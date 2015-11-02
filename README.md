@@ -1,4 +1,4 @@
-# MotionTouch - Potential Behavior when Touch
+# MotionTouch - Potential Device Behaviour
 
 This repository contains source code and all the research documentation for my implementation of touch with sensor data on mobile devices. 
 
@@ -12,6 +12,10 @@ more information are coming soon...
 
 coming soon...
 
+
+
 ## Contributors
+
 [Changkun Ou](http://changkun.us/)
+
 [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)

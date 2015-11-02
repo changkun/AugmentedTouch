@@ -1,0 +1,634 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 798DE1871BDEE4200014DB03 /* Tock_01.wav */; };
+		79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A617701BE0EAF400DE17F6 /* SVMModel.mm */; };
+		79A617731BE0EB1D00DE17F6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A617721BE0EB1D00DE17F6 /* opencv2.framework */; };
+		79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */; };
+		79B678A71BDBCF8C00083F6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678A61BDBCF8C00083F6D /* main.m */; };
+		79B678AA1BDBCF8C00083F6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678A91BDBCF8C00083F6D /* AppDelegate.m */; };
+		79B678AD1BDBCF8C00083F6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678AC1BDBCF8C00083F6D /* ViewController.m */; };
+		79B678B01BDBCF8C00083F6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79B678AE1BDBCF8C00083F6D /* Main.storyboard */; };
+		79B678B21BDBCF8C00083F6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79B678B11BDBCF8C00083F6D /* Assets.xcassets */; };
+		79B678B51BDBCF8C00083F6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79B678B31BDBCF8C00083F6D /* LaunchScreen.storyboard */; };
+		79B678C01BDBCF8D00083F6D /* TouchMotion_CollectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678BF1BDBCF8D00083F6D /* TouchMotion_CollectTests.m */; };
+		79B678CB1BDBCF8D00083F6D /* TouchMotion_CollectUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678CA1BDBCF8D00083F6D /* TouchMotion_CollectUITests.m */; };
+		79B678DA1BDBD5D700083F6D /* MotionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678D91BDBD5D700083F6D /* MotionData.m */; };
+		79B678DD1BDC205500083F6D /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678DC1BDC205500083F6D /* ButtonView.m */; };
+		79B678E01BDD0A0C00083F6D /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678DF1BDD0A0C00083F6D /* TestViewController.m */; };
+		79CB83EC1BDE9A9200CEA62D /* MotionDataTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB83EB1BDE9A9200CEA62D /* MotionDataTool.m */; };
+		79CB83EE1BDE9ACE00CEA62D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */; };
+		79CB83F81BDEBEAF00CEA62D /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */; };
+		79CB83FE1BDEC6ED00CEA62D /* PlaySound.m in Sources */ = {isa = PBXBuildFile; fileRef = 79CB83FD1BDEC6ED00CEA62D /* PlaySound.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		79B678BC1BDBCF8D00083F6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79B6789A1BDBCF8C00083F6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79B678A11BDBCF8C00083F6D;
+			remoteInfo = "TouchMotion Collect";
+		};
+		79B678C71BDBCF8D00083F6D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79B6789A1BDBCF8C00083F6D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 79B678A11BDBCF8C00083F6D;
+			remoteInfo = "TouchMotion Collect";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		798DE1871BDEE4200014DB03 /* Tock_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tock_01.wav; sourceTree = "<group>"; };
+		79A6176F1BE0EAF400DE17F6 /* SVMModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMModel.h; sourceTree = "<group>"; };
+		79A617701BE0EAF400DE17F6 /* SVMModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SVMModel.mm; sourceTree = "<group>"; };
+		79A617721BE0EB1D00DE17F6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		79A6177E1BE230CA00DE17F6 /* TrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingViewController.h; sourceTree = "<group>"; };
+		79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TrainingViewController.mm; sourceTree = "<group>"; };
+		79B678A21BDBCF8C00083F6D /* TouchMotion Collect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TouchMotion Collect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B678A61BDBCF8C00083F6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		79B678A81BDBCF8C00083F6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		79B678A91BDBCF8C00083F6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		79B678AB1BDBCF8C00083F6D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		79B678AC1BDBCF8C00083F6D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		79B678AF1BDBCF8C00083F6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		79B678B11BDBCF8C00083F6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		79B678B41BDBCF8C00083F6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		79B678B61BDBCF8C00083F6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79B678BB1BDBCF8C00083F6D /* TouchMotion CollectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TouchMotion CollectTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B678BF1BDBCF8D00083F6D /* TouchMotion_CollectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouchMotion_CollectTests.m; sourceTree = "<group>"; };
+		79B678C11BDBCF8D00083F6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79B678C61BDBCF8D00083F6D /* TouchMotion CollectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TouchMotion CollectUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		79B678CA1BDBCF8D00083F6D /* TouchMotion_CollectUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouchMotion_CollectUITests.m; sourceTree = "<group>"; };
+		79B678CC1BDBCF8D00083F6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		79B678D81BDBD5D700083F6D /* MotionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionData.h; sourceTree = "<group>"; };
+		79B678D91BDBD5D700083F6D /* MotionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionData.m; sourceTree = "<group>"; };
+		79B678DB1BDC205500083F6D /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonView.h; sourceTree = "<group>"; };
+		79B678DC1BDC205500083F6D /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonView.m; sourceTree = "<group>"; };
+		79B678DE1BDD0A0C00083F6D /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
+		79B678DF1BDD0A0C00083F6D /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		79CB83EA1BDE9A9200CEA62D /* MotionDataTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionDataTool.h; sourceTree = "<group>"; };
+		79CB83EB1BDE9A9200CEA62D /* MotionDataTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionDataTool.m; sourceTree = "<group>"; };
+		79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		79CB83FC1BDEC6ED00CEA62D /* PlaySound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaySound.h; sourceTree = "<group>"; };
+		79CB83FD1BDEC6ED00CEA62D /* PlaySound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaySound.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		79B6789F1BDBCF8C00083F6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79A617731BE0EB1D00DE17F6 /* opencv2.framework in Frameworks */,
+				79CB83F81BDEBEAF00CEA62D /* AVFoundation.framework in Frameworks */,
+				79CB83EE1BDE9ACE00CEA62D /* libsqlite3.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678B81BDBCF8C00083F6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678C31BDBCF8D00083F6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		79A617811BE36C6300DE17F6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79A6177E1BE230CA00DE17F6 /* TrainingViewController.h */,
+				79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */,
+				79B678DE1BDD0A0C00083F6D /* TestViewController.h */,
+				79B678DF1BDD0A0C00083F6D /* TestViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		79A617821BE36C7700DE17F6 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				79CB83EA1BDE9A9200CEA62D /* MotionDataTool.h */,
+				79CB83EB1BDE9A9200CEA62D /* MotionDataTool.m */,
+				79CB83FC1BDEC6ED00CEA62D /* PlaySound.h */,
+				79CB83FD1BDEC6ED00CEA62D /* PlaySound.m */,
+			);
+			name = Tool;
+			sourceTree = "<group>";
+		};
+		79A617831BE36C7E00DE17F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				79B678D81BDBD5D700083F6D /* MotionData.h */,
+				79B678D91BDBD5D700083F6D /* MotionData.m */,
+				79A6176F1BE0EAF400DE17F6 /* SVMModel.h */,
+				79A617701BE0EAF400DE17F6 /* SVMModel.mm */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		79A617841BE36CA600DE17F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				79B678DB1BDC205500083F6D /* ButtonView.h */,
+				79B678DC1BDC205500083F6D /* ButtonView.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		79A617851BE36CC700DE17F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79A617721BE0EB1D00DE17F6 /* opencv2.framework */,
+				79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */,
+				79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		79B678991BDBCF8C00083F6D = {
+			isa = PBXGroup;
+			children = (
+				79B678A41BDBCF8C00083F6D /* TouchMotion Collect */,
+				79B678BE1BDBCF8D00083F6D /* TouchMotion CollectTests */,
+				79B678C91BDBCF8D00083F6D /* TouchMotion CollectUITests */,
+				79B678A31BDBCF8C00083F6D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		79B678A31BDBCF8C00083F6D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79B678A21BDBCF8C00083F6D /* TouchMotion Collect.app */,
+				79B678BB1BDBCF8C00083F6D /* TouchMotion CollectTests.xctest */,
+				79B678C61BDBCF8D00083F6D /* TouchMotion CollectUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		79B678A41BDBCF8C00083F6D /* TouchMotion Collect */ = {
+			isa = PBXGroup;
+			children = (
+				79A617851BE36CC700DE17F6 /* Frameworks */,
+				79B678A81BDBCF8C00083F6D /* AppDelegate.h */,
+				79B678A91BDBCF8C00083F6D /* AppDelegate.m */,
+				79B678AB1BDBCF8C00083F6D /* ViewController.h */,
+				79B678AC1BDBCF8C00083F6D /* ViewController.m */,
+				79B678AE1BDBCF8C00083F6D /* Main.storyboard */,
+				79A617841BE36CA600DE17F6 /* View */,
+				79A617831BE36C7E00DE17F6 /* Model */,
+				79A617821BE36C7700DE17F6 /* Tool */,
+				79A617811BE36C6300DE17F6 /* Controller */,
+				79B678A51BDBCF8C00083F6D /* Supporting Files */,
+			);
+			path = "TouchMotion Collect";
+			sourceTree = "<group>";
+		};
+		79B678A51BDBCF8C00083F6D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				798DE1871BDEE4200014DB03 /* Tock_01.wav */,
+				79B678B11BDBCF8C00083F6D /* Assets.xcassets */,
+				79B678B31BDBCF8C00083F6D /* LaunchScreen.storyboard */,
+				79B678B61BDBCF8C00083F6D /* Info.plist */,
+				79B678A61BDBCF8C00083F6D /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		79B678BE1BDBCF8D00083F6D /* TouchMotion CollectTests */ = {
+			isa = PBXGroup;
+			children = (
+				79B678BF1BDBCF8D00083F6D /* TouchMotion_CollectTests.m */,
+				79B678C11BDBCF8D00083F6D /* Info.plist */,
+			);
+			path = "TouchMotion CollectTests";
+			sourceTree = "<group>";
+		};
+		79B678C91BDBCF8D00083F6D /* TouchMotion CollectUITests */ = {
+			isa = PBXGroup;
+			children = (
+				79B678CA1BDBCF8D00083F6D /* TouchMotion_CollectUITests.m */,
+				79B678CC1BDBCF8D00083F6D /* Info.plist */,
+			);
+			path = "TouchMotion CollectUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		79B678A11BDBCF8C00083F6D /* TouchMotion Collect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79B678CF1BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion Collect" */;
+			buildPhases = (
+				79B6789E1BDBCF8C00083F6D /* Sources */,
+				79B6789F1BDBCF8C00083F6D /* Frameworks */,
+				79B678A01BDBCF8C00083F6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "TouchMotion Collect";
+			productName = "TouchMotion Collect";
+			productReference = 79B678A21BDBCF8C00083F6D /* TouchMotion Collect.app */;
+			productType = "com.apple.product-type.application";
+		};
+		79B678BA1BDBCF8C00083F6D /* TouchMotion CollectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79B678D21BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion CollectTests" */;
+			buildPhases = (
+				79B678B71BDBCF8C00083F6D /* Sources */,
+				79B678B81BDBCF8C00083F6D /* Frameworks */,
+				79B678B91BDBCF8C00083F6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79B678BD1BDBCF8D00083F6D /* PBXTargetDependency */,
+			);
+			name = "TouchMotion CollectTests";
+			productName = "TouchMotion CollectTests";
+			productReference = 79B678BB1BDBCF8C00083F6D /* TouchMotion CollectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		79B678C51BDBCF8D00083F6D /* TouchMotion CollectUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 79B678D51BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion CollectUITests" */;
+			buildPhases = (
+				79B678C21BDBCF8D00083F6D /* Sources */,
+				79B678C31BDBCF8D00083F6D /* Frameworks */,
+				79B678C41BDBCF8D00083F6D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				79B678C81BDBCF8D00083F6D /* PBXTargetDependency */,
+			);
+			name = "TouchMotion CollectUITests";
+			productName = "TouchMotion CollectUITests";
+			productReference = 79B678C61BDBCF8D00083F6D /* TouchMotion CollectUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		79B6789A1BDBCF8C00083F6D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Changkun Ou";
+				TargetAttributes = {
+					79B678A11BDBCF8C00083F6D = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					79B678BA1BDBCF8C00083F6D = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 79B678A11BDBCF8C00083F6D;
+					};
+					79B678C51BDBCF8D00083F6D = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 79B678A11BDBCF8C00083F6D;
+					};
+				};
+			};
+			buildConfigurationList = 79B6789D1BDBCF8C00083F6D /* Build configuration list for PBXProject "TouchMotion Collect" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 79B678991BDBCF8C00083F6D;
+			productRefGroup = 79B678A31BDBCF8C00083F6D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				79B678A11BDBCF8C00083F6D /* TouchMotion Collect */,
+				79B678BA1BDBCF8C00083F6D /* TouchMotion CollectTests */,
+				79B678C51BDBCF8D00083F6D /* TouchMotion CollectUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		79B678A01BDBCF8C00083F6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */,
+				79B678B51BDBCF8C00083F6D /* LaunchScreen.storyboard in Resources */,
+				79B678B21BDBCF8C00083F6D /* Assets.xcassets in Resources */,
+				79B678B01BDBCF8C00083F6D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678B91BDBCF8C00083F6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678C41BDBCF8D00083F6D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		79B6789E1BDBCF8C00083F6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B678E01BDD0A0C00083F6D /* TestViewController.m in Sources */,
+				79CB83EC1BDE9A9200CEA62D /* MotionDataTool.m in Sources */,
+				79B678AD1BDBCF8C00083F6D /* ViewController.m in Sources */,
+				79B678DD1BDC205500083F6D /* ButtonView.m in Sources */,
+				79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */,
+				79B678AA1BDBCF8C00083F6D /* AppDelegate.m in Sources */,
+				79CB83FE1BDEC6ED00CEA62D /* PlaySound.m in Sources */,
+				79B678A71BDBCF8C00083F6D /* main.m in Sources */,
+				79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */,
+				79B678DA1BDBD5D700083F6D /* MotionData.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678B71BDBCF8C00083F6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B678C01BDBCF8D00083F6D /* TouchMotion_CollectTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		79B678C21BDBCF8D00083F6D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79B678CB1BDBCF8D00083F6D /* TouchMotion_CollectUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		79B678BD1BDBCF8D00083F6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79B678A11BDBCF8C00083F6D /* TouchMotion Collect */;
+			targetProxy = 79B678BC1BDBCF8D00083F6D /* PBXContainerItemProxy */;
+		};
+		79B678C81BDBCF8D00083F6D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 79B678A11BDBCF8C00083F6D /* TouchMotion Collect */;
+			targetProxy = 79B678C71BDBCF8D00083F6D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		79B678AE1BDBCF8C00083F6D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79B678AF1BDBCF8C00083F6D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		79B678B31BDBCF8C00083F6D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				79B678B41BDBCF8C00083F6D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		79B678CD1BDBCF8D00083F6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		79B678CE1BDBCF8D00083F6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		79B678D01BDBCF8D00083F6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
+				);
+				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-Collect";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		79B678D11BDBCF8D00083F6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
+				);
+				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-Collect";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		79B678D31BDBCF8D00083F6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "TouchMotion CollectTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-CollectTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TouchMotion Collect.app/TouchMotion Collect";
+			};
+			name = Debug;
+		};
+		79B678D41BDBCF8D00083F6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = "TouchMotion CollectTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-CollectTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/TouchMotion Collect.app/TouchMotion Collect";
+			};
+			name = Release;
+		};
+		79B678D61BDBCF8D00083F6D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "TouchMotion CollectUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-CollectUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "TouchMotion Collect";
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		79B678D71BDBCF8D00083F6D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "TouchMotion CollectUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-CollectUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = "TouchMotion Collect";
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		79B6789D1BDBCF8C00083F6D /* Build configuration list for PBXProject "TouchMotion Collect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B678CD1BDBCF8D00083F6D /* Debug */,
+				79B678CE1BDBCF8D00083F6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79B678CF1BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion Collect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B678D01BDBCF8D00083F6D /* Debug */,
+				79B678D11BDBCF8D00083F6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79B678D21BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion CollectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B678D31BDBCF8D00083F6D /* Debug */,
+				79B678D41BDBCF8D00083F6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		79B678D51BDBCF8D00083F6D /* Build configuration list for PBXNativeTarget "TouchMotion CollectUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				79B678D61BDBCF8D00083F6D /* Debug */,
+				79B678D71BDBCF8D00083F6D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 79B6789A1BDBCF8C00083F6D /* Project object */;
+}

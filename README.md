@@ -10,7 +10,7 @@ The project are inspired from some of touch behaviour research by [Daniel Busche
 
 More information are coming soon...
 
-## TODO
+## TODO:
 
 coming soon...
 
@@ -21,3 +21,6 @@ coming soon...
 [Changkun Ou](http://changkun.us/)
 
 [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)
+
+## License
+&copy; Contributors, 2015. Licensed under an GNU Public v2 license.

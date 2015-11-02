@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>TouchMotion Collect.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>79B678A11BDBCF8C00083F6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79B678BA1BDBCF8C00083F6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>79B678C51BDBCF8D00083F6D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

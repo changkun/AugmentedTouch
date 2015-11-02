@@ -6,7 +6,7 @@
 //  Copyright © 2015 Changkun Ou. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "MainViewController.h"
 #import "AppDelegate.h"
 #import "MotionData.h"
 #import "MotionDataTool.h"
@@ -14,15 +14,20 @@
 
 #import "SVMModel.h"
 
-@interface ViewController ()
+#import "TestViewController.h"
+
+@interface MainViewController ()
 {
     CMMotionManager *mManager;
 }
+
 @property (nonatomic, assign) NSInteger sampleNumber;
 @property (strong, nonatomic) IBOutlet UILabel *sampleDisplay;
+
+@property (strong, nonatomic) UIBarButtonItem* keyboardDoneButton;
 @end
 
-@implementation ViewController
+@implementation MainViewController
 
 - (void)trashBarClick {
     NSLog(@"trashBarClick----test");
@@ -82,6 +87,23 @@
     self.sampleNumber = [MotionDataTool recordSamples];
     [self.sampleDisplay setText:[NSString stringWithFormat:@"Current Sample Number:\n\n%ld", (long)self.sampleNumber]];
     
+    // set number pad
+    UIToolbar* keyboardDoneButtonView = [[UIToolbar alloc] init];
+    [keyboardDoneButtonView sizeToFit];
+    self.keyboardDoneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done"
+                                                               style:UIBarButtonItemStylePlain
+                                                              target:self
+                                                              action:@selector(doneClicked:)];
+    [keyboardDoneButtonView setItems:[NSArray arrayWithObjects:self.keyboardDoneButton, nil]];
+    [self.useridTextField addTarget:self action:@selector(textChanged) forControlEvents:UIControlEventEditingChanged];
+    self.useridTextField.inputAccessoryView = keyboardDoneButtonView;
+    [self.useridTextField setText:[NSString stringWithFormat:@"%d", (int)self.sampleNumber]];
+    
+    
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    self.keyboardDoneButton.enabled = self.useridTextField.text.length;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,15 +111,59 @@
     [self.sampleDisplay setText:[NSString stringWithFormat:@"Current Sample Number:\n\n%ld", (long)self.sampleNumber]];
 }
 
-- (IBAction)onStartButton:(id)sender {
+
+- (IBAction)onStartRecord:(id)sender {
+    if (self.sampleNumber == 0 && [self.useridTextField.text intValue] == 0) {
+        [self performSegueWithIdentifier:@"intoTestView" sender:sender];
+        return;
+    }
+    
+    if ([self.useridTextField.text intValue] == (int)self.sampleNumber || [self.useridTextField.text intValue] == (int)self.sampleNumber+1) {
+        // 执行segue
+        [self performSegueWithIdentifier:@"intoTestView" sender:sender];
+        return;
+    } else {
+        
+        UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"Error" message:@"Only accept current user_id or user_id+1. " preferredStyle:UIAlertControllerStyleAlert];
+        [alter addAction:[UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"fuck");
+            [self.useridTextField becomeFirstResponder];
+        }]];
+        [self presentViewController:alter animated:YES completion:nil];
+        
+    }
+}
+- (IBAction)onStartTraining:(id)sender {
+    
+    if (self.sampleNumber == 0) {
+        UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"Error" message:@"Please Record Data first!" preferredStyle:UIAlertControllerStyleAlert];
+        [alter addAction:[UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"fuck");
+            [self.useridTextField becomeFirstResponder];
+            self.keyboardDoneButton.enabled = self.useridTextField.text.length;
+        }]];
+        [self presentViewController:alter animated:YES completion:nil];
+    } else {
+        // 执行segue
+        [self performSegueWithIdentifier:@"intoTrainView" sender:sender];
+    }
     
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    // 在单点触摸时，可以用下面这行代码取出UITouch对象
-    UITouch *touch = [touches anyObject];
-    CGPoint point = [touch locationInView:self.view];
-
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"intoTestView"]) {
+        TestViewController *vc = segue.destinationViewController;
+        vc.current_userID = [self.useridTextField.text intValue];
+    }
 }
 
+// 定制键盘
+- (void)textChanged {
+    self.keyboardDoneButton.enabled = self.useridTextField.text.length;
+}
+- (IBAction)doneClicked:(id)sender
+{
+    NSLog(@"Done Clicked.");
+    [self.view endEditing:YES];
+}
 @end

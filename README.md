@@ -44,7 +44,7 @@ coming soon...
 
 ## Contributors
 
-[Changkun Ou](http://changkun.us/)
+[Changkun Ou](http://changkun.us/about/)
 
 [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)
 

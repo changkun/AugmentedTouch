@@ -12,6 +12,8 @@
 
 #import "PlaySound.h"
 
+#import "MainViewController.h"
+
 @interface TestViewController()
 {
     ButtonView *button[10];
@@ -20,7 +22,7 @@
 }
 @property (strong, nonatomic) IBOutlet UILabel *randomInputNumber;
 
-@property (nonatomic) int current_userID;
+
 @property (nonatomic) int count_touch;
 @property (nonatomic) BOOL left;
 
@@ -106,10 +108,12 @@
     [self removeObserver:self forKeyPath:@"count_touch"];
 }
 
+
 - (void)viewDidLoad {
     self.count_touch = 0;
     self.left = YES;
-    self.current_userID = (int)[MotionDataTool recordSamples]+1;
+    //self.current_userID = (int)[MotionDataTool recordSamples]+1;
+    NSLog(@"current user id:%d", self.current_userID);
     sound = [[PlaySound alloc] initForPlayingSoundEffectWith:@"Tock_01.wav"];
     
     [self addButtonSubViews];

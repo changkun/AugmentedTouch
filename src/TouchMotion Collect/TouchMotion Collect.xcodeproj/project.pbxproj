@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 798DE1871BDEE4200014DB03 /* Tock_01.wav */; };
 		79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A617701BE0EAF400DE17F6 /* SVMModel.mm */; };
-		79A617731BE0EB1D00DE17F6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A617721BE0EB1D00DE17F6 /* opencv2.framework */; };
 		79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */; };
+		79A617891BE8085500DE17F6 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A617881BE8085500DE17F6 /* opencv2.framework */; };
 		79B678A71BDBCF8C00083F6D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678A61BDBCF8C00083F6D /* main.m */; };
 		79B678AA1BDBCF8C00083F6D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678A91BDBCF8C00083F6D /* AppDelegate.m */; };
-		79B678AD1BDBCF8C00083F6D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678AC1BDBCF8C00083F6D /* ViewController.m */; };
+		79B678AD1BDBCF8C00083F6D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B678AC1BDBCF8C00083F6D /* MainViewController.m */; };
 		79B678B01BDBCF8C00083F6D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79B678AE1BDBCF8C00083F6D /* Main.storyboard */; };
 		79B678B21BDBCF8C00083F6D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79B678B11BDBCF8C00083F6D /* Assets.xcassets */; };
 		79B678B51BDBCF8C00083F6D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79B678B31BDBCF8C00083F6D /* LaunchScreen.storyboard */; };
@@ -49,15 +49,15 @@
 		798DE1871BDEE4200014DB03 /* Tock_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tock_01.wav; sourceTree = "<group>"; };
 		79A6176F1BE0EAF400DE17F6 /* SVMModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMModel.h; sourceTree = "<group>"; };
 		79A617701BE0EAF400DE17F6 /* SVMModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SVMModel.mm; sourceTree = "<group>"; };
-		79A617721BE0EB1D00DE17F6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		79A6177E1BE230CA00DE17F6 /* TrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingViewController.h; sourceTree = "<group>"; };
 		79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TrainingViewController.mm; sourceTree = "<group>"; };
+		79A617881BE8085500DE17F6 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		79B678A21BDBCF8C00083F6D /* TouchMotion Collect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TouchMotion Collect.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		79B678A61BDBCF8C00083F6D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		79B678A81BDBCF8C00083F6D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		79B678A91BDBCF8C00083F6D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		79B678AB1BDBCF8C00083F6D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		79B678AC1BDBCF8C00083F6D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		79B678AB1BDBCF8C00083F6D /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		79B678AC1BDBCF8C00083F6D /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		79B678AF1BDBCF8C00083F6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		79B678B11BDBCF8C00083F6D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		79B678B41BDBCF8C00083F6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -87,8 +87,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79A617731BE0EB1D00DE17F6 /* opencv2.framework in Frameworks */,
 				79CB83F81BDEBEAF00CEA62D /* AVFoundation.framework in Frameworks */,
+				79A617891BE8085500DE17F6 /* opencv2.framework in Frameworks */,
 				79CB83EE1BDE9ACE00CEA62D /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,7 +155,7 @@
 		79A617851BE36CC700DE17F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				79A617721BE0EB1D00DE17F6 /* opencv2.framework */,
+				79A617881BE8085500DE17F6 /* opencv2.framework */,
 				79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */,
 				79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */,
 			);
@@ -188,8 +188,8 @@
 				79A617851BE36CC700DE17F6 /* Frameworks */,
 				79B678A81BDBCF8C00083F6D /* AppDelegate.h */,
 				79B678A91BDBCF8C00083F6D /* AppDelegate.m */,
-				79B678AB1BDBCF8C00083F6D /* ViewController.h */,
-				79B678AC1BDBCF8C00083F6D /* ViewController.m */,
+				79B678AB1BDBCF8C00083F6D /* MainViewController.h */,
+				79B678AC1BDBCF8C00083F6D /* MainViewController.m */,
 				79B678AE1BDBCF8C00083F6D /* Main.storyboard */,
 				79A617841BE36CA600DE17F6 /* View */,
 				79A617831BE36C7E00DE17F6 /* Model */,
@@ -363,7 +363,7 @@
 			files = (
 				79B678E01BDD0A0C00083F6D /* TestViewController.m in Sources */,
 				79CB83EC1BDE9A9200CEA62D /* MotionDataTool.m in Sources */,
-				79B678AD1BDBCF8C00083F6D /* ViewController.m in Sources */,
+				79B678AD1BDBCF8C00083F6D /* MainViewController.m in Sources */,
 				79B678DD1BDC205500083F6D /* ButtonView.m in Sources */,
 				79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */,
 				79B678AA1BDBCF8C00083F6D /* AppDelegate.m in Sources */,
@@ -516,6 +516,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 				);
 				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -531,6 +535,10 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
 				);

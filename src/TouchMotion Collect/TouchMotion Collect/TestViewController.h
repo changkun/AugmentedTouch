@@ -11,4 +11,6 @@
 
 @interface TestViewController : UIViewController <ButtonViewDelegate>
 
+@property (nonatomic) int current_userID;
+
 @end

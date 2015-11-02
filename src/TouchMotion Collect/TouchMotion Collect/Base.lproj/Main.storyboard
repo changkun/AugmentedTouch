@@ -3,12 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Touch with Motion-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -27,8 +28,7 @@
                                 <fontDescription key="fontDescription" name="GillSans-Italic" family="Gill Sans" pointSize="24"/>
                                 <state key="normal" title="Start Record"/>
                                 <connections>
-                                    <action selector="onStartButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ksh-Lg-zwx"/>
-                                    <segue destination="HPw-ho-Z9Y" kind="show" id="DbA-Ea-lue"/>
+                                    <action selector="onStartRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Ma-FS-etc"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Samples Size:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m9Q-PX-CuJ">
@@ -49,8 +49,38 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="hDJ-ec-lAF">
+                                <rect key="frame" x="20" y="101" width="560" height="30"/>
+                                <animations/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="E5W-YU-ir1"/>
+                                    <constraint firstAttribute="width" constant="216" id="hgE-Gy-3rq"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" spellCheckingType="no" keyboardType="numberPad" keyboardAppearance="alert" returnKeyType="go"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="hgE-Gy-3rq"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="E4Z-2I-Wfe"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please Input User ID:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qr9-Ms-KR3">
+                                <rect key="frame" x="142" y="72" width="316" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="VOx-oR-Mae"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F8B-sd-ycA">
-                                <rect key="frame" x="246.5" y="410" width="107" height="32"/>
+                                <rect key="frame" x="246" y="455" width="107" height="32"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="92U-Ul-EJn"/>
@@ -58,36 +88,44 @@
                                 </constraints>
                                 <state key="normal" title="Start Training"/>
                                 <connections>
-                                    <segue destination="UeJ-Ax-qeb" kind="show" id="TSE-74-k11"/>
+                                    <action selector="onStartTraining:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8wi-gM-Q6j"/>
                                 </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dBW-BN-Nch">
-                                <rect key="frame" x="285" y="457" width="30" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Test"/>
                             </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="hDJ-ec-lAF" firstAttribute="top" secondItem="Qr9-Ms-KR3" secondAttribute="bottom" constant="8" id="2GS-0w-3rc"/>
+                            <constraint firstItem="hDJ-ec-lAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DG0-gJ-Mh8"/>
+                            <constraint firstItem="Qr9-Ms-KR3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="N6B-QQ-Dvh"/>
+                            <constraint firstItem="Qr9-Ms-KR3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="NQh-Rl-adY"/>
                             <constraint firstItem="iJG-2T-5Sk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QDL-K0-C6g"/>
                             <constraint firstItem="GxC-Xl-9mV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="THV-gd-hPf"/>
+                            <constraint firstItem="hDJ-ec-lAF" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="c6C-zW-dbU"/>
+                            <constraint firstItem="iJG-2T-5Sk" firstAttribute="top" secondItem="F8B-sd-ycA" secondAttribute="bottom" constant="8" id="fvp-rZ-SKS"/>
                             <constraint firstItem="F8B-sd-ycA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j68-OZ-iLx"/>
-                            <constraint firstItem="dBW-BN-Nch" firstAttribute="top" secondItem="F8B-sd-ycA" secondAttribute="bottom" constant="15" id="mfk-Dc-qAh"/>
-                            <constraint firstItem="dBW-BN-Nch" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rXd-Fa-GT5"/>
+                            <constraint firstItem="hDJ-ec-lAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="mhq-se-nG8"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iJG-2T-5Sk" secondAttribute="bottom" constant="60" id="vIf-4Z-ymb"/>
                             <constraint firstItem="GxC-Xl-9mV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w8F-vO-05K"/>
                             <constraint firstItem="F8B-sd-ycA" firstAttribute="top" secondItem="GxC-Xl-9mV" secondAttribute="bottom" constant="60" id="xuu-D1-dc3"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="xuu-D1-dc3"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Touch with Motion" id="VNQ-Lu-lS1"/>
                     <connections>
                         <outlet property="sampleDisplay" destination="GxC-Xl-9mV" id="xKC-bs-zVN"/>
+                        <outlet property="useridTextField" destination="hDJ-ec-lAF" id="4IH-jl-7W4"/>
+                        <segue destination="HPw-ho-Z9Y" kind="show" identifier="intoTestView" id="eth-e0-ZOM"/>
+                        <segue destination="UeJ-Ax-qeb" kind="show" identifier="intoTrainView" id="iiG-9N-N2g"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-60" y="438"/>
+            <point key="canvasLocation" x="-143" y="433"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ex5-7h-hHd">
@@ -178,7 +216,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AKr-ID-yKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="514" y="1182"/>
+            <point key="canvasLocation" x="-143" y="1185"/>
         </scene>
     </scenes>
 </document>

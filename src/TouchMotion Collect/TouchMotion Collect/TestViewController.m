@@ -6,9 +6,11 @@
 //  Copyright © 2015 Changkun Ou. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "TestViewController.h"
 #import "MotionData.h"
 #import "MotionDataTool.h"
+#import "MotionBuffer.h"
 
 #import "PlaySound.h"
 
@@ -19,6 +21,12 @@
     ButtonView *button[10];
     PlaySound *sound;
     
+    CMMotionManager *mManager;
+    
+    MotionBuffer *devMotionBuffer;
+    MotionBuffer *gyroBuffer;
+    MotionBuffer *accBuffer;
+    
 }
 @property (strong, nonatomic) IBOutlet UILabel *randomInputNumber;
 
@@ -27,39 +35,78 @@
 @property (nonatomic) BOOL left;
 
 @property (nonatomic, strong) NSMutableArray *samples;
+
+@property (nonatomic, strong) NSMutableArray *bufferSamples;
 @end
 
 
 @implementation TestViewController
 
-// ButtonView协议
+// ButtonView protocol
 - (void)onButtonViewClick:(MotionData *)data withFlag:(int)flag{
     if (flag == 0) {
         [sound play];
+        
+        // 考虑concurrency并发性
+        // TODO: 写入tap触发时的缓存
+//        for (int i = 0; i < 50; i++) {
+//            NSLog(@"devMotionBuffer[x:%f, y:%f, z:%f]", [devMotionBuffer getXbyIndex:i], [devMotionBuffer getYbyIndex:i], [devMotionBuffer getZbyIndex:i]);
+//            NSLog(@"accBuffer[x:%f, y:%f, z:%f]", [accBuffer getXbyIndex:i], [accBuffer getYbyIndex:i], [accBuffer getZbyIndex:i]);
+//            NSLog(@"gyroBuffer[x:%f, y:%f, z:%f]", [gyroBuffer getXbyIndex:i], [gyroBuffer getYbyIndex:i], [gyroBuffer getZbyIndex:i]);
+//            
+//        }
+        
+        // 1. 记录当前左右手情况
+        if (self.left) {
+            [devMotionBuffer setHand:0 andUserID:self.current_userID andTapIndex:self.count_touch]; // 0 means left
+            [accBuffer setHand:0 andUserID:self.current_userID andTapIndex:self.count_touch];
+            [gyroBuffer setHand:0 andUserID:self.current_userID andTapIndex:self.count_touch];
+        } else {
+            [devMotionBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch]; // 1 means left
+            [accBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch];
+            [gyroBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch];
+        }
+
+        // 2. 将整个buffer保存下来
+        MotionBuffer *bufferObjectDev = [[MotionBuffer alloc] initWithBuffer:devMotionBuffer];
+        MotionBuffer *bufferObjectAcc = [[MotionBuffer alloc] initWithBuffer:accBuffer];
+        MotionBuffer *bufferObjectGyro = [[MotionBuffer alloc] initWithBuffer:gyroBuffer];
+        if (self.bufferSamples) {
+            [self.bufferSamples addObject:bufferObjectDev];
+            [self.bufferSamples addObject:bufferObjectAcc];
+            [self.bufferSamples addObject:bufferObjectGyro];
+        } else {
+            self.bufferSamples = [NSMutableArray arrayWithObjects:bufferObjectDev, bufferObjectAcc, bufferObjectGyro, nil];
+        }
+        
+//        [devMotionBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
+//        [accBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
+//        [gyroBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
+        
     }
     
-    
-    // write to buffer
+    // write the moment data to memory buffer
     if (self.samples) {
         [self.samples addObject:data];
     } else {
         self.samples = [NSMutableArray arrayWithObjects:data, nil];
     }
     
+    
     if (flag == 2) {
         self.count_touch++;
+        
+        // TODO: 写入tap结束瞬间的的缓存
+        
+        
     }
-    NSLog(@"count_touch:%d", self.count_touch);
+    //NSLog(@"count_touch:%d", self.count_touch);
 }
 - (int)currentUserID {
     return self.current_userID;
 }
 - (int)whichHand {
-    if (self.left == YES) {
-        return 0;
-    } else {
-        return 1;
-    }
+    return !(self.left == YES);
 }
 
 
@@ -84,20 +131,28 @@
             }
         }
     }
-        
-//        // 每个用户测试
-//        if (self.count_touch < 10 && self.left == YES) {
-//            <#statements#>
-//        } else if (self.count_touch )
-
-    
     
     if (self.count_touch >= TIMES*6*2){
         // data	persistence once
         #warning still need sqlite transaction optimize
+        
+        
+        // 写入所有触摸瞬间数据
         for (MotionData *data in self.samples) {
             [MotionDataTool insertAllData:data];
         }
+        
+        // 写入所有buffer对象
+        for (MotionBuffer* buffer in self.bufferSamples) {
+            BOOL result = [MotionDataTool writeBufferDataWithBuffer:buffer];
+            if (result) {
+                NSLog(@"成功写入buffer[%d]", [buffer getTapIndex]);
+            } else {
+                NSLog(@"写入失败");
+            }
+        }
+        
+        // 退出当前viewcontroller
         [self.navigationController popViewControllerAnimated:YES];
     }
 }
@@ -119,6 +174,42 @@
     [self addButtonSubViews];
     [self updateInputNumberWithHandFlag:0];
     [self addObserver:self forKeyPath:@"count_touch" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
+    
+    // start buffer record, it can save 50 data.
+    [self startBufferReco];
+    
+}
+
+- (void)startBufferReco {
+    mManager = [(AppDelegate *)[[UIApplication sharedApplication] delegate] sharedManager];
+    
+    // 1. 初始化缓存池
+    //    缓存池大小可以保存50条历史数据
+    devMotionBuffer = [[MotionBuffer alloc] initWithSensorFlag:0];
+    accBuffer = [[MotionBuffer alloc] initWithSensorFlag:1];
+    gyroBuffer = [[MotionBuffer alloc] initWithSensorFlag:2];
+
+    
+    // 2. 设置传感记录器
+    NSTimeInterval delta = 0.01;
+    [mManager setDeviceMotionUpdateInterval:delta];
+    [mManager setAccelerometerUpdateInterval:delta];
+    [mManager setGyroUpdateInterval:delta];
+    
+    // 3. 每次数据更新时将传感数据写入缓存
+    [mManager startGyroUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMGyroData * _Nullable gyroData, NSError * _Nullable error) {
+        // 写gyro数据进buffer
+        [gyroBuffer addX:gyroData.rotationRate.x Y:gyroData.rotationRate.y Z:gyroData.rotationRate.z];
+    }];
+    [mManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMAccelerometerData * _Nullable accelerometerData, NSError * _Nullable error) {
+        // 写acc数据进buffer
+        [accBuffer addX:accelerometerData.acceleration.x Y:accelerometerData.acceleration.y Z:accelerometerData.acceleration.z];
+    }];
+    [mManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion * _Nullable motion, NSError * _Nullable error) {
+        // 写motion数据进buffer
+        [devMotionBuffer addX:motion.attitude.roll Y:motion.attitude.pitch Z:motion.attitude.yaw];
+    }];
+
 }
 
 - (void)updateInputNumberWithHandFlag:(int)flag {

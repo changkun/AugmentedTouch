@@ -67,8 +67,11 @@
     CGPoint point = [touch locationInView:self];
     
     MotionData* data_all = [[MotionData alloc] initWithUserID:[self.delegate currentUserID]
+                                                  andTapCount:0
                                                          andX:point.x+self.frame.origin.x
                                                          andY:point.y+self.frame.origin.y
+                                                   andOffsetX:point.x
+                                                   andOffsetY:point.y
                                                       andRoll:mManager.deviceMotion.attitude.roll
                                                      andPitch:mManager.deviceMotion.attitude.pitch
                                                        andYaw:mManager.deviceMotion.attitude.yaw

@@ -6,11 +6,13 @@
 //  Copyright © 2015 Changkun Ou. All rights reserved.
 //
 
+#import <opencv2/ml.hpp>
+
 #import "TrainingViewController.h"
 
 #import "MotionData.h"
 #import "MotionDataTool.h"
-#import <opencv2/ml.hpp>
+
 #import "AppDelegate.h"
 
 using namespace cv;

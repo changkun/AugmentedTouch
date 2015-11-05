@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class MotionData;
+@class MotionBuffer;
 
 @interface MotionDataTool : NSObject
 
@@ -22,9 +23,16 @@
 
 // 插入全部数据
 + (BOOL)insertAllData:(MotionData *)data;
-
+//+ (BOOL)writeBufferDataWithUserID:(int)userID
+//                         tapCount:(int)tapCount
+//                                X:(double)X
+//                                Y:(double)Y
+//                                Z:(double)Z
+//                       sensorFlag:(int)flag;
++ (BOOL)writeBufferDataWithBuffer:(MotionBuffer *)buffer;
 
 + (BOOL)removeAllData;
++ (BOOL)removeallBufferData;
 + (NSInteger)recordNumber;
 + (NSInteger)recordSamples;
 

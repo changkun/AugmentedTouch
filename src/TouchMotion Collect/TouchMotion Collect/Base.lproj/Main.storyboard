@@ -91,6 +91,18 @@
                                     <action selector="onStartTraining:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8wi-gM-Q6j"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbL-Sn-T0o">
+                                <rect key="frame" x="257" y="375" width="86" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="86" id="5RE-vq-21N"/>
+                                    <constraint firstAttribute="height" constant="30" id="avx-bh-RBm"/>
+                                </constraints>
+                                <state key="normal" title="Clean Buffer"/>
+                                <connections>
+                                    <action selector="cleanBufferDataBase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e4I-HZ-aej"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -99,6 +111,7 @@
                             <constraint firstItem="hDJ-ec-lAF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DG0-gJ-Mh8"/>
                             <constraint firstItem="Qr9-Ms-KR3" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="N6B-QQ-Dvh"/>
                             <constraint firstItem="Qr9-Ms-KR3" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="NQh-Rl-adY"/>
+                            <constraint firstItem="bbL-Sn-T0o" firstAttribute="top" secondItem="GxC-Xl-9mV" secondAttribute="bottom" constant="25" id="PAU-jM-gX8"/>
                             <constraint firstItem="iJG-2T-5Sk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="QDL-K0-C6g"/>
                             <constraint firstItem="GxC-Xl-9mV" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="THV-gd-hPf"/>
                             <constraint firstItem="hDJ-ec-lAF" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="c6C-zW-dbU"/>
@@ -106,6 +119,7 @@
                             <constraint firstItem="F8B-sd-ycA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="j68-OZ-iLx"/>
                             <constraint firstItem="hDJ-ec-lAF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="mhq-se-nG8"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="iJG-2T-5Sk" secondAttribute="bottom" constant="60" id="vIf-4Z-ymb"/>
+                            <constraint firstItem="bbL-Sn-T0o" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vOp-Jb-VIC"/>
                             <constraint firstItem="GxC-Xl-9mV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="w8F-vO-05K"/>
                             <constraint firstItem="F8B-sd-ycA" firstAttribute="top" secondItem="GxC-Xl-9mV" secondAttribute="bottom" constant="60" id="xuu-D1-dc3"/>
                         </constraints>

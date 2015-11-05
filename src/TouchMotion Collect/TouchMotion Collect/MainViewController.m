@@ -36,6 +36,13 @@
     [self.sampleDisplay setText:[NSString stringWithFormat:@"Current Sample Number:\n\n%ld", (long)self.sampleNumber]];
 }
 
+- (IBAction)cleanBufferDataBase:(id)sender {
+    BOOL result = [MotionDataTool removeallBufferData];
+    if (result == YES) {
+        NSLog(@"删除成功");
+    }
+}
+
 // airdrop 发送文件
 - (void)share {
     NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"TouchWithMotionData.sqlite"];

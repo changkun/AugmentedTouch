@@ -8,6 +8,7 @@
 
 #import "MotionDataTool.h"
 #import "MotionData.h"
+#import "MotionBuffer.h"
 #import <sqlite3.h>
 
 @implementation MotionDataTool
@@ -33,8 +34,11 @@ static sqlite3 *db;
         const char *sql = "CREATE TABLE IF NOT EXISTS touchesData ( \
         id INTEGER PRIMARY KEY AUTOINCREMENT,       \
         user_id INTEGER DEFAULT 0,                  \
+        tap_count INTEGER DEFAULT 0,                \
         x REAL DEFAULT 0,                           \
         y REAL DEFAULT 0,                           \
+        offset_x REAL DEFAULT 0,                    \
+        offset_y REAL DEFAULT 0,                    \
         roll REAL DEFAULT 0,                        \
         pitch REAL DEFAULT 0,                       \
         yaw REAL DEFAULT 0,                         \
@@ -49,11 +53,53 @@ static sqlite3 *db;
         touch_time DATETIME DEFAULT (datetime('now','localtime')));";
         
         char *error_msg = NULL;
+        
+//        const char *sql1 = "drop table touchesData;";
+//        const char *sql2 = "drop table sensorBuffer;";
+//        sqlite3_exec(db, sql1, NULL, NULL, &error_msg);
+//        sqlite3_exec(db, sql2, NULL, NULL, &error_msg);
+        
         int result = sqlite3_exec(db, sql, NULL, NULL, &error_msg);
         if (result == SQLITE_OK) {
             NSLog(@"成功创建表");
         } else {
             NSLog(@"创建表失败: %s", error_msg);
+        }
+    } else {
+        NSLog(@"打开数据库失败, error number: %d", result);
+    }
+    
+    if (result == SQLITE_OK) {
+        NSLog(@"打开数据库成功");
+        
+        // 2. 创建表
+        
+        // (id, UserID, x, y, roll, pitch, yaw, accX, accY, accZ, rotationX, rotationY, rotationZ, hand, movingFlag, TouchTime)
+        
+
+        
+        const char *sql = "CREATE TABLE IF NOT EXISTS sensorBuffer ( \
+        id INTEGER PRIMARY KEY AUTOINCREMENT,       \
+        user_id INTEGER DEFAULT 0,                  \
+        tap_index INTEGER DEFAULT 0,                \
+        x REAL DEFAULT 0,                           \
+        y REAL DEFAULT 0,                           \
+        z REAL DEFAULT 0,                           \
+        hand INTEGER DEFAULT 0,                     \
+        sensor_flag INTEGER DEFAULT 0 );";
+
+        char *error_msg = NULL;
+
+//        const char *sql3 = "drop table sensorBuffer;";
+//        sqlite3_exec(db, sql3, NULL, NULL, &error_msg);
+
+        
+        
+        int result = sqlite3_exec(db, sql, NULL, NULL, &error_msg);
+        if (result == SQLITE_OK) {
+            NSLog(@"成功创建sensorBuffer表");
+        } else {
+            NSLog(@"创建sensorBuffer表失败: %s", error_msg);
         }
     } else {
         NSLog(@"打开数据库失败, error number: %d", result);
@@ -92,13 +138,6 @@ static sqlite3 *db;
     return requestData;
 }
 
-//+ (BOOL)insertMotionData:(MotionData *)data {
-//    NSString *sql = [NSString stringWithFormat:@"insert into touchesData(x, y, roll, pitch, yaw, hand) values (%f, %f, %f, %f, %f, %d);", data.x, data.y, data.roll, data.pitch, data.yaw, data.hand];
-//    char *error_msg = NULL;
-//    int result = sqlite3_exec(db, sql.UTF8String, NULL, NULL, &error_msg);
-//    return result == SQLITE_OK;
-//}
-
 + (BOOL)insertAllData:(MotionData *)data {
     
     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -106,10 +145,70 @@ static sqlite3 *db;
     NSString *dateString=[dateFormat stringFromDate:data.time];
     //    NSLog(@"%@", dateString);
     
-    NSString *sql = [NSString stringWithFormat:@"insert into touchesData(user_id, x, y, roll, pitch, yaw, acc_x, acc_y, acc_z, rotation_x, rotation_y, rotation_z, hand, moving_flag, touch_time) values (%d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %d, %d, datetime(\"%@\"));", data.userID, data.x, data.y, data.roll, data.pitch, data.yaw, data.accx, data.accy, data.accz, data.rotationRateX, data.rotationRateY, data.rotationRateZ, data.hand, data.movingFlag, dateString];
+    NSString *sql = [NSString stringWithFormat:@"insert into touchesData( \
+                     user_id,           \
+                     tap_count,         \
+                     x,                 \
+                     y,                 \
+                     offset_x,          \
+                     offset_y,          \
+                     roll,              \
+                     pitch,             \
+                     yaw,               \
+                     acc_x,             \
+                     acc_y,             \
+                     acc_z,             \
+                     rotation_x,        \
+                     rotation_y,        \
+                     rotation_z,        \
+                     hand,              \
+                     moving_flag,       \
+                     touch_time)        \
+        values (%d, %d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %d, %d, datetime(\"%@\"));",
+                     data.userID,
+                     data.tapCount,
+                     data.x,
+                     data.y,
+                     data.offsetX,
+                     data.offsetY,
+                     data.roll,
+                     data.pitch,
+                     data.yaw,
+                     data.accx,
+                     data.accy,
+                     data.accz,
+                     data.rotationRateX,
+                     data.rotationRateY,
+                     data.rotationRateZ,
+                     data.hand,
+                     data.movingFlag,
+                     dateString];
     char *error_msg = NULL;
     int result = sqlite3_exec(db, sql.UTF8String, NULL, NULL, &error_msg);
     //    NSLog(@"%s", error_msg);
+    return result == SQLITE_OK;
+}
+
+#warning 这里存在严重的并发性问题
++ (BOOL)writeBufferDataWithBuffer:(MotionBuffer *)buffer {
+    int result = SQLITE_OK;
+    
+    NSLog(@"%@", buffer);
+    
+    for (int i = [buffer getTail]; i != ([buffer getTail]-1)%BUFFER_FRAME; i = (i+1)%BUFFER_FRAME) {
+        NSString *sql = [NSString stringWithFormat:@"insert into sensorBuffer   \
+                         (user_id, tap_index, x, y, z, hand, sensor_flag)       \
+                         values(%d,      %d,       %f,%f,%f, %d, %d)",
+                         [buffer getUserID],
+                         [buffer getTapIndex],
+                         [buffer getXbyIndex:i],
+                         [buffer getYbyIndex:i],
+                         [buffer getZbyIndex:i],
+                         [buffer getHand],
+                         [buffer getSensorFlag]];
+        char *error_msg = NULL;
+        result = sqlite3_exec(db, sql.UTF8String, NULL, NULL, &error_msg);
+    }
     return result == SQLITE_OK;
 }
 
@@ -127,6 +226,28 @@ static sqlite3 *db;
     } else {
         return NO;
     }
+}
+
++ (BOOL)removeallBufferData {
+    // 清空数据库
+    const char * sql1 = "delete from sensorBuffer;";
+    char *error_msg = NULL;
+    int result = sqlite3_exec(db, sql1, NULL, NULL, &error_msg);
+    if (result == SQLITE_OK) {
+        // 使primary key为0
+        const char * sql2 = "UPDATE sqlite_sequence SET seq = 0 WHERE name='sensorBuffer';";
+        result = sqlite3_exec(db, sql2, NULL, NULL, &error_msg);
+        
+//        // 调试用
+//        const char *sql3 = "drop table sensorBuffer;";
+//        result = sqlite3_exec(db, sql3, NULL, NULL, &error_msg);
+
+        return result == SQLITE_OK;
+    } else {
+        return NO;
+    }
+    
+    
 }
 
 + (NSInteger)recordNumber {

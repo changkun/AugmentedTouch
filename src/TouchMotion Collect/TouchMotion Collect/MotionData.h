@@ -13,8 +13,11 @@
 
 
 @property (nonatomic, assign) int userID;
+@property (nonatomic, assign) int tapCount;
 @property (nonatomic, assign) CGFloat x;
 @property (nonatomic, assign) CGFloat y;
+@property (nonatomic, assign) CGFloat offsetX;
+@property (nonatomic, assign) CGFloat offsetY;
 @property (nonatomic, assign) double roll;
 @property (nonatomic, assign) double pitch;
 @property (nonatomic, assign) double yaw;
@@ -28,9 +31,13 @@
 @property (nonatomic, assign) int movingFlag; // only 0, 1, 2. 0 means beganTouch, 1 means moving events, 2 means endTouch
 @property (nonatomic, assign) int hand; // only 1 and 0. 0 means left and 1 means right
 
+
 - (instancetype)initWithUserID:(int)userID
+                   andTapCount:(int)tapCount
                           andX:(CGFloat)x
                           andY:(CGFloat)y
+                    andOffsetX:(CGFloat)offsetX
+                    andOffsetY:(CGFloat)offsetY
                        andRoll:(double)roll
                       andPitch:(double)pitch
                         andYaw:(double)yaw

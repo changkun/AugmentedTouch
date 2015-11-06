@@ -116,6 +116,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     self.sampleNumber = [MotionDataTool recordSamples];
     [self.sampleDisplay setText:[NSString stringWithFormat:@"Current Sample Number:\n\n%ld", (long)self.sampleNumber]];
+    [self.useridTextField setText:[NSString stringWithFormat:@"%ld", (long)self.sampleNumber]];
 }
 
 

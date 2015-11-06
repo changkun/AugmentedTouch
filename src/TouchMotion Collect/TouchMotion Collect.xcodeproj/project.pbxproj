@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 798DE1871BDEE4200014DB03 /* Tock_01.wav */; };
 		79A5F9241BEBAEEC003FC372 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A5F9231BEBAEEC003FC372 /* opencv2.framework */; };
+		79A5F9401BECA895003FC372 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F93F1BECA895003FC372 /* MBProgressHUD.m */; };
 		79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A617701BE0EAF400DE17F6 /* SVMModel.mm */; };
 		79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */; };
 		79A6178E1BEB5D9B00DE17F6 /* MotionBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6178D1BEB5D9B00DE17F6 /* MotionBuffer.m */; };
@@ -49,6 +50,8 @@
 /* Begin PBXFileReference section */
 		798DE1871BDEE4200014DB03 /* Tock_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tock_01.wav; sourceTree = "<group>"; };
 		79A5F9231BEBAEEC003FC372 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		79A5F93E1BECA895003FC372 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		79A5F93F1BECA895003FC372 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		79A6176F1BE0EAF400DE17F6 /* SVMModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMModel.h; sourceTree = "<group>"; };
 		79A617701BE0EAF400DE17F6 /* SVMModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SVMModel.mm; sourceTree = "<group>"; };
 		79A6177E1BE230CA00DE17F6 /* TrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingViewController.h; sourceTree = "<group>"; };
@@ -113,6 +116,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		79A5F93D1BECA873003FC372 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				79A5F93E1BECA895003FC372 /* MBProgressHUD.h */,
+				79A5F93F1BECA895003FC372 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
 		79A617811BE36C6300DE17F6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +172,7 @@
 		79A617851BE36CC700DE17F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79A5F93D1BECA873003FC372 /* MBProgressHUD */,
 				79A5F9231BEBAEEC003FC372 /* opencv2.framework */,
 				79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */,
 				79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */,
@@ -373,6 +386,7 @@
 				79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */,
 				79B678AA1BDBCF8C00083F6D /* AppDelegate.m in Sources */,
 				79CB83FE1BDEC6ED00CEA62D /* PlaySound.m in Sources */,
+				79A5F9401BECA895003FC372 /* MBProgressHUD.m in Sources */,
 				79B678A71BDBCF8C00083F6D /* main.m in Sources */,
 				79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */,
 				79A6178E1BEB5D9B00DE17F6 /* MotionBuffer.m in Sources */,
@@ -530,6 +544,8 @@
 					Collect,
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 				);
 				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -545,6 +561,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
 					"$(PROJECT_DIR)/TouchMotion",

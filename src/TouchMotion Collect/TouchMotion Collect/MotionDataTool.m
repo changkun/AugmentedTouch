@@ -195,7 +195,15 @@ static sqlite3 *db;
     
     NSLog(@"%@", buffer);
     
-    for (int i = [buffer getTail]; i != ([buffer getTail]-1)%BUFFER_FRAME; i = (i+1)%BUFFER_FRAME) {
+    int start = [buffer getTail];
+    int end;
+    if (start == 0) {
+        end = BUFFER_FRAME-1;
+    } else {
+        end = start-1;
+    }
+    
+    for (int i = start; i != end; i = (i+1)%BUFFER_FRAME) {
         NSString *sql = [NSString stringWithFormat:@"insert into sensorBuffer   \
                          (user_id, tap_index, x, y, z, hand, sensor_flag)       \
                          values(%d,      %d,       %f,%f,%f, %d, %d)",

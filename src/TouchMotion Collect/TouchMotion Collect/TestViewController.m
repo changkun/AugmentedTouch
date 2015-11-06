@@ -16,6 +16,8 @@
 
 #import "MainViewController.h"
 
+#import "MBProgressHUD.h"
+
 @interface TestViewController()
 {
     ButtonView *button[10];
@@ -62,7 +64,7 @@
             [accBuffer setHand:0 andUserID:self.current_userID andTapIndex:self.count_touch];
             [gyroBuffer setHand:0 andUserID:self.current_userID andTapIndex:self.count_touch];
         } else {
-            [devMotionBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch]; // 1 means left
+            [devMotionBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch]; // 1 means right
             [accBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch];
             [gyroBuffer setHand:1 andUserID:self.current_userID andTapIndex:self.count_touch];
         }
@@ -136,24 +138,34 @@
         // data	persistence once
         #warning still need sqlite transaction optimize
         
-        
-        // 写入所有触摸瞬间数据
-        for (MotionData *data in self.samples) {
-            [MotionDataTool insertAllData:data];
-        }
-        
-        // 写入所有buffer对象
-        for (MotionBuffer* buffer in self.bufferSamples) {
-            BOOL result = [MotionDataTool writeBufferDataWithBuffer:buffer];
-            if (result) {
-                NSLog(@"成功写入buffer[%d]", [buffer getTapIndex]);
-            } else {
-                NSLog(@"写入失败");
+        MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hub.dimBackground = YES;
+        hub.labelText = @"Write data into Database...";
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            
+            // 写入所有touch moment数据
+            for (MotionData *data in self.samples) {
+                [MotionDataTool insertAllData:data];
             }
-        }
+            
+            // 写入所有buffer对象
+            for (MotionBuffer* buffer in self.bufferSamples) {
+                BOOL result = [MotionDataTool writeBufferDataWithBuffer:buffer];
+                if (result) {
+                    NSLog(@"成功写入buffer[%d]", [buffer getTapIndex]);
+                } else {
+                    NSLog(@"写入失败");
+                }
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
+                // 退出当前viewcontroller
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        });
         
-        // 退出当前viewcontroller
-        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

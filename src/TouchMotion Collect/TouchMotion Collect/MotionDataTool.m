@@ -189,7 +189,17 @@ static sqlite3 *db;
     return result == SQLITE_OK;
 }
 
-#warning 这里存在严重的并发性问题
++(int)beginService{
+    char *errmsg;
+    int rc = sqlite3_exec(db, "BEGIN transaction", NULL, NULL, &errmsg);
+    return rc;
+}
++(int)commitService{
+    char *errmsg;
+    int rc = sqlite3_exec(db, "COMMIT transaction", NULL, NULL, &errmsg);
+    return rc;
+}
+
 + (BOOL)writeBufferDataWithBuffer:(MotionBuffer *)buffer {
     int result = SQLITE_OK;
     

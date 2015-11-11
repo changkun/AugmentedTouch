@@ -21,6 +21,9 @@
 // 插入MotionData
 //+ (BOOL)insertMotionData:(MotionData *)data;
 
++(int)beginService;
++(int)commitService;
+
 // 插入全部数据
 + (BOOL)insertAllData:(MotionData *)data;
 //+ (BOOL)writeBufferDataWithUserID:(int)userID

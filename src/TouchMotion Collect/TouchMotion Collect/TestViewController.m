@@ -11,11 +11,10 @@
 #import "MotionData.h"
 #import "MotionDataTool.h"
 #import "MotionBuffer.h"
-
 #import "PlaySound.h"
-
 #import "MainViewController.h"
 
+// 第三方框架
 #import "MBProgressHUD.h"
 
 @interface TestViewController()
@@ -39,6 +38,7 @@
 @property (nonatomic, strong) NSMutableArray *samples;
 
 @property (nonatomic, strong) NSMutableArray *bufferSamples;
+
 @end
 
 
@@ -51,12 +51,6 @@
         
         // 考虑concurrency并发性
         // TODO: 写入tap触发时的缓存
-//        for (int i = 0; i < 50; i++) {
-//            NSLog(@"devMotionBuffer[x:%f, y:%f, z:%f]", [devMotionBuffer getXbyIndex:i], [devMotionBuffer getYbyIndex:i], [devMotionBuffer getZbyIndex:i]);
-//            NSLog(@"accBuffer[x:%f, y:%f, z:%f]", [accBuffer getXbyIndex:i], [accBuffer getYbyIndex:i], [accBuffer getZbyIndex:i]);
-//            NSLog(@"gyroBuffer[x:%f, y:%f, z:%f]", [gyroBuffer getXbyIndex:i], [gyroBuffer getYbyIndex:i], [gyroBuffer getZbyIndex:i]);
-//            
-//        }
         
         // 1. 记录当前左右手情况
         if (self.left) {
@@ -80,11 +74,6 @@
         } else {
             self.bufferSamples = [NSMutableArray arrayWithObjects:bufferObjectDev, bufferObjectAcc, bufferObjectGyro, nil];
         }
-        
-//        [devMotionBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
-//        [accBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
-//        [gyroBuffer writeToSQLWithCurrentUserID:self.current_userID andTapCount:self.count_touch];
-        
     }
     
     // write the moment data to memory buffer
@@ -99,7 +88,6 @@
         self.count_touch++;
         
         // TODO: 写入tap结束瞬间的的缓存
-        
         
     }
     //NSLog(@"count_touch:%d", self.count_touch);
@@ -136,28 +124,30 @@
     
     if (self.count_touch >= TIMES*6*2){
         // data	persistence once
-        #warning still need sqlite transaction optimize
         
         MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hub.dimBackground = YES;
-        hub.labelText = @"Write data into Database...";
+        hub.labelText = @"Writing data into Database...";
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             
-            // 写入所有touch moment数据
-            for (MotionData *data in self.samples) {
-                [MotionDataTool insertAllData:data];
-            }
-            
-            // 写入所有buffer对象
-            for (MotionBuffer* buffer in self.bufferSamples) {
-                BOOL result = [MotionDataTool writeBufferDataWithBuffer:buffer];
-                if (result) {
-                    NSLog(@"成功写入buffer[%d]", [buffer getTapIndex]);
-                } else {
-                    NSLog(@"写入失败");
+            // SQL Transaction Optimize
+            [MotionDataTool beginService];
+                // 写入所有touch moment数据
+                for (MotionData *data in self.samples) {
+                    [MotionDataTool insertAllData:data];
                 }
-            }
             
+                // 写入所有buffer对象
+                for (MotionBuffer* buffer in self.bufferSamples) {
+                    BOOL result = [MotionDataTool writeBufferDataWithBuffer:buffer];
+                    if (result) {
+                        NSLog(@"成功写入buffer[%d]", [buffer getTapIndex]);
+                    } else {
+                        NSLog(@"写入失败");
+                    }
+                }
+            [MotionDataTool commitService];
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
@@ -201,7 +191,6 @@
     accBuffer = [[MotionBuffer alloc] initWithSensorFlag:1];
     gyroBuffer = [[MotionBuffer alloc] initWithSensorFlag:2];
 
-    
     // 2. 设置传感记录器
     NSTimeInterval delta = 0.01;
     [mManager setDeviceMotionUpdateInterval:delta];

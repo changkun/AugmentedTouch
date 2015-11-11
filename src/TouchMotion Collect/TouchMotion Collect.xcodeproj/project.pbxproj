@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */ = {isa = PBXBuildFile; fileRef = 798DE1871BDEE4200014DB03 /* Tock_01.wav */; };
-		79A5F9241BEBAEEC003FC372 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A5F9231BEBAEEC003FC372 /* opencv2.framework */; };
 		79A5F9401BECA895003FC372 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F93F1BECA895003FC372 /* MBProgressHUD.m */; };
+		79A5F9421BEF4710003FC372 /* fmdb in Resources */ = {isa = PBXBuildFile; fileRef = 79A5F9411BEF4710003FC372 /* fmdb */; };
+		79A5F9461BEF4749003FC372 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79A5F9451BEF4749003FC372 /* opencv2.framework */; };
 		79A617711BE0EAF400DE17F6 /* SVMModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A617701BE0EAF400DE17F6 /* SVMModel.mm */; };
 		79A617801BE230CA00DE17F6 /* TrainingViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 79A6177F1BE230CA00DE17F6 /* TrainingViewController.mm */; };
 		79A6178E1BEB5D9B00DE17F6 /* MotionBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A6178D1BEB5D9B00DE17F6 /* MotionBuffer.m */; };
@@ -49,9 +50,10 @@
 
 /* Begin PBXFileReference section */
 		798DE1871BDEE4200014DB03 /* Tock_01.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Tock_01.wav; sourceTree = "<group>"; };
-		79A5F9231BEBAEEC003FC372 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		79A5F93E1BECA895003FC372 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		79A5F93F1BECA895003FC372 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		79A5F9411BEF4710003FC372 /* fmdb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fmdb; sourceTree = "<group>"; };
+		79A5F9451BEF4749003FC372 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 		79A6176F1BE0EAF400DE17F6 /* SVMModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMModel.h; sourceTree = "<group>"; };
 		79A617701BE0EAF400DE17F6 /* SVMModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SVMModel.mm; sourceTree = "<group>"; };
 		79A6177E1BE230CA00DE17F6 /* TrainingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingViewController.h; sourceTree = "<group>"; };
@@ -93,8 +95,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A5F9461BEF4749003FC372 /* opencv2.framework in Frameworks */,
 				79CB83F81BDEBEAF00CEA62D /* AVFoundation.framework in Frameworks */,
-				79A5F9241BEBAEEC003FC372 /* opencv2.framework in Frameworks */,
 				79CB83EE1BDE9ACE00CEA62D /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -172,8 +174,9 @@
 		79A617851BE36CC700DE17F6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				79A5F9451BEF4749003FC372 /* opencv2.framework */,
+				79A5F9411BEF4710003FC372 /* fmdb */,
 				79A5F93D1BECA873003FC372 /* MBProgressHUD */,
-				79A5F9231BEBAEEC003FC372 /* opencv2.framework */,
 				79CB83F71BDEBEAF00CEA62D /* AVFoundation.framework */,
 				79CB83ED1BDE9ACE00CEA62D /* libsqlite3.tbd */,
 			);
@@ -315,6 +318,7 @@
 				TargetAttributes = {
 					79B678A11BDBCF8C00083F6D = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 3958KNX538;
 					};
 					79B678BA1BDBCF8C00083F6D = {
 						CreatedOnToolsVersion = 7.1;
@@ -351,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79A5F9421BEF4710003FC372 /* fmdb in Resources */,
 				798DE1881BDEE4200014DB03 /* Tock_01.wav in Resources */,
 				79B678B51BDBCF8C00083F6D /* LaunchScreen.storyboard in Resources */,
 				79B678B21BDBCF8C00083F6D /* Assets.xcassets in Resources */,
@@ -531,6 +536,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,11 +553,17 @@
 					Collect,
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect/fmdb,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 				);
 				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-Collect";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -558,6 +571,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -573,11 +588,17 @@
 					Collect,
 					"$(PROJECT_DIR)/TouchMotion",
 					Collect,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect/fmdb,
+					"$(PROJECT_DIR)/TouchMotion",
+					Collect,
 				);
 				INFOPLIST_FILE = "TouchMotion Collect/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "us.changkun.TouchMotion-Collect";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

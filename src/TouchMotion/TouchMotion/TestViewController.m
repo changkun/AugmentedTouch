@@ -20,6 +20,7 @@
     // 保存在plist文件中的随机数
     NSMutableArray *testNumberArray;
     
+    // MotionBuffer缓存
     MotionBuffer *devMotionBuffer;
     MotionBuffer *accBuffer;
     MotionBuffer *gyroBuffer;
@@ -72,6 +73,7 @@
     [self addObserver:self forKeyPath:@"tapCount" options:NSKeyValueObservingOptionOld|NSKeyValueObservingOptionNew context:nil];
     
 }
+
 // 移除tapCount观察者
 - (void)dealloc
 {
@@ -82,6 +84,9 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // 观察到tapcount变化时候，进入这个方法
+    
+    
+    
     
     // 当tapcount大于某个值时，退出并写入数据
     if (self.tapCount >= 6*TIMES) {

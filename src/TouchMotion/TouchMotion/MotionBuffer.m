@@ -10,64 +10,57 @@
 
 @implementation MotionBuffer
 
-- (instancetype)initWithSensorFlag:(int)flag {
+- (instancetype)initWithUserID:(int)userid andTestCount:(int)testcount andTestCase:(int)testcase andTapCount:(int)tapcount andSensorFlag:(int)sensorflag andHandPosture:(int)handposture {
     if ([super init] != nil) {
+        _tail = 0;
         for (int i = 0 ; i < BUFFER_FRAME; i++) {
             x[i] = y[i] = z[i] = 0;
         }
-        tail = 0;
-        sensorFlag = flag;
-        
-        handPosture = 0;
+        _userID = userid;
+        _testCount = testcount;
+        _testCase = testcase;
+        _tapCount = tapcount;
+        _sensorFlag = sensorflag;
+        _handPosture = handposture;
     }
     return self;
+
 }
 
+// 拷贝构造(copy constructor)
 - (instancetype)initWithBuffer:(MotionBuffer *)buffer {
     if ([super init] != nil) {
+        _tail = buffer.tail;
         for (int i = 0; i < BUFFER_FRAME; i++) {
             x[i] = buffer->x[i];
             y[i] = buffer->y[i];
             z[i] = buffer->z[i];
         }
-        tail = buffer->tail;
-        handPosture = buffer->handPosture;
-        userID = buffer->userID;
-        tapCount= buffer->tapCount;
-        sensorFlag = buffer->sensorFlag;
+        _userID = buffer.userID;
+        _testCount = buffer.testCount;
+        _testCase = buffer.testCase;
+        _tapCount = buffer.tapCount;
+        _sensorFlag = buffer.sensorFlag;
+        _handPosture = buffer.handPosture;
     }
     return self;
 }
 
 - (void)addX:(double)X Y:(double)Y Z:(double)Z {
-    x[tail] = X;
-    y[tail] = Y;
-    z[tail] = Z;
-    tail = (tail+1)%BUFFER_FRAME;
+    x[_tail] = X;
+    y[_tail] = Y;
+    z[_tail] = Z;
+    _tail = (_tail+1)%BUFFER_FRAME;
 }
 
-- (void)setHand:(int)Hand andUserID:(int)userid andTapIndex:(int)tapindex {
-    handPosture = Hand;
-    userID = userid;
-    tapCount = tapindex;
+- (void)setUserID:(int)userid andTestCount:(int)testcount andTestCase:(int)testcase andTapCount:(int)tapcount andHandPosture:(int)handposture {
+    _userID = userid;
+    _testCount = testcount;
+    _testCase = testcase;
+    _tapCount = tapcount;
+    _handPosture = handposture;
 }
 
-
-- (int)getUserID {
-    return userID;
-}
-- (int)getTail {
-    return tail;
-}
-- (int)getTapIndex {
-    return tapCount;
-}
-- (int)getSensorFlag {
-    return sensorFlag;
-}
-- (int)getHand {
-    return handPosture;
-}
 - (double)getXbyIndex:(int)i {
     return x[i];
 }
@@ -78,7 +71,13 @@
     return z[i];
 }
 -(NSString *)description {
-    NSString *str = [NSString stringWithFormat:@"(userID:%d, tapIndex:%d, hand:%d)", userID, tapCount, handPosture];
+    NSString *str = [NSString stringWithFormat:@"(%d,%d,%d,%d,%d,%d)",
+                     _userID,
+                     _testCount,
+                     _testCase,
+                     _tapCount,
+                     _sensorFlag,
+                     _handPosture];
     return str;
 }
 @end

@@ -61,15 +61,17 @@ static sqlite3 *db;
                                                 \
     touch_time DATETIME DEFAULT (datetime('now','localtime')));";
     
-//    const char *motionBuffer = "CREATE TABLE IF NOT EXISTS MotionBuffer ( \
-//    id INTEGER PRIMARY KEY AUTOINCREMENT,       \
-//    user_id INTEGER DEFAULT 0,                  \
-//    tap_index INTEGER DEFAULT 0,                \
-//    x REAL DEFAULT 0,                           \
-//    y REAL DEFAULT 0,                           \
-//    z REAL DEFAULT 0,                           \
-//    hand INTEGER DEFAULT 0,                     \
-//    sensor_flag INTEGER DEFAULT 0 );";
+    const char *motionBuffer = "CREATE TABLE IF NOT EXISTS MotionBuffer ( \
+    id INTEGER PRIMARY KEY AUTOINCREMENT,       \
+    user_id INTEGER DEFAULT 0,                  \
+    test_count INTEGER DEFAULT 0,               \
+    test_case INTEGER DEFAULT 0,                \
+    tap_count INTEGER DEFAULT 0,                \
+    sensor_flag INTEGER DEFAULT 0,              \
+    hand_posture INTEGER DEFAULT 0,             \
+    x REAL DEFAULT 0,                           \
+    y REAL DEFAULT 0,                           \
+    z REAL DEFAULT 0);";
     
     char *error_msg = NULL;
     
@@ -78,7 +80,10 @@ static sqlite3 *db;
     if (result == SQLITE_OK) {
         NSLog(@"successful open table MotionData");
     }
-//    sqlite3_exec(db, motionBuffer, NULL, NULL, &error_msg);
+    result = sqlite3_exec(db, motionBuffer, NULL, NULL, &error_msg);
+    if (result == SQLITE_OK) {
+        NSLog(@"sucessful open table MotionBuffer");
+    }
     
 }
 
@@ -144,9 +149,50 @@ static sqlite3 *db;
 }
 + (BOOL)writeBufferWithMotionBuffer:(MotionBuffer *)buffer {
     
-    // 写入Buffer
     
-    return YES;
+    // 写入Buffer
+    int start = buffer.tail;
+    int end;
+    if (start == 0) {
+        end = BUFFER_FRAME-1;
+    } else {
+        end = start-1;
+    }
+    
+    int result = SQLITE_OK;
+    char *error_msg = NULL;
+    for (int i = start; i != end; i = (i+1)%BUFFER_FRAME) {
+        NSString *sql = [NSString stringWithFormat:@"insert into MotionBuffer   \
+                         (user_id, test_count, test_case, tap_count, sensor_flag, hand_posture, x, y, z)       \
+                         values(%d,%d,%d,%d,%d,%d,%f,%f,%f)",
+                         buffer.userID,
+                         buffer.testCount,
+                         buffer.testCase,
+                         buffer.tapCount,
+                         buffer.sensorFlag,
+                         buffer.handPosture,
+                         [buffer getXbyIndex:i],
+                         [buffer getYbyIndex:i],
+                         [buffer getZbyIndex:i]];
+        result = sqlite3_exec(db, sql.UTF8String, NULL, NULL, &error_msg);
+    }
+    // 不要忘记最后一条!
+    NSString *sql = [NSString stringWithFormat:@"insert into MotionBuffer   \
+                     (user_id, test_count, test_case, tap_count, sensor_flag, hand_posture, x, y, z)       \
+                     values(%d,%d,%d,%d,%d,%d,%f,%f,%f)",
+                     buffer.userID,
+                     buffer.testCount,
+                     buffer.testCase,
+                     buffer.tapCount,
+                     buffer.sensorFlag,
+                     buffer.handPosture,
+                     [buffer getXbyIndex:end],
+                     [buffer getYbyIndex:end],
+                     [buffer getZbyIndex:end]];
+    result = sqlite3_exec(db, sql.UTF8String, NULL, NULL, &error_msg);
+    
+    // 这个返回结果有问题，只要最后一条成功，就算成功。
+    return result == SQLITE_OK;
 }
 
 
@@ -178,7 +224,7 @@ static sqlite3 *db;
 }
 
 + (BOOL)removeAllMotionData {
-    // 清空数据库
+    // 清空数据库MotionData表
     const char * sql1 = "delete from MotionData;";
     char *error_msg = NULL;
     int result = sqlite3_exec(db, sql1, NULL, NULL, &error_msg);
@@ -190,6 +236,29 @@ static sqlite3 *db;
     } else {
         return NO;
     }
+}
+
++ (BOOL)removeAllMotionBuffer {
+    // 清空数据库MotionBuffer表
+    const char * sql1 = "delete from MotionBuffer;";
+    char *error_msg = NULL;
+    int result = sqlite3_exec(db, sql1, NULL, NULL, &error_msg);
+    if (result == SQLITE_OK) {
+        // 使primary key为0
+        const char * sql2 = "UPDATE sqlite_sequence SET seq = 0 WHERE name='MotionBuffer';";
+        result = sqlite3_exec(db, sql2, NULL, NULL, &error_msg);
+        return result == SQLITE_OK;
+    } else {
+        return NO;
+    }
+}
+
++ (BOOL)removeAllMotion {
+    [SQLiteTool beginService];
+    [SQLiteTool removeAllMotionData];
+    [SQLiteTool removeAllMotionBuffer];
+    [SQLiteTool commitService];
+    return YES;
 }
 
 @end

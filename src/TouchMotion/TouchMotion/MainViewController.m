@@ -36,7 +36,7 @@
     if (userNumbers == 0) {
         [self.userStatus setText:@"Non record"];
     } else {
-        [self.userStatus setText:[NSString stringWithFormat:@"Current Sample Number: %ld", userNumbers]];
+        [self.userStatus setText:[NSString stringWithFormat:@"Current Sample Number: %ld", (long)userNumbers]];
     }
     
     
@@ -44,7 +44,6 @@
     // 1. 从数据库中查找当前有多少个用户
     NSInteger currentUserNumber = [SQLiteTool recordUserNumbers];
     // 2. 初始化strUserID数组
-#warning 这里还没有测试有数据存在的情况
     strUserID = [NSMutableArray array];
     for (NSInteger i = 0; i < currentUserNumber+1; i++) {
         [strUserID addObject:[NSString stringWithFormat:@"%ld", i+1]];
@@ -169,9 +168,9 @@
             vc.currentHandPosture = 0;
         } else if ([self.handPostureTextField.text isEqualToString:@"Right Thumb"]){
             vc.currentHandPosture = 1;
-        } else if ([self.handPostureTextField.text isEqualToString:@"Left Index"]){
+        } else if ([self.handPostureTextField.text isEqualToString:@"Left Index Finger"]){
             vc.currentHandPosture = 2;
-        } else if ([self.handPostureTextField.text isEqualToString:@"Right Index"]){
+        } else if ([self.handPostureTextField.text isEqualToString:@"Right Index Finger"]){
             vc.currentHandPosture = 3;
         }
         
@@ -188,8 +187,10 @@
 #pragma mark - NavigationBar Item
 // Airdrop sending file
 - (void)share {
-    NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"TouchWithMotionData.sqlite"];
+    NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"TouchWithMotion.sqlite"];
+//    NSString *filepath2 = [[NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"NumberSeries.plist"];
     NSURL *url = [NSURL fileURLWithPath:filepath];
+//    NSURL *url2 = [NSURL fileURLWithPath:filepath2];
     NSArray *objectsToShare = @[url];
     
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
@@ -210,24 +211,26 @@
 }
 
 - (void)trashBarClick {
-    NSLog(@"trashBarClick----test");
-    // 清空文本框内的数据
+    
+    // clean all the text from textfield
     self.userIDTextField.text = @"";
     self.handPostureTextField.text = @"";
     self.TestCaseTextField.text = @"";
     
-    // 移除数据库内的数据
-    [SQLiteTool removeAllMotionData];
+    // remove all data from database
+    [SQLiteTool removeAllMotion];
     NSInteger userNumbers = [SQLiteTool recordUserNumbers];
-    [self.userStatus setText:[NSString stringWithFormat:@"Current Sample Number: %ld", userNumbers]];
+    [self.userStatus setText:[NSString stringWithFormat:@"Current Sample Number: %ld", (long)userNumbers]];
     
-    // 更新userIDTextField.inputView选择器的数据源
+    // update userIDTextField.inputView's pickview datasource
     [strUserID removeAllObjects];
     [strUserID addObject:@"1"];
     
-    // 重新读取数据源
+    // Reload Datasource
+    #pragma mark - this inputview must be a uipickerview
     UIPickerView* pv =  (UIPickerView *)self.userIDTextField.inputView;
     [pv reloadAllComponents];
+    
 }
 
 - (void)doneClicked {
@@ -305,6 +308,24 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self.view endEditing:YES];
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    UIPickerView *picker = (UIPickerView *)textField.inputView;
+    NSInteger row = [picker selectedRowInComponent:0];
+    switch (textField.tag) {
+        case 0:
+            [textField setText:[NSString stringWithFormat:@"%@", strUserID[row]]];
+            break;
+        case 1:
+            [textField setText:[NSString stringWithFormat:@"%@", strPosture[row]]];
+            break;
+        case 2:
+            [textField setText:[NSString stringWithFormat:@"%@", strTestCase[row]]];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Memory Warning Process

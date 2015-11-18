@@ -21,7 +21,6 @@
 
 @interface TestViewController ()
 {
-    NSArray *numberSeries;
     ButtonView *button[10];
     
     CMMotionManager *mManager;
@@ -36,9 +35,12 @@
     
     PlaySound *buttonSound;
     
+    UIColor *bgcolor;
+    
 }
 
 @property (nonatomic) int tapCount;
+@property (nonatomic) int inputCount; // 记录当前输入
 
 @property (strong, nonatomic) IBOutlet UILabel *randomInputNumber;
 
@@ -53,6 +55,9 @@
 
 -(void)viewDidLoad {
     [self loadTestNumberSeries];
+    
+    
+    bgcolor = self.view.backgroundColor;
     
     self.tapCount = 0;
     buttonSound = [[PlaySound alloc] initForPlayingSoundEffectWith:@"Tock_01.wav"];
@@ -122,12 +127,18 @@
 
 // 目前来说=6
 #define XTIMES testNumberArray.count
-#define YTIMES 5
+#define YTIMES 10
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     // 观察到tapcount变化时候，进入这个方法
     // 每输入6次之后产生一次变化，每产生6*YTIMES次后更换一次PIN码
     if (self.tapCount%6 == 0 && self.tapCount < 6*XTIMES*YTIMES) {
+        
+        //不知道这句代码会不会影响所记录的数据
+        //AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+        
+        
         [self updateInputNumberWithHandPosture:self.currentHandPosture andTestCase:self.currentTestCase andCurrentTapCount:self.tapCount/(6*YTIMES)];
         int red, green, blue;
         do {
@@ -135,7 +146,12 @@
             green = arc4random()%255;
             blue = arc4random()%255;
         } while (!red && !green && !blue);
+        
         self.view.backgroundColor = [UIColor colorWithRed:red/255.0 green:green/255.0 blue:blue/255.0 alpha:1];
+        bgcolor = self.view.backgroundColor;
+        
+        // 重置当前pin码的缓存数据个数
+        self.inputCount = 0;
     }
     
     
@@ -195,7 +211,7 @@
             [testNumberArray addObject:randomNumberStr];
         }
     }
-    NSLog(@"%@", testNumberArray);
+    //NSLog(@"%@", testNumberArray);
 }
 
 // 根据handposture设置提示label
@@ -266,7 +282,7 @@
     } else if ([[self hardwareString] isEqualToString:@"iPhone5,2"]) {
         radius = 30;
     }
-    NSLog(@"%@", [self hardwareString]);
+    //NSLog(@"%@", [self hardwareString]);
     
     for (int i = 1; i <= 9; i++) {
         button[i] = [ButtonView buttonViewWithCornerRadius:radius
@@ -296,9 +312,15 @@
 }
 
 #pragma mark - ButtonView Protocol
-- (void)onButtonViewClick:(MotionData *)data withMovingFlag:(int)movingFlag {
+- (void)onButtonViewClick:(MotionData *)data withMovingFlag:(int)movingFlag withSeft:(ButtonView *)sender{
+    
+    // 判断当前输入是否正确，如果正确，则继续执行下面的内容
+    // 否则，清除本次buffer，并从头开始
+    
+    //NSLog(@"%@,%c", tmp, tmp.UTF8String[self.tapCount%6]);
     
     if (movingFlag == 0) {
+        
         [buttonSound play];
         
         // 1. 记录当前姿势的进buffer
@@ -317,18 +339,56 @@
         } else {
             self.motionBufferPool = [NSMutableArray arrayWithObjects:bufferObjectDev, bufferObjectAcc, bufferObjectGyro, nil];
         }
-        NSLog(@"%@", bufferObjectDev);
-        NSLog(@"%@", bufferObjectAcc);
-        NSLog(@"%@", bufferObjectGyro);
     }
-    
+    self.inputCount++;
     // write the moment data to memory buffer
     if (self.motionDataPool)
         [self.motionDataPool addObject:data];
     else
         self.motionDataPool = [NSMutableArray arrayWithObjects:data, nil];
     
+    
     if (movingFlag == 2) {
+        
+        NSString *tmp = [testNumberArray objectAtIndex:self.tapCount/60];
+        // 判断当前输入是否正确
+        if (tmp.UTF8String[self.tapCount%6] == [NSString stringWithFormat:@"%ld", (long)sender.score].UTF8String[0]) {
+            
+            NSLog(@"right!");
+            
+            // 更新对应的alter
+            NSMutableAttributedString *attrStr = [[NSMutableAttributedString alloc] initWithAttributedString:self.randomInputNumber.attributedText];
+            [attrStr addAttribute:NSForegroundColorAttributeName
+                            value:bgcolor
+                            range:NSMakeRange([self.randomInputNumber.text length]-6, 1+self.tapCount%6)];
+            [self.randomInputNumber setAttributedText:attrStr];
+            
+        } else {
+            
+            UIAlertController *alter = [UIAlertController alertControllerWithTitle:@"Error" message:@"Wrong number! Please intput again!" preferredStyle:UIAlertControllerStyleAlert];
+            [alter addAction:[UIAlertAction actionWithTitle:@"Confirm" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+                NSLog(@"fuck");
+            }]];
+            [self presentViewController:alter animated:YES completion:nil];
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
+            
+            // 如果这次输入是错误输入，那么删除前面所有的记录，
+            // motionDataPool有 inputCount 条，motionBufferPool有 (1+self.tapCount%6)*3 条
+            for (int i = 0; i < self.inputCount; i++) {
+                [self.motionDataPool removeLastObject];
+            }
+            for (int i = 0; i < (1+self.tapCount%6)*3; i++) {
+                [self.motionBufferPool removeLastObject];
+            }
+            NSLog(@"%@", self.motionDataPool);
+            NSLog(@"%@", self.motionBufferPool);
+            
+            // 然后马上返回，重置self.inputCount;
+            self.inputCount = 0;
+            self.tapCount -= self.tapCount%6;
+            return;
+        }
+        
         self.tapCount++;
     }
 }

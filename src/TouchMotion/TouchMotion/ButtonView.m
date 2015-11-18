@@ -83,9 +83,9 @@
                                              andRotationZ:mManager.gyroData.rotationRate.z
                                                   andTime:[NSDate date]];
     
-    NSLog(@"%@", data);
+    //NSLog(@"%@", data);
     
-    [self.delegate onButtonViewClick:data withMovingFlag:movingflag];
+    [self.delegate onButtonViewClick:data withMovingFlag:movingflag withSeft:self];
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class MotionData;
+@class ButtonView;
 
 @protocol ButtonViewDelegate <NSObject>
 
@@ -16,7 +17,7 @@
 // 0 means beganTouch,
 // 1 means moving events,
 // 2 means endTouch
-- (void)onButtonViewClick:(MotionData *)data withMovingFlag:(int)movingFlag;
+- (void)onButtonViewClick:(MotionData *)data withMovingFlag:(int)movingFlag withSeft:(ButtonView *)sender;
 
 // only 1 and 0. 0 means left and 1 means right
 //- (int)whichHand;

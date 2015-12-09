@@ -25,6 +25,7 @@
 		79A5F98E1BF147F7003FC372 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F98D1BF147F7003FC372 /* TestViewController.m */; };
 		79A5F9911BF14839003FC372 /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9901BF14839003FC372 /* ButtonView.m */; };
 		79A5F9941BF148D3003FC372 /* MotionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9931BF148D3003FC372 /* MotionData.m */; };
+		79E2855B1C1191C500BA56B3 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79E285561C11917000BA56B3 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +43,42 @@
 			remoteGlobalIDString = 79A5F9521BF13EA7003FC372;
 			remoteInfo = TouchMotion;
 		};
+		79E285551C11917000BA56B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B183A5951A8535D100C76870;
+			remoteInfo = ResearchKit;
+		};
+		79E285571C11917000BA56B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 86CC8E9A1AC09332001CCD89;
+			remoteInfo = ResearchKitTests;
+		};
+		79E2855C1C1191C500BA56B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B183A4731A8535D100C76870;
+			remoteInfo = ResearchKit;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		79E2855E1C1191C500BA56B3 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				79E2855B1C1191C500BA56B3 /* ResearchKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		795A01D01BF232DB00428BF0 /* PlaySound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaySound.h; sourceTree = "<group>"; };
@@ -78,6 +114,7 @@
 		79A5F9901BF14839003FC372 /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonView.m; sourceTree = "<group>"; };
 		79A5F9921BF148D3003FC372 /* MotionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionData.h; sourceTree = "<group>"; };
 		79A5F9931BF148D3003FC372 /* MotionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionData.m; sourceTree = "<group>"; };
+		79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "../../../../../../Desktop/daniel-project/ResearchKit/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +196,7 @@
 		79A5F94A1BF13EA7003FC372 = {
 			isa = PBXGroup;
 			children = (
+				79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */,
 				79A5F9551BF13EA7003FC372 /* TouchMotion */,
 				79A5F96F1BF13EA7003FC372 /* TouchMotionTests */,
 				79A5F97A1BF13EA7003FC372 /* TouchMotionUITests */,
@@ -225,6 +263,15 @@
 			path = TouchMotionUITests;
 			sourceTree = "<group>";
 		};
+		79E285501C11917000BA56B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				79E285561C11917000BA56B3 /* ResearchKit.framework */,
+				79E285581C11917000BA56B3 /* ResearchKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -235,10 +282,12 @@
 				79A5F94F1BF13EA7003FC372 /* Sources */,
 				79A5F9501BF13EA7003FC372 /* Frameworks */,
 				79A5F9511BF13EA7003FC372 /* Resources */,
+				79E2855E1C1191C500BA56B3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				79E2855D1C1191C500BA56B3 /* PBXTargetDependency */,
 			);
 			name = TouchMotion;
 			productName = TouchMotion;
@@ -314,6 +363,12 @@
 			mainGroup = 79A5F94A1BF13EA7003FC372;
 			productRefGroup = 79A5F9541BF13EA7003FC372 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 79E285501C11917000BA56B3 /* Products */;
+					ProjectRef = 79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				79A5F9521BF13EA7003FC372 /* TouchMotion */,
@@ -322,6 +377,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		79E285561C11917000BA56B3 /* ResearchKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ResearchKit.framework;
+			remoteRef = 79E285551C11917000BA56B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		79E285581C11917000BA56B3 /* ResearchKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ResearchKitTests.xctest;
+			remoteRef = 79E285571C11917000BA56B3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		79A5F9511BF13EA7003FC372 /* Resources */ = {
@@ -398,6 +470,11 @@
 			isa = PBXTargetDependency;
 			target = 79A5F9521BF13EA7003FC372 /* TouchMotion */;
 			targetProxy = 79A5F9781BF13EA7003FC372 /* PBXContainerItemProxy */;
+		};
+		79E2855D1C1191C500BA56B3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ResearchKit;
+			targetProxy = 79E2855C1C1191C500BA56B3 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

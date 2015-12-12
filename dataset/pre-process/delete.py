@@ -3,6 +3,8 @@ import csv
 import numpy as np
 import matplotlib.pyplot as plt
 
+import scipy.fftpack
+
 import time
 #
 # pre-process filepath
@@ -14,6 +16,7 @@ def prefix(folderName):
     else:
         folderNameStr = str(folderName)
     return folderNameStr
+
 def LargeDeviceMoment(folderName):
     return '../' + prefix(folderName) + '/1.1.csv'
 
@@ -93,6 +96,8 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
 
     bufferSize = 50
     seriesArray = [(value-49)*0.01 for value in xrange(0,50)]
+    N = 50
+    T = 0.01
 
     numList = GetNumberSeries()
 
@@ -100,7 +105,7 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
     #print 'tapCount%6: ' + str(tapCount%6)
     #print 'numList[index]: ' + str(numList[tapCount/60, tapCount%6])
 
-    plt.figure(figsize=(5,13))
+    plt.figure(figsize=(10,13))
     num = numList[tapCount/60, tapCount%6]
     plt.suptitle('Current Input Number: ' + str(num))
 
@@ -111,39 +116,79 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
     #print 'start line: ' + str(start)
     #print 'data shape: ' + str(data.shape)
 
-    plt.subplot(3, 1, 1)
+    plt.subplot(3, 2, 1)
     x = data[start:start+bufferSize, -3]
     y = data[start:start+bufferSize, -2]
     z = data[start:start+bufferSize, -1]
     plt.plot(seriesArray, x, color='r', linewidth=2.5, label='roll')
     plt.plot(seriesArray, y, color='g', linewidth=2.5, label='pitch')
     plt.plot(seriesArray, z, color='b', linewidth=2.5, label='yaw')
-    plt.title('Device.Attitute')
+    plt.title('Device.Attitude Time Domain')
     plt.axis([-0.5, 0, -2.5, 2.5])
+    plt.legend(loc='upper right')
+
+    plt.subplot(3, 2, 2)
+    yfft1 = scipy.fftpack.fft(x)
+    yfft2 = scipy.fftpack.fft(y)
+    yfft3 = scipy.fftpack.fft(z)
+    xfft = np.linspace(0.0, 1.0/(2.0*T), N/2)
+    plt.plot(xfft, 2.0/N * np.abs(yfft1[:N/2]), color='r', linewidth=2.5, label='roll')
+    plt.plot(xfft, 2.0/N * np.abs(yfft2[:N/2]), color='g', linewidth=2.5, label='pitch')
+    plt.plot(xfft, 2.0/N * np.abs(yfft3[:N/2]), color='b', linewidth=2.5, label='yaw')
+    plt.title('Device.Attitude Frequency Domain')
+    #plt.axis([-0.5, 0, -2.5, 2.5])
+    plt.legend(loc='upper right')
 
     start = start + 50
-    plt.subplot(3, 1, 2)
+    plt.subplot(3, 2, 3)
     x = data[start:start+bufferSize, -3]
     y = data[start:start+bufferSize, -2]
     z = data[start:start+bufferSize, -1]
     plt.plot(seriesArray, x, color='r', linewidth=2.5, label='x')
     plt.plot(seriesArray, y, color='g', linewidth=2.5, label='y')
     plt.plot(seriesArray, z, color='b', linewidth=2.5, label='z')
-    plt.title('Device.Accelerator')
+    plt.title('Device.Accelerator Time Domain')
     plt.axis([-0.5, 0, -2.5, 2.5])
     plt.ylabel('Value')
+    plt.legend(loc='upper right')
+
+    plt.subplot(3, 2, 4)
+    yfft1 = scipy.fftpack.fft(x)
+    yfft2 = scipy.fftpack.fft(y)
+    yfft3 = scipy.fftpack.fft(z)
+    xfft = np.linspace(0.0, 1.0/(2.0*T), N/2)
+    plt.plot(xfft, 2.0/N * np.abs(yfft1[:N/2]), color='r', linewidth=2.5, label='x')
+    plt.plot(xfft, 2.0/N * np.abs(yfft2[:N/2]), color='g', linewidth=2.5, label='y')
+    plt.plot(xfft, 2.0/N * np.abs(yfft3[:N/2]), color='b', linewidth=2.5, label='z')
+    plt.title('Device.Accelerator Frequency Domain')
+    #plt.axis([-0.5, 0, -2.5, 2.5])
+    plt.legend(loc='upper right')
 
     start = start + 50
-    plt.subplot(3, 1, 3)
+    plt.subplot(3, 2, 5)
     x = data[start:start+bufferSize, -3]
     y = data[start:start+bufferSize, -2]
     z = data[start:start+bufferSize, -1]
     plt.plot(seriesArray, x, color='r', linewidth=2.5, label='x')
     plt.plot(seriesArray, y, color='g', linewidth=2.5, label='y')
     plt.plot(seriesArray, z, color='b', linewidth=2.5, label='z')
-    plt.title('Device.Gyroscope')
+    plt.title('Device.Gyroscope Time Domain')
     plt.axis([-0.5, 0, -2.5, 2.5])
     plt.xlabel('Time(s)')
+    plt.legend(loc='upper right')
+
+    plt.subplot(3, 2, 6)
+    yfft1 = scipy.fftpack.fft(x)
+    yfft2 = scipy.fftpack.fft(y)
+    yfft3 = scipy.fftpack.fft(z)
+    xfft = np.linspace(0.0, 1.0/(2.0*T), N/2)
+    plt.plot(xfft, 2.0/N * np.abs(yfft1[:N/2]), color='r', linewidth=2.5, label='x')
+    plt.plot(xfft, 2.0/N * np.abs(yfft2[:N/2]), color='g', linewidth=2.5, label='y')
+    plt.plot(xfft, 2.0/N * np.abs(yfft3[:N/2]), color='b', linewidth=2.5, label='z')
+    plt.title('Device.Gyroscope Frequency Domain')
+    #plt.axis([-0.5, 0, -2.5, 2.5])
+    plt.legend(loc='upper right')
+
 
     if folderName<10:
         folderNameStr = '0'+str(folderName)
@@ -151,9 +196,7 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
         folderNameStr = str(folderName)
     fileName =  '../'+ folderNameStr + '/2.1/' + str(testCount) + '/' + str(tapCount) + '-' + str(tapCount%6)+ '-' + str(num) + '.png'
     plt.savefig(fileName, dpi=72)
-
     plt.close('all')
-    #plt.show()
 
 
 # def plotSensorBuffer(data, featureFlag=0, tapCount=0):

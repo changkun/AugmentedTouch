@@ -1,4 +1,4 @@
-# This script delete first column and second column in csv dataset
+# This script draw the buffer picture
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,10 +20,10 @@ def prefix(folderName):
 def LargeDeviceMoment(folderName):
     return '../' + prefix(folderName) + '/1.1.csv'
 
-def LargeDeviceBuffer(folderName):
+def SmallDeviceMoment(folderName):
     return '../' + prefix(folderName) + '/1.2.csv'
 
-def SmallDeviceMoment(folderName):
+def LargeDeviceBuffer(folderName):
     return '../' + prefix(folderName) + '/2.1.csv'
 
 def SmallDeviceBuffer(folderName):
@@ -139,7 +139,7 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
     #plt.axis([-0.5, 0, -2.5, 2.5])
     plt.legend(loc='upper right')
 
-    start = start + 50
+    start += 50
     plt.subplot(3, 2, 3)
     x = data[start:start+bufferSize, -3]
     y = data[start:start+bufferSize, -2]
@@ -164,7 +164,7 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
     #plt.axis([-0.5, 0, -2.5, 2.5])
     plt.legend(loc='upper right')
 
-    start = start + 50
+    start += 50
     plt.subplot(3, 2, 5)
     x = data[start:start+bufferSize, -3]
     y = data[start:start+bufferSize, -2]
@@ -188,7 +188,7 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
     plt.title('Device.Gyroscope Frequency Domain')
     #plt.axis([-0.5, 0, -2.5, 2.5])
     plt.legend(loc='upper right')
-
+    #plt.show()
 
     if folderName<10:
         folderNameStr = '0'+str(folderName)
@@ -263,8 +263,8 @@ def plotSensorBuffer2(data, tapCount=0, testCount=1, folderName=1):
 #
 def TraverFolderCSV(folderName):
     filePathList = [LargeDeviceMoment(folderName),
-                    LargeDeviceBuffer(folderName),
                     SmallDeviceMoment(folderName),
+                    LargeDeviceBuffer(folderName),
                     SmallDeviceBuffer(folderName)]
     for i in xrange(0,4):
         #print filePathList[i]

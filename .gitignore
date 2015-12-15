@@ -1,0 +1,12 @@
+
+*.csv
+
+*.json
+
+*.pyc
+
+*.mov
+
+dataset/result/*
+
+*.mov

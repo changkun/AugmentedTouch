@@ -10,3 +10,7 @@
 dataset/result/*
 
 *.mov
+
+*.numbers
+
+*.key

@@ -68,15 +68,32 @@ and the classfication problem can be described as following form:
 
 #### 2. Binary Classification
 
-base line
-(x,y) --> (1,2,3,4)
+##### Base Line
 
-left hand(left thumb+left index) right hand(right thumb+ right index)
+(x,y) --> (left thumb, right thumb, left index, right index)
+
+##### Hand Classification
+
+feature condition --> {left hand(left thumb+left index) right hand(right thumb+ right index)}
+
+##### Offset feature study
 
 offset_position + sensor
 
+##### Authentication
 
-receiver operating 
+For each user u in u: (?, not sure)
+take 1/2 data of u --> 1
+take all (or subset) of data --> 0
+from all (1/2) other users  u
+
+NOTE: Receiver Operating Curves
+
+1. training SVM (...)
+2. test SVM: input other 1/2 data of u
+3. input other 1/2 data of all others
+
+
 
 ##### Thumb Classification
 

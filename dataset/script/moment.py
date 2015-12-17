@@ -18,7 +18,7 @@ def classify(trainingData, trainingLabel, testData, testLabel,
             error_count += 1
     return error_count/result.shape[0]
 
-def classifyMOdel(trainingData, trainingLabel, kernel='linear', max_iter=-1):
+def classifyModel(trainingData, trainingLabel, kernel='linear', max_iter=-1):
     clfModel = svm.SVC(kernel=kernel, max_iter=max_iter).fit(trainingData, trainingLabel)
     return clfModel
 
@@ -93,7 +93,7 @@ def processMethod4(userid, device, featureCondition=1, classificationCondition=1
     trainingData  = splitMomentDataByFeature(rawDataList[userid-1], featureCondition=featureCondition)
     trainingLabel = rawDataList[userid-1][:, 4]
 
-    clfModel = classifyMOdel(trainingData, trainingLabel);
+    clfModel = classifyModel(trainingData, trainingLabel);
 
     hackErrorRateList = []
 

@@ -30,6 +30,8 @@
 	* Finger movement is easy to remember
 	* They alway use
 
+
+
 ## Posture Classifier
 
 ### Problem description
@@ -93,11 +95,9 @@ NOTE: Receiver Operating Curves
 2. test SVM: input other 1/2 data of u
 3. input other 1/2 data of all others
 
-
-
 ##### Thumb Classification
 
-1. (x, y, atti_roll)    --> (left thumb, right thumb)
+* (x, y, atti_roll)    --> (left thumb, right thumb)
 * (x, y, atti_pitch)   --> (left thumb, right thumb)
 * (x, y, atti_yaw)     --> (left thumb, right thumb)
 * (x, y, acce_x)       --> (left thumb, right thumb)
@@ -106,12 +106,15 @@ NOTE: Receiver Operating Curves
 * (x, y, gyro_x)       --> (left thumb, right thumb)
 * (x, y, gyro_y)       --> (left thumb, right thumb)
 * (x, y, gyro_z)       --> (left thumb, right thumb)
+
 * (x, y, atti_roll, atti_pitch, atti_yaw) --> (left thumb, right thumb)
 * (x, y, acce_x, acce_y, acce_z)          --> (left thumb, right thumb)
 * (x, y, gyro_x, gyro_y, gyro_z)          --> (left thumb, right thumb)
+
 * (x, y, atti{roll,pitch,yaw}, acce{x,y,z}) --> (left thumb, right thumb)
 * (x, y, atti{roll,pitch,yaw}, gyro{x,y,z}) --> (left thumb, right thumb)
 * (x, y, acce{x,y,z}, gyro{x,y,z})          --> (left thumb, right thumb)
+
 * (x, y, atti\_{roll,pitch,yaw}, acce\_{x,y,z}, gyro\_{x,y,z}) --> (left thumb, right thumb)
 
 ##### Index Finger Classification

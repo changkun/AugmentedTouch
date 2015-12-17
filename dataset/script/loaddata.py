@@ -56,10 +56,14 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
     #     3: Multi-Classification (left thumb, right thumb, left index, right index)
     return 1# data, label;
 
-def splitMomentDataByFeature(rawdata, featureCondition=1):
+def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
     """
     Parameters
     ----------
+    offsetOn: Bool
+    False: do not use offset feature
+     True: use offset position features
+
     featureCondition: int
         1: (x, y, atti_roll)
         2: (x, y, atti_pitch)
@@ -78,42 +82,43 @@ def splitMomentDataByFeature(rawdata, featureCondition=1):
        15: (x, y, acce{x,y,z}, gyro{x,y,z})
        16: (x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})
     """
-    # positionData    = normalization(rawdata[:, 5:7], device=device)
-    # offsetData      = rawdata[:, 7:9]
 
-    # attitudeData    = rawdata[:, 9:12]
-    # acceleratorData = rawdata[:, 12:15]
-    # gyroscopeData   = rawdata[:, 15:18]
+    # TODO: applying offset
+    # positionData    = normalization(rawdata[:, 5:7], device=device)
+
+    offset=0
+    if offsetOn==True:
+        offset=2
 
     if   featureCondition==1:
-        return rawdata[:, [5,6,9]]
+        return rawdata[:, [5+offset,6+offset,9]]
     elif featureCondition==2:
-        return rawdata[:, [5,6,10]]
+        return rawdata[:, [5+offset,6+offset,10]]
     elif featureCondition==3:
-        return rawdata[:, [5,6,11]]
+        return rawdata[:, [5+offset,6+offset,11]]
     elif featureCondition==4:
-        return rawdata[:, [5,6,12]]
+        return rawdata[:, [5+offset,6+offset,12]]
     elif featureCondition==5:
-        return rawdata[:, [5,6,13]]
+        return rawdata[:, [5+offset,6+offset,13]]
     elif featureCondition==6:
-        return rawdata[:, [5,6,14]]
+        return rawdata[:, [5+offset,6+offset,14]]
     elif featureCondition==7:
-        return rawdata[:, [5,6,15]]
+        return rawdata[:, [5+offset,6+offset,15]]
     elif featureCondition==8:
-        return rawdata[:, [5,6,16]]
+        return rawdata[:, [5+offset,6+offset,16]]
     elif featureCondition==9:
-        return rawdata[:, [5,6,17]]
+        return rawdata[:, [5+offset,6+offset,17]]
     elif featureCondition==10:
-        return rawdata[:, [5,6,9,10,11]]
+        return rawdata[:, [5+offset,6+offset,9,10,11]]
     elif featureCondition==11:
-        return rawdata[:, [5,6,12,13,14]]
+        return rawdata[:, [5+offset,6+offset,12,13,14]]
     elif featureCondition==12:
-        return rawdata[:, [5,6,15,16,17]]
+        return rawdata[:, [5+offset,6+offset,15,16,17]]
     elif featureCondition==13:
-        return rawdata[:, [5,6,9,10,11,12,13,14]]
+        return rawdata[:, [5+offset,6+offset,9,10,11,12,13,14]]
     elif featureCondition==14:
-        return rawdata[:, [5,6,9,10,11,15,16,17]]
+        return rawdata[:, [5+offset,6+offset,9,10,11,15,16,17]]
     elif featureCondition==15:
-        return rawdata[:, [5,6,12,13,14,15,16,17]]
+        return rawdata[:, [5+offset,6+offset,12,13,14,15,16,17]]
     else: #featureCondition==16
-        return rawdata[:, [5,6,9,10,11,12,13,14,15,16,17]]
+        return rawdata[:, [5+offset,6+offset,9,10,11,12,13,14,15,16,17]]

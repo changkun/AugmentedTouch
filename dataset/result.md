@@ -5,8 +5,7 @@
 ### Participants
 
 
-
-### Description
+#### Description
 
 1. When participants applying the user study, we randomly ask few questions to participants and the question are follows:
 	

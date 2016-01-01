@@ -12,6 +12,6 @@ def storeToMongo():
     for x in xrange(1,17):
         with open(jsonPath(x)) as dataFile:
             dataList.append(json.load(dataFile))
-    print data
+    print dataList
 
 storeToMongo()

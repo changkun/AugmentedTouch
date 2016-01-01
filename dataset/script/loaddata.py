@@ -1,3 +1,5 @@
+# coding:utf-8
+
 import csv
 import numpy as np
 
@@ -28,6 +30,31 @@ def filePath(userid, device, datatype):
 #          == 2 : iphone 5
 # datatype == 1 : moment data
 #          == 2 : buffer data
+#
+#  Return Value
+#  ------------
+#  data format:
+#           column:
+#               0 test_count,
+#               1 test_case,
+#               2 tap_count,
+#               3 moving_flag,
+#               4 hand_posture,
+#               5 x,
+#               6 y,
+#               7 offset_x,
+#               8 offset_y,
+#               9 roll,
+#              10 pitch,
+#              11 yaw,
+#              12 acc_x,
+#              13 acc_y,
+#              14 acc_z,
+#              15 rotation_x,
+#              16 rotation_y,
+#              17 rotation_z,
+#              18 touch_time
+#
 def loadUserData(userid=1, device=1, datatype=1, delimiter=','):
     filepath = filePath(userid, device=device, datatype=datatype)
     csvfile = open(filepath)
@@ -50,21 +77,63 @@ def normalization(positionData, device):
     return 1
 
 def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
-    # classificationCondition: int
-    #     1: Thumb Classification (left thumb, right thumb)
-    #     2: Index Finger Classification (left index, right index)
-    #     3: Multi-Classification (left thumb, right thumb, left index, right index)
-    return 1# data, label;
+    """
+    classificationCondition: int
 
+        1: Thumb Classification (left thumb, right thumb)
+        2: Index Finger Classification (left index, right index)
+        3: Multi-Classification (left thumb, right thumb, left index, right index)
+        4: Hand Classification (left thumb+index, right thumb+index)
+
+    """
+    converLabel = [[value] for value in label]
+    dataWithLabel = np.append(rawdata, converLabel, axis=1)
+
+    leftThumbData  = dataWithLabel[(dataWithLabel[:,-1]=='0'), :]
+    rightThumbData = dataWithLabel[(dataWithLabel[:,-1]=='1'), :]
+    leftIndexData  = dataWithLabel[(dataWithLabel[:,-1]=='2'), :]
+    rightIndexData = dataWithLabel[(dataWithLabel[:,-1]=='3'), :]
+
+    if classificationCondition==1:
+        dataWithLabel = np.vstack((leftThumbData, rightThumbData))
+    elif classificationCondition==2:
+        dataWithLabel = np.vstack((leftIndexData, rightIndexData))
+    elif classificationCondition==3:
+        pass
+    elif classificationCondition==4:
+
+        leftHandData = np.vstack((leftThumbData, leftIndexData))
+        (row, column) = leftHandData.shape
+        leftHandLabel = np.zeros(row, dtype=int)
+        leftHandLabel.shape = row, -1
+        leftHandData = np.hstack((leftHandData[:, 0:-1], leftHandLabel))
+
+        rightHandData = np.vstack((rightThumbData, rightIndexData))
+        (row, column) = rightHandData.shape
+        rightHandLabel = np.ones(row, dtype=int)
+        rightHandLabel.shape = row, -1
+        rightHandData = np.hstack((rightHandData[:, 0:-1], rightHandLabel))
+
+        dataWithLabel = np.vstack((leftHandData, rightHandData))
+
+    newData = dataWithLabel[:,0:-1]
+    newLabel = dataWithLabel[:,-1]
+
+    return newData, newLabel
+
+# 根据 featureCondition 的值来获得不同的feature
 def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
     """
     Parameters
     ----------
     offsetOn: Bool
-    False: do not use offset feature
-     True: use offset position features
+
+        False: do not use offset feature
+         True: use offset position features
 
     featureCondition: int
+
+        0: (x, y)               # baseline
         1: (x, y, atti_roll)
         2: (x, y, atti_pitch)
         3: (x, y, atti_yaw)
@@ -83,14 +152,16 @@ def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
        16: (x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})
     """
 
-    # TODO: applying offset
+    # TODO: applying data normalization
     # positionData    = normalization(rawdata[:, 5:7], device=device)
 
     offset=0
     if offsetOn==True:
         offset=2
 
-    if   featureCondition==1:
+    if featureCondition==0: # baseline
+        return rawdata[:, [5+offset,6+offset]]
+    elif featureCondition==1:
         return rawdata[:, [5+offset,6+offset,9]]
     elif featureCondition==2:
         return rawdata[:, [5+offset,6+offset,10]]

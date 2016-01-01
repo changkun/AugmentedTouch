@@ -1,5 +1,6 @@
 from loaddata import loadUserData
 from loaddata import splitMomentDataByFeature
+from loaddata import splitMomentDataByLabel
 
 from sklearn import svm
 from sklearn.cross_validation import train_test_split
@@ -21,8 +22,6 @@ def classify(trainingData, trainingLabel, testData, testLabel,
 def classifyModel(trainingData, trainingLabel, kernel='linear', max_iter=-1):
     clfModel = svm.SVC(kernel=kernel, max_iter=max_iter).fit(trainingData, trainingLabel)
     return clfModel
-
-
 
 def processMethod1(userid, device, datatype=1, featureCondition=1, classificationCondition=1):
     """ User-i Device-j hack in User-i Device-j Model (cross validation)
@@ -115,8 +114,8 @@ def processMethod4(userid, device, featureCondition=1, classificationCondition=1
 def processMethod1ForAllUser(featureCondition):
 
     lines = []
-    for i in xrange(1,17):
-        for j in xrange(1,3):
+    for i in xrange(1,17): # userid
+        for j in xrange(1,3): # device
             line =  'user' + str(i) + ' device' + str(j) + ' error rate: ' + str(processMethod1(i, j, featureCondition=featureCondition)) + '\n'
             lines.append(line)
     #print lines
@@ -159,7 +158,6 @@ def processMethod3ForAllUser(featureCondition):
     print 'featureCondition '+str(featureCondition) + ' finished..'
 
 def threads(method):
-
     threads = []
     for featureCondition in xrange(1,17):
         t = threading.Thread()
@@ -189,11 +187,31 @@ def thread3():
     for i in xrange(1,17):
         print 'user' + str(i)+ ' iphone5 hack iphone6plus error rate: ' + str(processMethod3(i))
 
-#print 'method1 start...'
-#threads(1)
-#print 'method2 start...'
-#threads(2)
-#print 'method3 start...'
-#threads(3)
+
 
 #processMethod4(1, 1)
+
+def main():
+    #print 'method1 start...'
+    #threads(1)
+    #print 'method2 start...'
+    #threads(2)
+    #print 'method3 start...'
+    #threads(3)
+    userid = 1
+    device = 1
+    datatype = 1
+
+    rawData = loadUserData(userid, device, datatype)
+
+    data = splitMomentDataByFeature(rawData, featureCondition=0)
+    label = rawData[:, 4]
+
+    for i in xrange(1,5):
+        newData, newLabel = splitMomentDataByLabel(data, label, classificationCondition=i)
+        print str(i) + ':'
+        print newData
+        print newLabel
+
+if __name__ == '__main__':
+    main()

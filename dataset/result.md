@@ -29,8 +29,6 @@
 	* Finger movement is easy to remember
 	* They alway use
 
-
-
 ## Posture Classifier
 
 ### Problem description
@@ -55,31 +53,63 @@ and the classfication problem can be described as following form:
 
 #### 1. Traning and Testing Method
 
-1. 使用 user-i 的 device-j 训练模型，用 user-i 的 device-j 进行 test, i=1,2,...,16; j=1,2
+1. Method1: 使用 user-i 的 device-j 训练模型，用 user-i 的 device-j 进行 test, i=1,2,...,16; j=1,2
     - User-i Device-j hack in User-i Device-j Model (cross validation), error rate: 0.x%
 
-2. 使用 user-i 的 device-j 训练模型，用 user-i 的 device-k 进行 test, j!=k; i=1,2,...,16; j,k=1,2
+2. Method2: 使用 user-i 的 device-j 训练模型，用 user-i 的 device-k 进行 test, j!=k; i=1,2,...,16; j,k=1,2
     - User-i Device-j hack in User-i Device-k Model, error rate: 0.x%
 
-3. 使用 user-i 的 device-j 训练模型，用 user-k 的 device-j 进行 test, i!=k; i,k=1,2,...,16; j=1,2
+3. Method3: 使用 user-i 的 device-j 训练模型，用 user-k 的 device-j 进行 test, i!=k; i,k=1,2,...,16; j=1,2
     - User-i Device-j hack in User-k Device-l Model, error rate: 0.x%
 
-4. 使用 user-i 的 device-j 训练模型，用 user-k 的 device-l 进行 test, i!=k; j!=l; i,k=1,2,...,16; j,l=1,2
+4. Method4: 使用 user-i 的 device-j 训练模型，用 user-k 的 device-l 进行 test, i!=k; j!=l; i,k=1,2,...,16; j,l=1,2
     - User-i Device-j hack in User-k Device-l Model, error rate: 0.x%
 
-#### 2. Binary Classification
+#### 2. Moment Dataset Classification
 
-##### Base Line
+##### offset feature
 
-(x,y) --> (left thumb, right thumb, left index, right index)
+    feature (x,y) will be change when offset flag is on
 
-##### Hand Classification
+##### feature condition
 
-feature condition --> {left hand(left thumb+left index) right hand(right thumb+ right index)}
+        0: (x, y)               # baseline
+        1: (x, y, atti_roll)
+        2: (x, y, atti_pitch)
+        3: (x, y, atti_yaw)
+        4: (x, y, acce_x)
+        5: (x, y, acce_y)
+        6: (x, y, acce_z)
+        7: (x, y, gyro_x)
+        8: (x, y, gyro_y)
+        9: (x, y, gyro_z)
+       10: (x, y, atti_{roll,pitch,yaw})
+       11: (x, y, acce_{x,y,z})
+       12: (x, y, gyro_{x,y,z})
+       13: (x, y, atti{roll,pitch,yaw}, acce{x,y,z})
+       14: (x, y, atti{roll,pitch,yaw}, gyro{x,y,z})
+       15: (x, y, acce{x,y,z}, gyro{x,y,z})
+       16: (x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})
+       
+##### classification condition
 
-##### Offset feature study
+        1: Thumb Classification (left thumb, right thumb)
+        2: Index Finger Classification (left index, right index)
+        3: Multi-Classification (left thumb, right thumb, left index, right index)
+        4: Hand Classification (left thumb+index, right thumb+index)               # hand classification
 
-offset_position + sensor
+##### SVM parameters
+
+	C: 1.0
+	kernel: linear
+	gamma: auto
+	max iteration: 1 000 000
+	
+	other: default
+
+#### cross validation parameters
+    test_size: 0.1
+    random_state: 42
 
 ##### Authentication
 
@@ -93,72 +123,6 @@ NOTE: Receiver Operating Curves
 1. training SVM (...)
 2. test SVM: input other 1/2 data of u
 3. input other 1/2 data of all others
-
-##### Thumb Classification
-
-* (x, y, atti_roll)    --> (left thumb, right thumb)
-* (x, y, atti_pitch)   --> (left thumb, right thumb)
-* (x, y, atti_yaw)     --> (left thumb, right thumb)
-* (x, y, acce_x)       --> (left thumb, right thumb)
-* (x, y, acce_y)       --> (left thumb, right thumb)
-* (x, y, acce_z)       --> (left thumb, right thumb)
-* (x, y, gyro_x)       --> (left thumb, right thumb)
-* (x, y, gyro_y)       --> (left thumb, right thumb)
-* (x, y, gyro_z)       --> (left thumb, right thumb)
-
-* (x, y, atti_roll, atti_pitch, atti_yaw) --> (left thumb, right thumb)
-* (x, y, acce_x, acce_y, acce_z)          --> (left thumb, right thumb)
-* (x, y, gyro_x, gyro_y, gyro_z)          --> (left thumb, right thumb)
-
-* (x, y, atti{roll,pitch,yaw}, acce{x,y,z}) --> (left thumb, right thumb)
-* (x, y, atti{roll,pitch,yaw}, gyro{x,y,z}) --> (left thumb, right thumb)
-* (x, y, acce{x,y,z}, gyro{x,y,z})          --> (left thumb, right thumb)
-
-* (x, y, atti\_{roll,pitch,yaw}, acce\_{x,y,z}, gyro\_{x,y,z}) --> (left thumb, right thumb)
-
-##### Index Finger Classification
-
-* (x, y, atti_roll)    --> (left index, right index)
-* (x, y, atti_pitch)   --> (left index, right index)
-* (x, y, atti_yaw)     --> (left index, right index)
-* (x, y, acce_x)       --> (left index, right index)
-* (x, y, acce_y)       --> (left index, right index)
-* (x, y, acce_z)       --> (left index, right index)
-* (x, y, gyro_x)       --> (left index, right index)
-* (x, y, gyro_y)       --> (left index, right index)
-* (x, y, gyro_z)       --> (left index, right index)
-
-* (x, y, atti_roll, atti_pitch, atti_yaw) --> (left index, right index)
-* (x, y, acce_x, acce_y, acce_z)          --> (left index, right index)
-* (x, y, gyro_x, gyro_y, gyro_z)          --> (left index, right index)
-
-* (x, y, atti{roll,pitch,yaw}, acce{x,y,z}) --> (left index, right index)
-* (x, y, atti{roll,pitch,yaw}, gyro{x,y,z}) --> (left index, right index)
-* (x, y, acce{x,y,z}, gyro{x,y,z})          --> (left index, right index)
-
-* (x, y, atti\_{roll,pitch,yaw}, acce\_{x,y,z}, gyro\_{x,y,z}) --> (left thumb, right thumb)
-
-#### 3. Multi-Classification
-
-* (x, y, atti_roll)    --> (left thumb, right thumb, left index, right index)
-* (x, y, atti_pitch)   --> (left thumb, right thumb, left index, right index)
-* (x, y, atti_yaw)     --> (left thumb, right thumb, left index, right index)
-* (x, y, acce_x)       --> (left thumb, right thumb, left index, right index)
-* (x, y, acce_y)       --> (left thumb, right thumb, left index, right index)
-* (x, y, acce_z)       --> (left thumb, right thumb, left index, right index)
-* (x, y, gyro_x)       --> (left thumb, right thumb, left index, right index)
-* (x, y, gyro_y)       --> (left thumb, right thumb, left index, right index)
-* (x, y, gyro_z)       --> (left thumb, right thumb, left index, right index)
-
-* (x, y, atti_roll, atti_pitch, atti_yaw) --> (left thumb, right thumb, left index, right index)
-* (x, y, acce_x, acce_y, acce_z)          --> (left thumb, right thumb, left index, right index)
-* (x, y, gyro_x, gyro_y, gyro_z)          --> (left thumb, right thumb, left index, right index)
-
-* (x, y, atti{roll,pitch,yaw}, acce{x,y,z}) --> (left thumb, right thumb, left index, right index)
-* (x, y, atti{roll,pitch,yaw}, gyro{x,y,z}) --> (left thumb, right thumb, left index, right index)
-* (x, y, acce{x,y,z}, gyro{x,y,z})          --> (left thumb, right thumb, left index, right index)
-
-* (x, y, atti\_{roll,pitch,yaw}, acce\_{x,y,z}, gyro\_{x,y,z}) --> (left thumb, right thumb, left index, right index)
 
 
 ## Verification

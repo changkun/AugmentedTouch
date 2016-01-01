@@ -26,36 +26,39 @@ def filePath(userid, device, datatype):
         else:
             return '../data/' + prefix(userid) + '/2.2.csv'
 
-# device   == 1 : iphone 6 plus
-#          == 2 : iphone 5
-# datatype == 1 : moment data
-#          == 2 : buffer data
-#
-#  Return Value
-#  ------------
-#  data format:
-#           column:
-#               0 test_count,
-#               1 test_case,
-#               2 tap_count,
-#               3 moving_flag,
-#               4 hand_posture,
-#               5 x,
-#               6 y,
-#               7 offset_x,
-#               8 offset_y,
-#               9 roll,
-#              10 pitch,
-#              11 yaw,
-#              12 acc_x,
-#              13 acc_y,
-#              14 acc_z,
-#              15 rotation_x,
-#              16 rotation_y,
-#              17 rotation_z,
-#              18 touch_time
-#
 def loadUserData(userid=1, device=1, datatype=1, delimiter=','):
+    """
+    device   == 1 : iphone 6 plus
+             == 2 : iphone 5
+    datatype == 1 : moment data
+             == 2 : buffer data
+
+     Return Value
+     ------------
+     data format:
+          column:
+              0 test_count,
+              1 test_case,
+              2 tap_count,
+              3 moving_flag,
+              4 hand_posture,
+              5 x,
+              6 y,
+              7 offset_x,
+              8 offset_y,
+              9 roll,
+             10 pitch,
+             11 yaw,
+             12 acc_x,
+             13 acc_y,
+             14 acc_z,
+             15 rotation_x,
+             16 rotation_y,
+             17 rotation_z,
+             18 touch_time
+
+    TODO: load buffer data
+    """
     filepath = filePath(userid, device=device, datatype=datatype)
     csvfile = open(filepath)
     csv_reader = csv.reader(csvfile, delimiter=delimiter)
@@ -100,7 +103,7 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
         dataWithLabel = np.vstack((leftIndexData, rightIndexData))
     elif classificationCondition==3:
         pass
-    elif classificationCondition==4:
+    else: # classificationCondition==4:
 
         leftHandData = np.vstack((leftThumbData, leftIndexData))
         (row, column) = leftHandData.shape
@@ -122,7 +125,7 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
     return newData, newLabel
 
 # 根据 featureCondition 的值来获得不同的feature
-def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
+def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1):
     """
     Parameters
     ----------
@@ -156,7 +159,7 @@ def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
     # positionData    = normalization(rawdata[:, 5:7], device=device)
 
     offset=0
-    if offsetOn==True:
+    if offsetFeatureOn==True:
         offset=2
 
     if featureCondition==0: # baseline
@@ -193,3 +196,10 @@ def splitMomentDataByFeature(rawdata, offsetOn=False, featureCondition=1):
         return rawdata[:, [5+offset,6+offset,12,13,14,15,16,17]]
     else: #featureCondition==16
         return rawdata[:, [5+offset,6+offset,9,10,11,12,13,14,15,16,17]]
+
+def splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=False):
+    rawData = loadUserData(userid, device, datatype=1)
+    data = splitMomentDataByFeature(rawData, offsetFeatureOn=offsetFeatureOn, featureCondition=featureCondition)
+    label = rawData[:, 4] # hand posture column
+    data, label = splitMomentDataByLabel(data, label, classificationCondition=classificationCondition)
+    return data, label

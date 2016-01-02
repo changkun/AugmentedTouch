@@ -9,7 +9,6 @@ def prefix(userid):
     else:
         return str(userid)
 
-
 # device   == 1 : iphone 6 plus
 #          == 2 : iphone 5
 # datatype == 1 : moment data
@@ -26,7 +25,7 @@ def filePath(userid, device, datatype):
         else:
             return '../data/' + prefix(userid) + '/2.2.csv'
 
-def loadUserData(userid=1, device=1, datatype=1, delimiter=','):
+# 数据格式
     """
     device   == 1 : iphone 6 plus
              == 2 : iphone 5
@@ -59,7 +58,9 @@ def loadUserData(userid=1, device=1, datatype=1, delimiter=','):
 
     TODO: load buffer data
     """
-    filepath = filePath(userid, device=device, datatype=datatype)
+def loadUserData(userid, device, datatype=1, delimiter=','):
+
+    filepath = filePath(userid, device, datatype)
     csvfile = open(filepath)
     csv_reader = csv.reader(csvfile, delimiter=delimiter)
     data = np.array([row for row in csv_reader])
@@ -79,7 +80,7 @@ def normalization(positionData, device):
     #norData = np.c_[nor_x.ravel(), nor_y.ravel(), data[:, 2:]]
     return 1
 
-def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
+# 根据 clfCondition 的值来获得不同的训练数据
     """
     classificationCondition: int
 
@@ -89,6 +90,8 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
         4: Hand Classification (left thumb+index, right thumb+index)
 
     """
+def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
+
     converLabel = [[value] for value in label]
     dataWithLabel = np.append(rawdata, converLabel, axis=1)
 
@@ -125,7 +128,6 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
     return newData, newLabel
 
 # 根据 featureCondition 的值来获得不同的feature
-def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1):
     """
     Parameters
     ----------
@@ -154,6 +156,8 @@ def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1)
        15: (x, y, acce{x,y,z}, gyro{x,y,z})
        16: (x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})
     """
+def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1):
+
 
     # TODO: applying data normalization
     # positionData    = normalization(rawdata[:, 5:7], device=device)

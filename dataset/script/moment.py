@@ -9,8 +9,11 @@ from sklearn.cross_validation import train_test_split
 import numpy as np
 
 import threading
+import os.path
 
 import matplotlib.pyplot as plt
+
+
 
 # basic parameters
 my_kernel = 'linear'
@@ -113,7 +116,7 @@ def processMethod4(userid, device, featureCondition=1, classificationCondition=1
     """
     trainingData, trainingLabel = splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
     trainingData, testData, trainingLabel, testLabel = train_test_split(trainingData, trainingLabel, test_size=my_test_size, random_state=my_random_state) # use same test size with method1
-    clfModel = classifyModel(trainingData, trainingLabel)
+    clfModel = classifyModel(trainingData, trainingLabel, kernel=my_kernel, max_iter=my_max_iteration)
 
     hackErrorRateTextList = []
 
@@ -200,11 +203,14 @@ def processMethod4ForAllUser(featureCondition, classificationCondition, offsetFe
     for userid in xrange(1,17):
         for device in xrange(1,3):
             filepath = '../result/moment/method4/clfCondition' + str(classificationCondition) + '/featureCondition' + str(featureCondition) + '/user'
-            userHackRecord = processMethod4(userid, device, featureCondition=featureCondition, classificationCondition=classificationCondition, offsetFeatureOn=offsetFeatureOn)
             if device == 1:
                 filepath = filepath  + str(userid) + '_iphone6plus.txt'
             else:
                 filepath = filepath  + str(userid) + '_iphone5.txt'
+            # if os.path.exists(filepath)==True:
+            #     continue
+            # else:
+            userHackRecord = processMethod4(userid, device, featureCondition=featureCondition, classificationCondition=classificationCondition, offsetFeatureOn=offsetFeatureOn)
             f = open(filepath, 'w')
             f.writelines(userHackRecord)
             f.close()
@@ -297,10 +303,11 @@ def Method4Threads():
             threads.append(t)
     print 'thread create success.'
 
-    for i in xrange(0,17*4):
-        threads[i].start()
-    for i in xrange(0,17*4):
-        threads[i].join()
+    for j in xrange(0,4):
+        for i in xrange(0,17):
+            threads[j*17+i].start()
+        for i in xrange(0,17):
+            threads[j*17+i].join()
 
     print 'Process finished...'
 

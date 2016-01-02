@@ -154,8 +154,6 @@
         self.inputCount = 0;
     }
     
-    
-    
     // 当tapcount大于某个值时，退出并写入数据
     if (self.tapCount >= 6*XTIMES*YTIMES) {
         MBProgressHUD *hub = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

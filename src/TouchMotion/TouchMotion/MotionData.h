@@ -64,8 +64,6 @@
 // 触摸时间
 @property (nonatomic, copy) NSDate *time;
 
-
-
 - (instancetype)initWithUserID:(int)userid
                   andTestCount:(int)testcount
                    andTestCase:(int)testcase

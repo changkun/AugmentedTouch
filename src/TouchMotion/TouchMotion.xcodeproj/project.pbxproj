@@ -25,6 +25,7 @@
 		79A5F98E1BF147F7003FC372 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F98D1BF147F7003FC372 /* TestViewController.m */; };
 		79A5F9911BF14839003FC372 /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9901BF14839003FC372 /* ButtonView.m */; };
 		79A5F9941BF148D3003FC372 /* MotionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9931BF148D3003FC372 /* MotionData.m */; };
+		79C07B821C371E0900BF2C48 /* DataViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C07B811C371E0900BF2C48 /* DataViewerViewController.m */; };
 		79E2855B1C1191C500BA56B3 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79E285561C11917000BA56B3 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -114,6 +115,8 @@
 		79A5F9901BF14839003FC372 /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonView.m; sourceTree = "<group>"; };
 		79A5F9921BF148D3003FC372 /* MotionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionData.h; sourceTree = "<group>"; };
 		79A5F9931BF148D3003FC372 /* MotionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionData.m; sourceTree = "<group>"; };
+		79C07B801C371E0900BF2C48 /* DataViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewerViewController.h; sourceTree = "<group>"; };
+		79C07B811C371E0900BF2C48 /* DataViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataViewerViewController.m; sourceTree = "<group>"; };
 		79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "../../../../../../Desktop/daniel-project/ResearchKit/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,6 +184,8 @@
 			children = (
 				79A5F98C1BF147F7003FC372 /* TestViewController.h */,
 				79A5F98D1BF147F7003FC372 /* TestViewController.m */,
+				79C07B801C371E0900BF2C48 /* DataViewerViewController.h */,
+				79C07B811C371E0900BF2C48 /* DataViewerViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -436,6 +441,7 @@
 				79A5F9911BF14839003FC372 /* ButtonView.m in Sources */,
 				79A5F95B1BF13EA7003FC372 /* AppDelegate.m in Sources */,
 				79A5F98E1BF147F7003FC372 /* TestViewController.m in Sources */,
+				79C07B821C371E0900BF2C48 /* DataViewerViewController.m in Sources */,
 				795A01E51BF291F800428BF0 /* MBProgressHUD.m in Sources */,
 				79A5F9581BF13EA7003FC372 /* main.m in Sources */,
 				79A5F9941BF148D3003FC372 /* MotionData.m in Sources */,

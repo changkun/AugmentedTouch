@@ -11,7 +11,7 @@
 #import "SQLiteTool.h"
 #import <CoreMotion/CoreMotion.h>
 
-#import "TestViewController.h"
+#import "RecordingViewController.h"
 
 
 @interface MainViewController ()
@@ -161,7 +161,7 @@
 }
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"intoTestView"]) {
-        TestViewController *vc = segue.destinationViewController;
+        RecordingViewController *vc = segue.destinationViewController;
         
         vc.currentUserID      = [self.userIDTextField.text intValue];
         

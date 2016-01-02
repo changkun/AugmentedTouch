@@ -7,16 +7,22 @@
 //
 
 #import "DataViewerViewController.h"
+#import "SQLiteTool.h"
 
 @implementation DataViewerViewController
 
+- (void)viewDidLoad {
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    NSInteger users = [SQLiteTool recordUserNumbers];
+    return users;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.textLabel.text = @"123";
+    cell.textLabel.text = [NSString stringWithFormat:@"User %lu", (unsigned long)indexPath.row+1];
     return cell;
 }
 @end

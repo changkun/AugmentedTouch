@@ -22,10 +22,12 @@
 		79A5F9711BF13EA7003FC372 /* TouchMotionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9701BF13EA7003FC372 /* TouchMotionTests.m */; };
 		79A5F97C1BF13EA7003FC372 /* TouchMotionUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F97B1BF13EA7003FC372 /* TouchMotionUITests.m */; };
 		79A5F98B1BF144A9003FC372 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79A5F9891BF144A9003FC372 /* Main.storyboard */; };
-		79A5F98E1BF147F7003FC372 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F98D1BF147F7003FC372 /* TestViewController.m */; };
+		79A5F98E1BF147F7003FC372 /* RecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F98D1BF147F7003FC372 /* RecordingViewController.m */; };
 		79A5F9911BF14839003FC372 /* ButtonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9901BF14839003FC372 /* ButtonView.m */; };
 		79A5F9941BF148D3003FC372 /* MotionData.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A5F9931BF148D3003FC372 /* MotionData.m */; };
 		79C07B821C371E0900BF2C48 /* DataViewerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C07B811C371E0900BF2C48 /* DataViewerViewController.m */; };
+		79C07B8C1C3808F700BF2C48 /* TestingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C07B8B1C3808F700BF2C48 /* TestingViewController.m */; };
+		79C07B991C380B3700BF2C48 /* TestingTableTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79C07B981C380B3700BF2C48 /* TestingTableTableViewController.m */; };
 		79E2855B1C1191C500BA56B3 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 79E285561C11917000BA56B3 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
@@ -109,14 +111,18 @@
 		79A5F97B1BF13EA7003FC372 /* TouchMotionUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TouchMotionUITests.m; sourceTree = "<group>"; };
 		79A5F97D1BF13EA7003FC372 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79A5F98A1BF144A9003FC372 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		79A5F98C1BF147F7003FC372 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		79A5F98D1BF147F7003FC372 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
+		79A5F98C1BF147F7003FC372 /* RecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingViewController.h; sourceTree = "<group>"; };
+		79A5F98D1BF147F7003FC372 /* RecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordingViewController.m; sourceTree = "<group>"; };
 		79A5F98F1BF14839003FC372 /* ButtonView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ButtonView.h; sourceTree = "<group>"; };
 		79A5F9901BF14839003FC372 /* ButtonView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonView.m; sourceTree = "<group>"; };
 		79A5F9921BF148D3003FC372 /* MotionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionData.h; sourceTree = "<group>"; };
 		79A5F9931BF148D3003FC372 /* MotionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionData.m; sourceTree = "<group>"; };
 		79C07B801C371E0900BF2C48 /* DataViewerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataViewerViewController.h; sourceTree = "<group>"; };
 		79C07B811C371E0900BF2C48 /* DataViewerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataViewerViewController.m; sourceTree = "<group>"; };
+		79C07B8A1C3808F700BF2C48 /* TestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingViewController.h; sourceTree = "<group>"; };
+		79C07B8B1C3808F700BF2C48 /* TestingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingViewController.m; sourceTree = "<group>"; };
+		79C07B971C380B3700BF2C48 /* TestingTableTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestingTableTableViewController.h; sourceTree = "<group>"; };
+		79C07B981C380B3700BF2C48 /* TestingTableTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestingTableTableViewController.m; sourceTree = "<group>"; };
 		79E2854F1C11917000BA56B3 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "../../../../../../Desktop/daniel-project/ResearchKit/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,6 +155,7 @@
 		795A01CF1BF232C500428BF0 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				795A01D61BF234F600428BF0 /* ViewWidget */,
 				795A01E31BF291F800428BF0 /* MBProgressHUD.h */,
 				795A01E41BF291F800428BF0 /* MBProgressHUD.m */,
 				795A01D01BF232DB00428BF0 /* PlaySound.h */,
@@ -159,35 +166,13 @@
 			name = Tools;
 			sourceTree = "<group>";
 		};
-		795A01D51BF234CF00428BF0 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				79A5F9921BF148D3003FC372 /* MotionData.h */,
-				79A5F9931BF148D3003FC372 /* MotionData.m */,
-				795A01D71BF235AE00428BF0 /* MotionBuffer.h */,
-				795A01D81BF235AE00428BF0 /* MotionBuffer.m */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		795A01D61BF234F600428BF0 /* View */ = {
+		795A01D61BF234F600428BF0 /* ViewWidget */ = {
 			isa = PBXGroup;
 			children = (
 				79A5F98F1BF14839003FC372 /* ButtonView.h */,
 				79A5F9901BF14839003FC372 /* ButtonView.m */,
 			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		795A01DD1BF2379700428BF0 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				79A5F98C1BF147F7003FC372 /* TestViewController.h */,
-				79A5F98D1BF147F7003FC372 /* TestViewController.m */,
-				79C07B801C371E0900BF2C48 /* DataViewerViewController.h */,
-				79C07B811C371E0900BF2C48 /* DataViewerViewController.m */,
-			);
-			name = Controller;
+			name = ViewWidget;
 			sourceTree = "<group>";
 		};
 		795A01E01BF23C1800428BF0 /* Frameworks */ = {
@@ -223,14 +208,12 @@
 			isa = PBXGroup;
 			children = (
 				795A01E01BF23C1800428BF0 /* Frameworks */,
-				795A01DD1BF2379700428BF0 /* Controller */,
-				795A01D61BF234F600428BF0 /* View */,
-				795A01D51BF234CF00428BF0 /* Model */,
+				79C07B8D1C38094300BF2C48 /* Recording */,
+				79C07B8E1C38094D00BF2C48 /* DataViewer */,
+				79C07B8F1C38096500BF2C48 /* Testing */,
 				795A01CF1BF232C500428BF0 /* Tools */,
 				79A5F9591BF13EA7003FC372 /* AppDelegate.h */,
 				79A5F95A1BF13EA7003FC372 /* AppDelegate.m */,
-				79A5F95C1BF13EA7003FC372 /* MainViewController.h */,
-				79A5F95D1BF13EA7003FC372 /* MainViewController.m */,
 				79A5F9891BF144A9003FC372 /* Main.storyboard */,
 				79A5F9561BF13EA7003FC372 /* Supporting Files */,
 			);
@@ -266,6 +249,97 @@
 				79A5F97D1BF13EA7003FC372 /* Info.plist */,
 			);
 			path = TouchMotionUITests;
+			sourceTree = "<group>";
+		};
+		79C07B8D1C38094300BF2C48 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				79C07B951C3809A700BF2C48 /* Controller */,
+				79C07B941C3809A300BF2C48 /* View */,
+				79C07B931C38099D00BF2C48 /* Model */,
+			);
+			name = Recording;
+			sourceTree = "<group>";
+		};
+		79C07B8E1C38094D00BF2C48 /* DataViewer */ = {
+			isa = PBXGroup;
+			children = (
+				79C07B961C3809F600BF2C48 /* Controller */,
+			);
+			name = DataViewer;
+			sourceTree = "<group>";
+		};
+		79C07B8F1C38096500BF2C48 /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				79C07B921C38099000BF2C48 /* Controller */,
+				79C07B911C38098C00BF2C48 /* View */,
+				79C07B901C38098000BF2C48 /* Model */,
+			);
+			name = Testing;
+			sourceTree = "<group>";
+		};
+		79C07B901C38098000BF2C48 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		79C07B911C38098C00BF2C48 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		79C07B921C38099000BF2C48 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79C07B8A1C3808F700BF2C48 /* TestingViewController.h */,
+				79C07B8B1C3808F700BF2C48 /* TestingViewController.m */,
+				79C07B971C380B3700BF2C48 /* TestingTableTableViewController.h */,
+				79C07B981C380B3700BF2C48 /* TestingTableTableViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		79C07B931C38099D00BF2C48 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				79A5F9921BF148D3003FC372 /* MotionData.h */,
+				79A5F9931BF148D3003FC372 /* MotionData.m */,
+				795A01D71BF235AE00428BF0 /* MotionBuffer.h */,
+				795A01D81BF235AE00428BF0 /* MotionBuffer.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		79C07B941C3809A300BF2C48 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		79C07B951C3809A700BF2C48 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79A5F95C1BF13EA7003FC372 /* MainViewController.h */,
+				79A5F95D1BF13EA7003FC372 /* MainViewController.m */,
+				79A5F98C1BF147F7003FC372 /* RecordingViewController.h */,
+				79A5F98D1BF147F7003FC372 /* RecordingViewController.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		79C07B961C3809F600BF2C48 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				79C07B801C371E0900BF2C48 /* DataViewerViewController.h */,
+				79C07B811C371E0900BF2C48 /* DataViewerViewController.m */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		79E285501C11917000BA56B3 /* Products */ = {
@@ -437,10 +511,12 @@
 				795A01D21BF232DB00428BF0 /* PlaySound.m in Sources */,
 				795A01DC1BF2362C00428BF0 /* SQLiteTool.m in Sources */,
 				795A01D91BF235AE00428BF0 /* MotionBuffer.m in Sources */,
+				79C07B8C1C3808F700BF2C48 /* TestingViewController.m in Sources */,
 				79A5F95E1BF13EA7003FC372 /* MainViewController.m in Sources */,
 				79A5F9911BF14839003FC372 /* ButtonView.m in Sources */,
+				79C07B991C380B3700BF2C48 /* TestingTableTableViewController.m in Sources */,
 				79A5F95B1BF13EA7003FC372 /* AppDelegate.m in Sources */,
-				79A5F98E1BF147F7003FC372 /* TestViewController.m in Sources */,
+				79A5F98E1BF147F7003FC372 /* RecordingViewController.m in Sources */,
 				79C07B821C371E0900BF2C48 /* DataViewerViewController.m in Sources */,
 				795A01E51BF291F800428BF0 /* MBProgressHUD.m in Sources */,
 				79A5F9581BF13EA7003FC372 /* main.m in Sources */,

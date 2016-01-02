@@ -1,5 +1,5 @@
 //
-//  TestViewController.h
+//  RecordingViewController.h
 //  TouchMotion
 //
 //  Created by 欧长坤 on 09/11/15.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ButtonView.h"
 
-@interface TestViewController : UIViewController <ButtonViewDelegate>
+@interface RecordingViewController : UIViewController <ButtonViewDelegate>
 
 @property (nonatomic) int currentUserID;
 @property (nonatomic) int currentTestCount;

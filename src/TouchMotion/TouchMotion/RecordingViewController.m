@@ -1,12 +1,12 @@
 //
-//  TestViewController.m
+//  RecordingViewController.m
 //  TouchMotion
 //
 //  Created by 欧长坤 on 09/11/15.
 //  Copyright © 2015 Changkun Ou. All rights reserved.
 //
 
-#import "TestViewController.h"
+#import "RecordingViewController.h"
 #import "PlaySound.h"
 #import "AppDelegate.h"
 #import <CoreMotion/CoreMotion.h>
@@ -19,7 +19,7 @@
 #import "MBProgressHUD.h"
 #import "SQLiteTool.h"
 
-@interface TestViewController ()
+@interface RecordingViewController ()
 {
     ButtonView *button[10];
     
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation TestViewController
+@implementation RecordingViewController
 
 
 

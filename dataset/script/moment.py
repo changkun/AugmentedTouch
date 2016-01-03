@@ -3,17 +3,19 @@ from loaddata import splitMomentDataByFeature
 from loaddata import splitMomentDataByLabel
 from loaddata import splitMomentDataByFeatureAndLabel
 
+import numpy as np
+import matplotlib.pyplot as plt
+
 from sklearn import svm
 from sklearn.cross_validation import train_test_split
 
-import numpy as np
+from sklearn.metrics import roc_curve, auc
+from sklearn.preprocessing import label_binarize
+from sklearn.multiclass import OneVsRestClassifier
+from scipy import interp
 
 import threading
 import os.path
-
-import matplotlib.pyplot as plt
-
-
 
 # basic parameters
 my_kernel = 'linear'
@@ -53,7 +55,6 @@ def processMethod1(userid, device, featureCondition=1, classificationCondition=1
     trainingData, testData, trainingLabel, testLabel = train_test_split(data, label, test_size=my_test_size, random_state=my_random_state)
 
     return classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=my_max_iteration)
-
 def processMethod2(userid, featureCondition=1, classificationCondition=1, offsetFeatureOn=False):
     """ User-i Device-j hack in User-i Device-k Model: iphone5 hack iphone6plus
 
@@ -79,7 +80,6 @@ def processMethod2(userid, featureCondition=1, classificationCondition=1, offset
     trainingDataIP5, testDataIP5, trainingLabelIP5, testLabelIP5 = train_test_split(    testData,     testLabel, test_size=my_test_size, random_state=my_random_state)
 
     return classify(trainingDataIP6, trainingLabelIP6, testDataIP5, testLabelIP5, kernel=my_kernel, max_iter=my_max_iteration)
-
 def processMethod3(userid, featureCondition=1, classificationCondition=1, offsetFeatureOn=False):
     """ User-i Device-j hack in User-i Device-k Model: iphone6plus hack iphone5
 
@@ -106,7 +106,6 @@ def processMethod3(userid, featureCondition=1, classificationCondition=1, offset
     trainingDataIP6, testDataIP6, trainingLabelIP6, testLabelIP6 = train_test_split(    testData,     testLabel, test_size=my_test_size, random_state=my_random_state)
 
     return classify(trainingDataIP5, trainingLabelIP5, testDataIP6, testLabelIP6, kernel=my_kernel, max_iter=my_max_iteration)
-
 def processMethod4(userid, device, featureCondition=1, classificationCondition=1, offsetFeatureOn=False):
     """ User-i Device-j hack in User-k Device-j Model
 
@@ -130,32 +129,6 @@ def processMethod4(userid, device, featureCondition=1, classificationCondition=1
 
     return hackErrorRateTextList
 
-    # rawDataList = []
-    # for i in xrange(1,17):
-    #     rawDataList.append(loadUserData(i, device, datatype=1)) # moment data
-
-    # trainingData  = splitMomentDataByFeature(rawDataList[userid-1], featureCondition=featureCondition)
-    # trainingLabel = rawDataList[userid-1][:, 4]
-
-    # clfModel = classifyModel(trainingData, trainingLabel);
-
-    # hackErrorRateList = []
-
-    # for i in xrange(0,16):
-    #     if (i+1)!=userid:
-
-    #         error_count = 0.0
-    #         result = clfModel.predict(splitMomentDataByFeature(rawDataList[i], featureCondition=featureCondition))
-
-    #         for j, la in enumerate(result):
-    #             if la != rawDataList[i][:,4][j]:
-    #                 error_count += 1
-    #         #hackErrorRateList.append(error_count/result.shape[0])
-    #         print 'user ' + str(i) + ' hack ' + str(userid) + ', error rate: ' + str(error_count/result.shape[0]) + '\n'
-
-    #return hackErrorRateList
-
-
 def processMethod1ForAllUser(featureCondition, classificationCondition, offsetFeatureOn):
     lines = []
     for userid in xrange(1,17):
@@ -170,7 +143,6 @@ def processMethod1ForAllUser(featureCondition, classificationCondition, offsetFe
     f.close()
 
     print 'Method 1 featureCondition' + str(featureCondition) + ' and clfCondition' + str(classificationCondition) + ' finished.'
-
 def processMethod2ForAllUser(featureCondition, classificationCondition, offsetFeatureOn):
     lines = []
     for userid in xrange(1,17):
@@ -184,7 +156,6 @@ def processMethod2ForAllUser(featureCondition, classificationCondition, offsetFe
     f.close()
 
     print 'Method 2 featureCondition' + str(featureCondition) + ' and clfCondition' + str(classificationCondition) + ' finished.'
-
 def processMethod3ForAllUser(featureCondition, classificationCondition, offsetFeatureOn):
     lines = []
     for userid in xrange(1,17):
@@ -197,7 +168,6 @@ def processMethod3ForAllUser(featureCondition, classificationCondition, offsetFe
     f.close()
 
     print 'Method 3 featureCondition' + str(featureCondition) + ' and clfCondition' + str(classificationCondition) + ' finished.'
-
 def processMethod4ForAllUser(featureCondition, classificationCondition, offsetFeatureOn):
 
     for userid in xrange(1,17):
@@ -217,37 +187,14 @@ def processMethod4ForAllUser(featureCondition, classificationCondition, offsetFe
             print 'finish user' + str(userid) + ' device' + str(device)
 
     print 'Method 4 featureCondition' + str(featureCondition) + ' and clfCondition' + str(classificationCondition) + ' finished.'
-# def MethodThreads(method):
-#     threads = []
-#     classificationCondition=4
-#     for featureCondition in xrange(0,17):
-#         t = threading.Thread()
-#         if method==1:
-#             t = threading.Thread(target=processMethod1ForAllUser, args=(featureCondition, classificationCondition, ))
-#         elif method==2:
-#             t = threading.Thread(target=processMethod2ForAllUser, args=(featureCondition,))
-#         elif method==3:
-#             t = threading.Thread(target=processMethod3ForAllUser, args=(featureCondition,))
-#         threads.append(t)
 
-#     print 'thread create sucess.'
-
-#     for i in xrange(0,16):
-#         threads[i].start()
-
-#     for i in xrange(0,16):
-#         threads[i].join()
-
-#     print 'Process method ' + str(method) + ' finished.'
-
-
-def Method1Threads():
+def Method1Threads(xyfeature):
     threads = []
 
     for clfCondition in xrange(1, 5):
         for featureCondition in xrange(0,17):
             t = threading.Thread()
-            t = threading.Thread(target=processMethod1ForAllUser, args=(featureCondition, clfCondition, False))
+            t = threading.Thread(target=processMethod1ForAllUser, args=(featureCondition, clfCondition, xyfeature))
             threads.append(t)
     print 'thread create success.'
 
@@ -257,15 +204,14 @@ def Method1Threads():
     for i in xrange(0,17*4):
         threads[i].join()
 
-    print 'Process finished...'
-
-def Method2Threads():
+    print 'Process 1 finished...'
+def Method2Threads(xyfeature):
     threads = []
 
     for clfCondition in xrange(1, 5):
         for featureCondition in xrange(0,17):
             t = threading.Thread()
-            t = threading.Thread(target=processMethod2ForAllUser, args=(featureCondition, clfCondition, False))
+            t = threading.Thread(target=processMethod2ForAllUser, args=(featureCondition, clfCondition, xyfeature))
             threads.append(t)
     print 'thread create success.'
 
@@ -274,15 +220,14 @@ def Method2Threads():
     for i in xrange(0,17*4):
         threads[i].join()
 
-    print 'Process finished...'
-
-def Method3Threads():
+    print 'Process 2 finished...'
+def Method3Threads(xyfeature):
     threads = []
 
     for clfCondition in xrange(1, 5):
         for featureCondition in xrange(0,17):
             t = threading.Thread()
-            t = threading.Thread(target=processMethod3ForAllUser, args=(featureCondition, clfCondition, False))
+            t = threading.Thread(target=processMethod3ForAllUser, args=(featureCondition, clfCondition, xyfeature))
             threads.append(t)
     print 'thread create success.'
 
@@ -291,15 +236,14 @@ def Method3Threads():
     for i in xrange(0,17*4):
         threads[i].join()
 
-    print 'Process finished...'
-
-def Method4Threads():
+    print 'Process 3 finished...'
+def Method4Threads(xyfeature):
     threads = []
 
     for clfCondition in xrange(1, 5):
         for featureCondition in xrange(0,17):
             t = threading.Thread()
-            t = threading.Thread(target=processMethod4ForAllUser, args=(featureCondition, clfCondition, False))
+            t = threading.Thread(target=processMethod4ForAllUser, args=(featureCondition, clfCondition, xyfeature))
             threads.append(t)
     print 'thread create success.'
 
@@ -309,13 +253,12 @@ def Method4Threads():
         for i in xrange(0,17):
             threads[j*17+i].join()
 
-    print 'Process finished...'
+    print 'Process 4 finished...'
 
 def Method1DrawThreads():
     for userid in xrange(1, 17):
         drawErrorRate(userid)
     print 'Draw process finished...'
-
 def drawErrorRate(userid):
     featureAxis = np.arange(0, 17)
 
@@ -325,7 +268,7 @@ def drawErrorRate(userid):
         errorRateDict = { 1:[], 2:[] }
         for device in xrange(1,3):
             for featureCondition in xrange(0, 17):
-                err = processMethod1(userid, device, featureCondition=featureCondition, classificationCondition=clfCondition)
+                err = processMethod1(userid, device, featureCondition=featureCondition, classificationCondition=clfCondition, offsetFeatureOn=True)
                 errorRateDict[device].append(err)
 
             if device==1:
@@ -338,7 +281,7 @@ def drawErrorRate(userid):
             plt.legend(loc='upper right', fontsize='small')
             plt.axis([0, 16, 0, 1])
             plt.ylabel('Error Rate')
-            plt.axhline(0.15, color='green') # draw error rate base line
+            plt.axhline(0.05, color='green') # draw error rate base line
         print 'finish condition' + str(clfCondition)
 
     plt.xlabel('Feature Condition')
@@ -350,36 +293,124 @@ def drawErrorRate(userid):
     plt.close('all')
     print 'finish save user ' + str(userid) + '.'
 
+def plotROC():
+    userid = 1
+    device = 1
+    featureCondition = 10
+    classificationCondition = 1
+    offset = True
+
+    np.set_printoptions(threshold='nan')
+
+    # import data to play with
+    data, label = splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offset)
+
+    print data
+    print label
+
+    # binarize the output
+    label = label_binarize(label, classes=['0','1'])
+    print label
+    n_classes = label.shape[1]
+    print n_classes
+
+    # add noisy feature to make problem harder
+    random_state = np.random.RandomState(my_random_state)
+    n_samples, n_features = data.shape
+    print data.shape
+    data = np.c_[data, random_state.randn(n_samples, 200 * n_features)]
+
+    #shuffle and split traning and test sets
+    trainingData, testData, trainingLabel, testLabel = train_test_split(data, label, test_size=0.5, random_state=my_random_state)
+
+    # learn to predict each class against the other
+    classifier = OneVsRestClassifier(svm.SVC(kernel='linear', probability=True, random_state=my_random_state, max_iter=my_max_iteration))
+    label_score = classifier.fit(trainingData, trainingLabel).decision_function(testData)
+
+    print 'decision success.'
+
+    # Compute ROC curve and ROC area for each class
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+
+    for i in range(n_classes):
+        fpr[i], tpr[i], _ =roc_curve(testLabel[:, i], label_score[:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    # Compute micro-average ROC curve and ROC area
+    fpr["micro"], tpr["micro"], _ = roc_curve(testLabel.ravel(), label_score.ravel())
+    roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
+
+
+    ##############################################################################
+    # Plot of a ROC curve for a specific class
+    # plt.figure()
+    # plt.plot(fpr[0], tpr[0], label='ROC curve (area = %0.2f)' % roc_auc[0])
+    # plt.plot([0, 1], [0, 1], 'k--')
+    # plt.xlim([0.0, 1.0])
+    # plt.ylim([0.0, 1.05])
+    # plt.xlabel('False Positive Rate')
+    # plt.ylabel('True Positive Rate')
+    # plt.title('Receiver operating characteristic')
+    # plt.legend(loc="lower right")
+    # plt.show()
+
+    ##############################################################################
+    # Plot ROC curves for the multiclass problem
+
+    # Compute macro-average ROC curve and ROC area
+
+    # First aggregate all false positive rates
+    all_fpr = np.unique(np.concatenate([fpr[i] for i in range(n_classes)]))
+
+    # Then interpolate all ROC curves at this points
+    mean_tpr = np.zeros_like(all_fpr)
+    for i in range(n_classes):
+        mean_tpr += interp(all_fpr, fpr[i], tpr[i])
+
+    # Finally average it and compute AUC
+    mean_tpr /= n_classes
+
+    fpr["macro"] = all_fpr
+    tpr["macro"] = mean_tpr
+    roc_auc["macro"] = auc(fpr["macro"], tpr["macro"])
+
+    # Plot all ROC curves
+    plt.figure()
+    plt.plot(fpr["micro"], tpr["micro"],
+             label='micro-average ROC curve (area = {0:0.2f})'
+                   ''.format(roc_auc["micro"]),
+             linewidth=2)
+
+    plt.plot(fpr["macro"], tpr["macro"],
+             label='macro-average ROC curve (area = {0:0.2f})'
+                   ''.format(roc_auc["macro"]),
+             linewidth=2)
+
+    for i in range(n_classes):
+        plt.plot(fpr[i], tpr[i], label='ROC curve of class {0} (area = {1:0.2f})'
+                                       ''.format(i, roc_auc[i]))
+
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Some extension of Receiver operating characteristic to multi-class')
+    plt.legend(loc="lower right")
+    plt.show()
+
 def main():
-    #print 'method1 start...'
-    #threads(1)
-    #print 'method2 start...'
-    #threads(2)
-    #print 'method3 start...'
-    #threads(3)
 
-
-    # userid = 1
-    # device = 1
-    # datatype = 1
-
-    # rawData = loadUserData(userid, device, datatype)
-
-    # data = splitMomentDataByFeature(rawData, featureCondition=0)
-    # label = rawData[:, 4]
-
-    # for i in xrange(1,5):
-    #     newData, newLabel = splitMomentDataByLabel(data, label, classificationCondition=i)
-    #     print str(i) + ':'
-    #     print newData
-    #     print newLabel
-    #
-
-    #Method1Threads()
     #Method1DrawThreads()
-    #Method2Threads()
-    #Method3Threads()
-    Method4Threads()
+
+    # Method1Threads(True)
+    # Method2Threads(True)
+    # Method3Threads(True)
+    # Method4Threads(True)
+    plotROC()
+
 
 if __name__ == '__main__':
     main()

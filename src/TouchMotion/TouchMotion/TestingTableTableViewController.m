@@ -47,8 +47,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ModelCell" forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.text = [NSString stringWithFormat:@"User %ld Model", (long)indexPath.row];
-    cell.detailTextLabel.text = @"Need Update Model";
+//    cell.textLabel.text = [NSString stringWithFormat:@"User %ld Model", (long)indexPath.row];
+//    cell.detailTextLabel.text = @"Need Update Model";
     
     return cell;
 }

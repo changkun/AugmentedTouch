@@ -257,12 +257,11 @@ def Method4Threads(xyfeature):
 
     print 'Process 4 finished...'
 
+# 画出每个用户在四个不同clf条件下，不同feature条件的error_rate
 def Method1DrawAllUser():
     for userid in xrange(1, 17):
         drawErrorRate(userid, True)
     print 'Draw process finished...'
-
-# 画出每个用户在四个不同clf条件下，不同feature条件的error_rate
 def drawErrorRate(userid, offset):
     featureAxis = np.arange(0, 17)
 
@@ -343,6 +342,11 @@ def plotROC(userid, device, featureCondition, classificationCondition, offset=Fa
     # offset = False
     # noisyOn = True
     #np.set_printoptions(threshold='nan')
+    fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
+    if os.path.exists(fileName)==True:
+        print 'finish ' + fileName
+        return
+
 
     # import data to play with
     data, label = splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offset)
@@ -441,18 +445,17 @@ def plotROCforAll():
             for device in xrange(1,3):
                 for userid in xrange(1,17):
                     plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=True)
-                    #print 'finish clf' + str(classificationCondition) + ' feature' + str(featureCondition) + ' user' + str(userid)
 
 def main():
 
     #Method1DrawAllUser()
-    Method4DrawAllUser()
+    #Method4DrawAllUser()
 
     # Method1Threads(True)
     # Method2Threads(True)
     # Method3Threads(True)
     # Method4Threads(True)
-    #plotROCforAll()
+    plotROCforAll()
 
 
 if __name__ == '__main__':

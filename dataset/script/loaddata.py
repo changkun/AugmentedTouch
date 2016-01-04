@@ -9,11 +9,13 @@ def prefix(userid):
     else:
         return str(userid)
 
-# device   == 1 : iphone 6 plus
-#          == 2 : iphone 5
-# datatype == 1 : moment data
-#          == 2 : buffer data
 def filePath(userid, device, datatype):
+    """
+    device   == 1 : iphone 6 plus
+             == 2 : iphone 5
+    datatype == 1 : moment data
+             == 2 : buffer data
+    """
     if device==1:
         if datatype==1:
             return '../data/' + prefix(userid) + '/1.1.csv'
@@ -25,7 +27,7 @@ def filePath(userid, device, datatype):
         else:
             return '../data/' + prefix(userid) + '/2.2.csv'
 
-# 数据格式
+def loadUserData(userid, device, datatype=1, delimiter=','):
     """
     device   == 1 : iphone 6 plus
              == 2 : iphone 5
@@ -35,6 +37,7 @@ def filePath(userid, device, datatype):
      Return Value
      ------------
      data format:
+     when datatype == 1:
           column:
               0 test_count,
               1 test_case,
@@ -55,18 +58,24 @@ def filePath(userid, device, datatype):
              16 rotation_y,
              17 rotation_z,
              18 touch_time
+    when datatype == 2:
+        column:
+              0 test_count,
+              1 test_case,
+              2 tap_count,
+              3 sensor_flag,
+              4 hand_posture,
+              5 x,
+              6 y,
+              7 z
 
-    TODO: load buffer data
     """
-def loadUserData(userid, device, datatype=1, delimiter=','):
-
     filepath = filePath(userid, device, datatype)
     csvfile = open(filepath)
     csv_reader = csv.reader(csvfile, delimiter=delimiter)
     data = np.array([row for row in csv_reader])
     csvfile.close()
     return data[1:, 2:]
-
 
 # TODO: normalization module
 def normalization(positionData, device):
@@ -81,6 +90,7 @@ def normalization(positionData, device):
     return 1
 
 # 根据 clfCondition 的值来获得不同的训练数据
+def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
     """
     classificationCondition: int
 
@@ -90,8 +100,6 @@ def normalization(positionData, device):
         4: Hand Classification (left thumb+index, right thumb+index)
 
     """
-def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
-
     converLabel = [[value] for value in label]
     dataWithLabel = np.append(rawdata, converLabel, axis=1)
 
@@ -128,6 +136,7 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
     return newData, newLabel
 
 # 根据 featureCondition 的值来获得不同的feature
+def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1):
     """
     Parameters
     ----------
@@ -156,9 +165,6 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
        15: (x, y, acce{x,y,z}, gyro{x,y,z})
        16: (x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})
     """
-def splitMomentDataByFeature(rawdata, offsetFeatureOn=False, featureCondition=1):
-
-
     # TODO: applying data normalization
     # positionData    = normalization(rawdata[:, 5:7], device=device)
 
@@ -207,3 +213,5 @@ def splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classific
     label = rawData[:, 4] # hand posture column
     data, label = splitMomentDataByLabel(data, label, classificationCondition=classificationCondition)
     return data, label
+
+# 返回不同的

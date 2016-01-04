@@ -444,7 +444,7 @@ def plotROCforAll():
         for featureCondition in xrange(0,17):
             for device in xrange(1,3):
                 for userid in xrange(1,17):
-                    plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=True)
+                    plotROC(userid, device, featureCondition, classificationCondition, offset=True, noisyOn=True)
 
 def main():
 

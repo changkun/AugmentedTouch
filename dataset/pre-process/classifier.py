@@ -54,7 +54,31 @@ def delteIndexCondition(data, label):
     #         reduceData.append(row, axis=0)
     return dataWithLabel[:,0:5], dataWithLabel[:,5]
 
+def plot3Ddata(data, label):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
 
+    x = data[:, 0]
+    y = data[:, 1]
+    z = data[:, 2]
+
+    i = 0
+    for l in label:
+        if l == 1: #left hand
+            ax.scatter(x[i],y[i],z[i],c='r',marker='o')
+        else:
+            ax.scatter(x[i],y[i],z[i],c='b',marker='^')
+        i+=1
+    ax.set_xlabel('touch X')
+    ax.set_ylabel('touch Y')
+
+    if axis == 1:
+        ax.set_zlabel('roll value')
+    elif axis == 2:
+        ax.set_zlabel('pitch value')
+    else:
+        ax.set_zlabel('yaw value')
+    plt.show()
 
 def clfData(data, label, featureDimension=5):
     # print data.shape

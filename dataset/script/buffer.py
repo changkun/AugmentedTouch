@@ -1,6 +1,6 @@
 # coding:utf-8
 from loaddata import loadUserData
-from moment import classify
+from moment import classify, classifyModel
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,14 +13,18 @@ from sklearn.preprocessing import label_binarize
 from sklearn.multiclass import OneVsRestClassifier
 from scipy import interp
 
+from mpl_toolkits.mplot3d import Axes3D
+
 import threading
 import os.path
 import math
 import time
 
+# sample size
 bufferSize = 50
 sensorNumber = 3
 
+# for quick test
 userid = 1
 device = 1
 
@@ -96,7 +100,6 @@ def getBufferTrainingDataAndLabelBy(userid, device):
     #print 'The getDataAndLabelBy() function run time is : %.04f seconds' %(end_time-start_time)
     return wow[:, :-1], wow[:, -1]
 
-
 def errorRateForAll():
     error_rate_list = []
     for userid in xrange(1,17):
@@ -110,6 +113,15 @@ def errorRateForAll():
             print 'userid' + str(userid) + ' device' + str(device) + ' done'
     print error_rate_list
     return error_rate_list
+
+def getFourClassBufferDataByLabel(rawdata, label):
+    converLabel = [[str(int(value))] for value in label]
+    dataWithLabel = np.append(rawdata, converLabel, axis=1)
+    leftThumbData  = dataWithLabel[(dataWithLabel[:,-1]=='0'), :]
+    rightThumbData = dataWithLabel[(dataWithLabel[:,-1]=='1'), :]
+    leftIndexData  = dataWithLabel[(dataWithLabel[:,-1]=='2'), :]
+    rightIndexData = dataWithLabel[(dataWithLabel[:,-1]=='3'), :]
+    return leftThumbData, rightThumbData, leftIndexData, rightIndexData
 
 def splitBufferDataByLabel(rawdata, label, classificationCondition=1):
     """
@@ -196,12 +208,69 @@ def plotBufferFeatureROC(userid, device):
     plt.show()
     plt.close('all')
 
+def plot_svc_decision_function(data, label, ax=None):
+    """Plot the decision function for a 2D SVC"""
+    data, label = splitBufferDataByLabel(data, label, classificationCondition=1)
+    label = [float(value) for value in label]
+    clf = svm.SVC(kernel='rbf').fit(data, label)
+    fig = plt.figure()
+    if ax is None:
+        ax = plt.gca()
+    xx, yy = np.meshgrid(np.linspace(-1,1,1000), np.linspace(-1,1,1000))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = Z.reshape(xx.shape)
+    # plot the margins
+    ax.contour(xx, yy, Z, colors='k',
+               levels=[-1, 0, 1], alpha=0.5,
+               linestyles=['--', '-', '--'])
+    ax.scatter(data[:,0], data[:,1],c=label)
+    # plt.show()
 
-# data, label = getBufferTrainingDataAndLabelBy(userid, device)
-# data, label = splitBifferDataByLabel(data, label)
+def plot2Ddata(data, label):
+    plt.scatter(data[:, 0], data[:, 1], c=label, s=10, cmap='spring');
+    plt.show()
 
+def plot3Ddata(data, label, userid):
+    fig = plt.figure(figsize=(30,10))
+    for i in xrange(1,4):
+        ax = fig.add_subplot(130+i, projection='3d')
+        x = data[:, 0+3*(i-1)]
+        y = data[:, 1+3*(i-1)]
+        z = data[:, 2+3*(i-1)]
+        ax.scatter(x,y,z,c=label, marker='o')
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+        if i == 1:
+            ax.set_title('atti buffer')
+        elif i == 2:
+            ax.set_title('acce buffer')
+        elif i == 3:
+            ax.set_title('gyro buffer')
+    filename = '../result/buffer/average_feature/user' + str(userid) + '.png'
+    plt.savefig(filename)
+    plt.close('all')
+
+device=2
+for userid in xrange(1,17):
+    data, label = getBufferTrainingDataAndLabelBy(userid, device)
+# data, label = splitBufferDataByLabel(data, label, classificationCondition=1)
+# plot2Ddata(data, label)
+
+    plot3Ddata(data, label, userid)
+
+# output data view
 # print data
 # print label
 
-#plotBufferFeatureROC(userid, device)
-print 'average error rate: ' + repr(np.mean(errorRateForAll()))
+# plot ROC curve
+# plotBufferFeatureROC(userid, device)
+
+# print average of error rate
+# print 'average error rate: ' + repr(np.mean(errorRateForAll()))
+
+# plot svc model
+# i = 3
+# data2d = data[:, 0+i:2+i]
+# plot_svc_decision_function(data2d, label)
+

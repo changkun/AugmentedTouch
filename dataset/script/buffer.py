@@ -229,7 +229,6 @@ def plot_svc_decision_function(data, label, ax=None):
 def plot2Ddata(data, label):
     plt.scatter(data[:, 0], data[:, 1], c=label, s=10, cmap='spring');
     plt.show()
-
 def plot3Ddata(data, label, userid):
     fig = plt.figure(figsize=(30,10))
     for i in xrange(1,4):
@@ -251,13 +250,13 @@ def plot3Ddata(data, label, userid):
     plt.savefig(filename)
     plt.close('all')
 
-device=2
-for userid in xrange(1,17):
-    data, label = getBufferTrainingDataAndLabelBy(userid, device)
-# data, label = splitBufferDataByLabel(data, label, classificationCondition=1)
-# plot2Ddata(data, label)
+# device=2
+# for userid in xrange(1,17):
+#     data, label = getBufferTrainingDataAndLabelBy(userid, device)
+# # data, label = splitBufferDataByLabel(data, label, classificationCondition=1)
+# # plot2Ddata(data, label)
 
-    plot3Ddata(data, label, userid)
+#     plot3Ddata(data, label, userid)
 
 # output data view
 # print data
@@ -267,7 +266,7 @@ for userid in xrange(1,17):
 # plotBufferFeatureROC(userid, device)
 
 # print average of error rate
-# print 'average error rate: ' + repr(np.mean(errorRateForAll()))
+print 'average error rate: ' + repr(np.mean(errorRateForAll()))
 
 # plot svc model
 # i = 3

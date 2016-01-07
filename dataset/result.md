@@ -63,7 +63,7 @@ and the classfication problem can be described as following form:
     - User-i Device-j hack in User-k Device-l Model, error rate: 0.x%
 
 4. Method4: 使用 user-i 的 device-j 训练模型，用 user-k 的 device-l 进行 test, i!=k; j!=l; i,k=1,2,...,16; j,l=1,2
-    - User-i Device-j hack in User-k Device-l Model, error rate: 0.x%
+    - User-i Device-j hack in User-k Device-j Model, error rate: 0.x%
 
 #### 2. Moment Dataset Classification
 
@@ -103,12 +103,12 @@ and the classfication problem can be described as following form:
 	C: 1.0
 	kernel: linear
 	gamma: auto
-	max iteration: 1 000 000
+	max iteration: 5 000 000
 	
 	other: default
 
 #### cross validation parameters
-    test_size: 0.1
+    test_size: 0.3
     random_state: 42
 
 ##### Authentication

@@ -446,6 +446,64 @@ def plotROCforAll():
                 for userid in xrange(1,17):
                     plotROC(userid, device, featureCondition, classificationCondition, offset=True, noisyOn=True)
 
+
+def identificationMoment(userid, device, featureCondition, classificationCondition, offsetFeatureOn=False):
+
+    data = {}
+    label = {}
+    for user in xrange(1,17):
+        data[user], label[user] = splitMomentDataByFeatureAndLabel(user, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
+        if user == userid:
+            label[user] = [1 for value in label[user]]
+        else:
+            label[user] = [0 for value in label[user]]
+
+    for user in xrange(1,17):
+        if user != userid:
+            data[userid] = np.vstack((data[userid], data[user]))
+            label[userid] = np.hstack((label[userid], label[user]))
+
+    trainingData, testData, trainingLabel, testLabel = train_test_split(data[userid], label[userid], test_size=my_test_size, random_state=my_random_state)
+
+    return classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=1000)
+
+def identificationMomentForAll(featureCondition,  classificationCondition, offsetFeatureOn):
+    lines = []
+    for userid in xrange(1,17):
+        for device in xrange(1,3):
+            error_rate = identificationMoment(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
+            line =  'identification user' + str(userid) + ' device' + str(device) + ' featureCondition' + str(featureCondition) + ' classificationCondition' + str(classificationCondition) + ' error rate: ' + str(error_rate) + '\n'
+            print line
+            lines.append(line)
+
+    filepath = '../result/moment/method2/clfCondition' + str(classificationCondition) + '/featureCondition' + str(featureCondition) + '.txt'
+    f = open(filepath, 'w')
+    f.writelines(lines)
+    f.close()
+
+def identificationThreads(xyfeature):
+    threads = []
+
+    for clfCondition in xrange(1, 5):
+        for featureCondition in xrange(0,17):
+            t = threading.Thread(target=identificationMomentForAll, args=(featureCondition, clfCondition, xyfeature))
+            threads.append(t)
+
+    print 'thread create success.'
+
+    # for i in xrange(0,17*4):
+    #     threads[i].start()
+    # for i in xrange(0,17*4):
+    #     threads[i].join()
+
+    for j in xrange(0,4):
+        for i in xrange(0,17):
+            threads[j*17+i].start()
+        for i in xrange(0,17):
+            threads[j*17+i].join()
+
+    print 'Process identification finished...'
+
 def main():
 
     #Method1DrawAllUser()
@@ -455,7 +513,13 @@ def main():
     # Method2Threads(True)
     # Method3Threads(True)
     # Method4Threads(True)
-    plotROCforAll()
+
+    identificationThreads(False)
+
+    # print identificationMoment(1, 1, 1, 1, False)
+
+    # plotROCforAll()
+
 
 
 if __name__ == '__main__':

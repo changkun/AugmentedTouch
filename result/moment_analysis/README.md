@@ -1,4 +1,4 @@
-# READEME
+# README
 
 This folder contains:
 

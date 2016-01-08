@@ -14,3 +14,5 @@ dataset/result/*
 *.numbers
 
 *.key
+
+result/buffer_analysis/infovis/infovis.zip

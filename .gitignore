@@ -1,3 +1,12 @@
+.DS_Store
+
+result/moment_analysis/error_rate/*
+
+result/moment_analysis/roc_curve/*
+
+result/buffer_analysis/infovis/all/*
+
+dataset/PIN-Entry/data/*
 
 *.csv
 
@@ -7,12 +16,6 @@
 
 *.mov
 
-dataset/result/*
-
-*.mov
-
 *.numbers
 
 *.key
-
-result/buffer_analysis/infovis/infovis.zip

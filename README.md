@@ -1,14 +1,13 @@
-# MotionTouch - Potential Device Behaviour
+# Augmented Touch - Potential Device Behaviour 
 
-This repository contains source code and all the research documentation for my implementation of touch with sensor data on mobile devices. 
 
-I wish you can be inspired by this repository to keep interested in developing a new way to adapt user interface on mobile devices by using sensor behaviour and touch behaviour.
+## Introduction
 
-At the very beginining, you can see a very breif demo on [YouTube](https://youtu.be/voyEDZ6Awzw).
+Augmented Touch is a project on touch behaviour. It included the effect of using touch positon feature and sensor features to analysis hand posture classification probelm and authentication user on mobile devices.
 
-The project are inspired from some of touch behaviour research by [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/), and you can find the related works [here](https://scholar.google.de/citations?user=TsVkUBwAAAAJ).
+I wish you could be inspired by this repository to keep interested in develop a new way to use sensor information, such as adapt user interface on mobile devices by using sensor behaviour and touch behaviour. You can see a very breif demo on [YouTube](https://youtu.be/voyEDZ6Awzw).
 
-More information are coming soon...
+This project is inspired and coached from few of touch behaviour research by [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/), and you can find the related works [here](https://scholar.google.de/citations?user=TsVkUBwAAAAJ).
 
 ## Content
 ----------
@@ -18,8 +17,7 @@ More information are coming soon...
   - [TouchMotion Collect](./src/TouchMotion Collect/README.md)
 * [Github license](./LICENSE)
 
-## TODO:
---------
+## Basic Results Reveal
 
 ![(x,y,roll)数据的SVM分类效果](./img/x-y-roll-svm.png)
 
@@ -46,7 +44,10 @@ coming soon...
 
 [Changkun Ou](http://changkun.us/about/)
 
+## Advisor
+
 [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)
 
 ## License
-&copy; Contributors, 2015. Licensed under an GNU Public v2 license.
+
+&copy; Contributors & Advisor, 2015-2016. Licensed under an GNU Public v2 license.

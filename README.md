@@ -11,11 +11,18 @@ This project is inspired and coached from few of touch behaviour research by [Da
 
 ## Content
 ----------
-* [About](./README.md)
-* Projects
+* [**About**](./README.md)
+* [**Apply your own user study**]()
   - [MotionGraphs](./src/MotionGraphs/README.md)
+  - [TouchMotion](./src/TouchMotion/README.md)
   - [TouchMotion Collect](./src/TouchMotion Collect/README.md)
-* [Github license](./LICENSE)
+* [**Dataset**]()
+* [**Analysis source code**]()
+* [**License**](./LICENSE)
+
+## Apply your own user study
+
+## Dataset
 
 ## Basic Results Reveal
 
@@ -42,12 +49,16 @@ This project is inspired and coached from few of touch behaviour research by [Da
 
 ## Contributors
 
-[Changkun Ou](http://changkun.us/about/)
+- [Changkun Ou](http://changkun.us/about/)
 
-## Advisor
+### Project Advisor
 
-[Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)
+- [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/)
 
 ## License
 
-&copy; Contributors & Advisor, 2015-2016. Licensed under an GNU Public v2 license.
+You can download datasets/results and run/modify the user study software, but you are **forbidden** to copy and republish it without any modify on condition of contributors anonymous.
+
+Furthurmore, You need site the name of contributors in acknowledgement when you publish your studff.
+
+&copy; Contributors & Advisor, 2015-2016. All source code licensed under an GNU Public v2 license.

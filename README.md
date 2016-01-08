@@ -19,9 +19,9 @@ This project is inspired and coached from few of touch behaviour research by [Da
 
 ## Basic Results Reveal
 
-![(x,y,roll)数据的SVM分类效果](./img/x-y-roll-svm.png)
+![(x,y,roll)-SVM-clf-results](./img/x-y-roll-svm.png)
 
-coming soon...
+![buffer-data-vis](./img/buffer.jpeg)
 
 ## References
 -------------

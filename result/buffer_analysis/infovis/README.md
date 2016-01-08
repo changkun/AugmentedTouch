@@ -7,7 +7,7 @@ Images draws time domain and frequency domain of the buffer of attitude/accelera
 
 ### Dowloads
 
-* [infovis.zip](http://www.changkun.info/publicfiles/dataset/motiontouch/infovis.zip)
+* [infovis.zip](http://www.changkun.info/publicfiles/datasets/motiontouch/infovis.zip)
 
 ### Usage
 

@@ -7,24 +7,24 @@ Augmented Touch is a project on touch behaviour. It included the effect of using
 
 I wish you could be inspired by this repository to keep interested in develop a new way to use sensor information, such as adapt user interface on mobile devices by using sensor behaviour and touch behaviour. You can see a very breif demo on [YouTube](https://youtu.be/voyEDZ6Awzw).
 
-This project is inspired and coached from few of touch behaviour research by [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/), and you can find the related works [here](https://scholar.google.de/citations?user=TsVkUBwAAAAJ).
+This project is inspired and coached from few touch behaviour research by [Daniel Buschek](http://www.medien.ifi.lmu.de/team/daniel.buschek/), and you can find the related works [here](https://scholar.google.de/citations?user=TsVkUBwAAAAJ).
 
 ## Content
 ----------
 * [**About**](./README.md)
-* [**Apply your own user study**]()
+* [**Apply your own user study**](Apply your own user study)
   - [MotionGraphs](./src/MotionGraphs/README.md)
   - [TouchMotion](./src/TouchMotion/README.md)
   - [TouchMotion Collect](./src/TouchMotion Collect/README.md)
 * [**Dataset**]()
-* [**Analysis source code**]()
+* [**Build & Run**]()
 * [**License**](./LICENSE)
 
 ## Apply your own user study
 
 ## Dataset
 
-## Basic Results Reveal
+## Build & Run
 
 ![(x,y,roll)-SVM-clf-results](./img/x-y-roll-svm.png)
 
@@ -61,4 +61,4 @@ You can download datasets/results and run/modify the user study software, but yo
 
 Furthurmore, You need site the name of contributors in acknowledgement when you publish your studff.
 
-&copy; Contributors & Advisor, 2015-2016. All source code licensed under an GNU Public v2 license.
+&copy; Contributors & Advisor, 2015-2016. All source code licensed under [GNU Public v2 license](./LISENCE).

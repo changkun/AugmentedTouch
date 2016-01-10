@@ -1,18 +1,34 @@
-# AugmentedTouch: A Study in Best Feature of Touch and Sensor Data
+# AugmentedTouch: A Study in Sensors Augment Classification Accuracy of Using Touch Position or Touch Offset Features
+
+## Introduction
+
+This report aims to summary four parts of exploring in human touch behavior and  sensor features influence classification accuracy in posture predicting:
+
+1. Dynamic UI with different hand posture;
+2. App Prototyping for predict user's posture of hold their device;
+3. Result and feedback from participants of an User Study in using PIN Entry Design;
+4. Performance and conclution of sensor augment touch position ( or touch offset) features.
+
+> All the results and commit history can be download on the Github: [https://github.com/changkun/AugmentedTouch](https://github.com/changkun/AugmentedTouch)
+
+## Implementation
+
+### Dynamic UI
+
+> Youtube: https://www.youtube.com/watch?v=voyEDZ6Awzw
+
+### Prototyping App for Testing
+
+### Applying User Study
 
 
-## Abstract
+## Evaluation
 
+## Discussion
 
-## Introcution
+## Conclusion
 
-介绍背景
-
-### touch and feature design
-
-## 
-
-## Related work
+## References
 
 [1] 这篇文章探究了 Gyro 结合 touch 行为的手势探究
 没有完成的:
@@ -58,17 +74,3 @@ title = {{User-Specific Touch Models in a Cross-Device Context}},
 url = {http://eprints.gla.ac.uk/80621/},
 year = {2013}
 }
-
-
-## Implementation
-
-
-## Evaluation
-
-## Result 
-
-## Discussion
-
-## Conclusion
-
-## References

@@ -64,8 +64,8 @@ In this user study, we are primarily interested in the .. of ..
 This also helps to improve our understanding of 
 
 <div align="center">
-	<img src="img/pin1.png" width="200">
-	<img src="img/pin2.png" width="200">
+	<img src="img/pin1.PNG" width="200">
+	<img src="img/pin2.PNG" width="200">
 	<p><strong>Fig 4.</strong> PIN-Entry Study: </p>
 </div>
 

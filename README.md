@@ -61,4 +61,4 @@ You can download datasets/results and run/modify the user study software, but yo
 
 Furthurmore, You need site the name of contributors in acknowledgement when you publish your studff.
 
-&copy; Contributors & Advisor, 2015-2016. All source code licensed under [GNU Public v2 license](./LISENCE).
+&copy; Contributors & Advisor, 2015-2016. This work is licensed under a [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/). All source code licensed under a [GNU Public v2 License](./LISENCE). 

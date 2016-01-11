@@ -11,7 +11,7 @@
 
 ### JSON Format
 
-	condition:
+	l:
 		1==left_thumb, 
 		2==right_thumb, 
 		3==left_index, 
@@ -30,6 +30,7 @@
 		5==always
 		
 example:
+
 ```json
 {
 	"id" : 16,

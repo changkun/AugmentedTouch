@@ -8,7 +8,7 @@
 
 This report aims to summary five parts of exploring in human touch behavior and  sensor features influence classification accuracy in posture predicting and how these features influence a classification model for authentication:
 
-0. TouchML.framework for iOS
+0. TouchML framework for iOS;
 1. Dynamic UI with different hand posture;
 2. App Prototyping for predict user's posture of hold their device;
 3. Result and feedback from participants of an User Study in using PIN Entry Design;
@@ -20,6 +20,9 @@ This report aims to summary five parts of exploring in human touch behavior and 
 
 ### 2.1 TouchML for iOS
 
+This part mainly disscuss a TouchML framework[4] implementation on iOS devices..
+
+Coming soon...
 
 ### 2.2 Dynamic UI
 
@@ -41,11 +44,11 @@ This report aims to summary five parts of exploring in human touch behavior and 
 	<p><strong>Fig 2.</strong> GyroInfo: This figures group shows the wave pattern of gyroscope sensor , it represent when a user hit two button side by side repetedly.  The upper figure indicate left hand action, and the bottom figure indicate right hand action.</p>
 </div>
 
-### 2.3 Pre-Test
+### 2.3 Pre-test
 
 <div align="center">
 <img src="img/x-y-roll-svm.png" width="400">
-<p><strong>Fig 3.</strong> SVM Hyper-Plane: a small dataset applied simple linear SVM classification for different thumb, it only use touch position and one of device attitute angle features(3 features, (x,y,roll)). The red point indicate left thumb data and blue point indicate right thumb data.</p>
+<p><strong>Fig 3.</strong> SVM Hyper-plane: a small dataset applied simple linear SVM classification for different thumb, it only use touch position and one of device attitute angle features(3 features, (x,y,roll)). The red point indicate left thumb data and blue point indicate right thumb data.</p>
 </div>
 
 ### 2.4 Prototyping App for Testing
@@ -63,21 +66,50 @@ Inspired by this App, author observed if the traning data came from only one use
 ### 2.5 Applying User Study
 > Source Code: [TouchMotion](https://github.com/changkun/AugmentedTouch/tree/master/src/TouchMotion)
 
-In this user study, we are primarily interested in the .. of ..
-This also helps to improve our understanding of 
+In this user study, we are primarily interested in the accuracy of sensor feature extensions.
+
+This also helps to improve our understanding of sensor feature effects.
+
+#### 2.5.1 User Study Procedure
 
 <div align="center">
 	<img src="img/pin1.PNG" width="200">
 	<img src="img/pin2.PNG" width="200">
-	<p><strong>Fig 4.</strong> PIN-Entry Study: </p>
+	<p><strong>Fig 5.</strong> PIN-Entry Study Interface</p>
 </div>
 
 Each participant completed a sit down meeting maintain half one-hour for input **6 PINS x 10 repetitions x 6 touches x 4 hand postures x 2 devices**(iPhone 6 Plus and iPhone 5).
-The 6 PINs are pre-install on the study app, which is 273849, 593827, 950284, 020485, 857162, 495937, all of these numbers are randomly generated.
+The 6 PINs are pre-install on the study app, which is **273849, 593827, 950284, 020485, 857162, 495937,** all of these numbers are randomly generated.
 
 At the end of user study, we collected statistics, 16 joined participants which from 10 people of male and 6 people of female. The age range of Participants from 19 to 34, and half of participants are range in 23 to 27. A questionnaire invastigation after participants finished study shows the average of participants age of use touch screen smartphone almost five years. Half of participants are currently using PIN code to protect thier phone and a quarter use fingerprint.
 
+#### 2.5.2 Participants Feedback
+
+During the whole study, we randomly asked few quesiton to participants and questions are follows:
+
+* What influenced you make mistakes?
+	- Most anwsers: "I didn't realize the number has changed.";
+	- Six numbers as a PIN code is too complex for input quick, they often use four numbers.
+		
+* What do you think of the function of background color?
+	- Most anwsers: "may be nonsense";
+	
+* What's the special meaning of the input number series?
+   - Most anwsers: "no idea";
+	   
+* What's the study study in?
+	- A kind of game, count mistakes to find out how users concentrate on something;
+	- Find out which hand simple for users;
+	- Find out which number series is easy for input.
+
+* Comments?
+   - The last number series(495937) always much easier than others;
+   - Finger movement is easy to remeber.
+
+
 ## III. Evaluation
+
+As a glance of sensor feature effects, we didn't choose a complex model(such as deep nerual network) for a exceedingly outstanding error rate, instead of this, we use linear support vector machine algorithm to analysis the following datasets.
 
 ### 3.1 Datasets Description
 
@@ -167,13 +199,35 @@ And the following table shows some of fields explanation:
 
 ### 3.2 Experiment Setup
 
+Practically, participants _p_ use hand posture _h_ to input number _n_ on device _d_, and generate a moment data and a buffer data when they touch screen. Tuple (p, h, n, d) cause another tuple (touch_position, touch_offset, device_attitute, device_accelerometer, device_gyroscope, touch_time).
+
 In this study, we evaluate the most comprehensive cases of four different classification problem through five different analysis model.
 
 These five different analysis model contains the problem in classification of hand posture and authentication of PIN Entry with sensor features.
 
 #### 3.2.1 Models and Parameters
 
-We setup all the experiment in Support-Vector Machine Algorithm and the algorithum parameters are as follows:
+
+**Classification Models**
+
+A classification model in this study can be categorised by users or devices, as result, we heve three model for classification problem.
+
+
+**Model I**: Typical cross validation based on a specific user and a specific device.
+
+**Model II**: Typical cross validation based on a secific user but use the iPhone 6 Plus data to tran the model, and use iPhone 5 data to test the model.
+
+**Model III**: Typical cross validation based on a secific user but reversal the traning data and test data, which means use iPhone 5 data to train the model and use iPhone 6 Plus to test it.
+
+**Authentification Models**
+
+**Model IV**: For each raw data of user _u_  train a model as Model _m_, then take all complementray set of _u_ data to test Model _m_;
+
+**Model V**: For each user _u_, we take all the data of _u_ , change the all the hand posture label as 1, and take all complementray set of _u_ data and label it as 0, applying a typical cross validation on it.
+
+**Parameters**
+
+We setup all the experiment in Support-Vector Machine Algorithm and the algorithm parameters are as follows:
 
 ```python
 kernel = 'linear'
@@ -182,36 +236,20 @@ test_size = 0.3
 random_state = 42
 ```
 
-**Classification Model**
-
-Model 1: 
-Model 2:
-Model 3:
-
-**Authentification Model**
-
-Model 4:
-Model 5:
-2. **User Model**: Use split data in same device 
-3. **Basic Device-Cross Validation**: 
-4. **Basic Device-Cross Validation**: 
-5. **User-**:
-
-
 #### 3.2.2 Model Conditions
 
-一共设置了四种不同的分类方式, 分别是...
+We setup four different classification condition, they are listed as following table:
 
-| Classification Condition | classification Problem |
+| Classification Condition | Classification Problem |
 |:----------:|:-----------------:|
 |1|Left thumb and right thumb binary classification|
 |2|Left index-finger and right index-finger binary classification|
 |3|left and right thumb, left and right index-finger multi-classification|
 |4|left and right hand binary classification |
 
-说明: 左右手的二分类问题实际上整合了左手拇指和左手 indexfinger 作为左手数据, 右手类似, 进行的分类.
+Typically, 4th classification condition group the left thumb data and left index-finger data as left hand data, the right thumb and right index-finger data as right hand data.
 
-对于实验模型的特征一共设置了17组, 其中feature condition 为0的一组没有使用传感器特征,只使用了触摸位置 xy 或者触摸 offset 作为分类特征, 这个结果作为整个实验结果的 baseline.
+We set 17 feature extension conditions, and the feature condition 0 as the baseline for whole analysis. 
 
 | Feature Condition | Feature Component (with Position) | Feature Component (with Offset) |  
 |:--:|:--|:--|
@@ -237,62 +275,105 @@ Model 5:
 
 #### 3.3.1 Moment Data
 
+The range of sensor data is from -1 to 1. But the value of XY-position feature are range from 0x0 to 414x736 (iPhone 6 Plus logical pixel size) or 320x568(iPhone 6 Plus logical pixel size). 
+
+Considering a preprocess of data normalization, we rescale each of XY-position feature to the region of (0, 1), and also applied the normalization to each of offset feature data.
+
 #### 3.3.2 Buffer Data
+
+Buffer data has its own dimensionality. Each of tap moment recorded 50 record as a time series, therefore every tap moment represented by tree 50 dimension vectors of each sensor (called buffer vector).
+
+For a data preprocess, we set a kernel function(also can be customized to be anyone) to calculate the average of each buffer vector for reducing dimensions from 50 to 1.
 
 ### 3.4 Result
 
+> In order to reproduce the result of this paper, we open source the analysis code and dataset (participants infomation are removed due to privacy protection) on the Github under CC Licence and GPL Licence. If you interested in this study, you can also download the user study app and applying your work on this idea even expanding it.
 
-> In order to reproduce the result of this paper, we open source the analysis code and dataset (participants infomation are removed due to privacy protection) on the Github under CC4.0 Licence and GPLv2 Licence. If you interested in this study, you can also download the user study app and applying your work on this idea even expanding it.
+As results summary, we list all the analysis condition on the follow list:
 
-2类不同的baseline 扩展, 17个扩展 feature 条件, 2个不同设备, 2类不同数据 16个不同用户, 4个分类条件, 5个分析方法, 对 offset 和 position 分别进行实验.
+* **2 baseline extentions**: (x,y) or (offset_x, offset_y);
+* **17 feature conditions**;
+* **4 classcification conditions**: thumb classification, index-finger classification, thumb and index-finger classification and hand classification;
+* **2 data types**: moment data and buffer data;
+* **2 diveces**: iPHone 6 Plus and iPhone 5;
+* **16 participants**;
+* **5 analysis model**.
 
-| Average of Classification Accuracy(%) |||
-|:--:|:--:|:--:|
-| FeatureID | with XY-Position feature | with Offset feature |
+In analysis model I, error rate based on same participant with same device, **we have 544 error rate results per participant**;
+In analysis model II, error rate based on same participant with different device, **we have 272 error rate results per participant**;
+In analysis model II, error rate actually the same and only exchange is by device order, **we have 272 error rate results per participant**;
+
+In analysis moel IV, every participant has 15 attacker, so we have 8160 error rate results per user, if we calculate the average of this 15 attacker error rate, then **we have 544 results per participant**;
+In analysis model V,  each participant with each device gains its error rate, so **we have 544 error rate results per participant**.
+
+
+#### 3.4.1 Result of Classification Models
+
+There is no space to cover all the result we condisered, as an example, Fig 6 and 7 illustrates the model I results of 4th participants. 
+
+> Other result can be download on the GitHub repository.
+
+Intestestingly, the offset feature was observed to largely increasing accuracy and the ROC curve shows the performance of the offset feature classifier is better than XY-Position feature. 
 
 <div align="center">
 <img src="img/error_rate.png" width="60%">
-<p><strong>Fig 5.</strong> Error Rate: </p>
+<p><strong>Fig 6.</strong> Error Rate on each  on User 4, offset feature result compare with XY-position feature</p>
 </div>
 
 <div align="center">
 <img src="img/roc.png" width="100%">
-<p><strong>Fig 5.</strong> ROC Curve: </p>
+<p><strong>Fig 7.</strong> ROC Curve: The 9th Participant, Analysis Model I, Feature Condition 10</p>
 </div>
 
+Overall, this experiment indicate that the result of error rate under baseline condition is 96.8% of all the results.
+86.2% results of error rate based on offset feature is under 40% but the error rate based on XY-Position feature is under 80%.
 
-What is interesting in this result is that ...
+98.8% error rate results of offset feature is better than XY-Position feature.
 
-The difference between iPhone 6 Plus 
+As feature extensions, in this study, the results shows the conbination of the following features are the best features for classification and authentification:
+
+  * 3: (offset_x, offset_y, atti_yaw), 
+  * 10: (offset_x, offset_y, atti_{roll,pitch,yaw}), 
+  * 13: (offset_x, offset_y, atti{roll,pitch,yaw}, acce{x,y,z}), 
+  * 14: (offset_x, offset_y, atti{roll,pitch,yaw}, gyro{x,y,z}),
+  * 16: (offset_x, offset_y, atti{roll,pitch,yaw}, acce{x,y,z}, gyro{x,y,z}) 
+
+#### 3.4.2 Result of Authentication Models
+
+coming soon...
 
 ## IV. Discussion
 
 ### 4.1 Limitations
 
+Coming soon...
 
 ## V. Conclusions
 
-1. 部分传感器特征的引入能够大幅度提高只使用用户触摸位置进行握持手姿的分类预测
-2. Offset 特征比 Position 特征获得更好的分类精度
-3. 作为扩展特征, 在本次全面覆盖的实验中显示, 特征组合
-(x, y, atti_yaw), 
-(x, y, atti_{roll,pitch,yaw})|(offset_x, offset_y, atti_{roll,pitch,yaw}), 
-(x, y, atti{roll,pitch,yaw}, acce{x,y,z})|(offset_x, offset_y, atti{roll,pitch,yaw}, acce{x,y,z}),
-(x, y, atti{roll,pitch,yaw}, gyro{x,y,z})
-(x, y, atti_{roll,pitch,yaw}, acce_{x,y,z}, gyro_{x,y,z})|(offset_x, offset_y, atti_{roll,pitch,yaw}, 
-acce_{x,y,z}, gyro_{x,y,z}) 
-获得低于 0.05% 的错误率的结果占总结果集合的 xx%
+1. Appropriate import sensor feature can largely improve the accuracy of classify hand posture and PIN code login authentification;
+2. Offset feature is better than XY-Position;
+3. Device attitute is the most best feature extension. In input problem, yaw property is the best feature for classification.
+4. coming soon...
 
 ## VI. Feature Work 
 
 ### 6.1 Expansibility
 
 Coming soon...
-代码扩展性, 
 
 ### 6.2 Uncovered Feilds
 
-Coming soon...
+There are a plenty of information in the dataset we didn't use for analysis:
+
+1. Touch time, input numbers and speed was not used for this analysis;
+2. The input context could be a good parttern for remember, in these datasets, we can conclude which number was currently input, as analysis we didn't largely use this information. For example, we could add ten analysis condition if we classified by input numbers.
+3. Questionnaire was not used.
+4. Buffer vector could use fast fourier transform to frequency domain, and the result could use as features to analysis error rate;
+5. Why OFFSET is better than XY significantly;
+6. The operation from questionnaire maybe could as a weight to vote data's value for every user:
+  * Operation = { W{leftthumb}, W{rightthumb}, W{leftindex}, W{rightindex}, W{pin}, W{screensize} }
+	
+These could be the next step for analysis the best pattern for classification and authentication.
 
 ## VII. References
 
@@ -313,12 +394,11 @@ url = {http://dl.acm.org/citation.cfm?id=2380184},
 year = {2012}
 }
 
-[2] 这篇文章探究了 Touch 和 Motion 类型的
+[2] 这篇文章探究了 Touch 和 Motion 类型的影响, 但是大部分结果都是人工标准, 没有使用机器学习方法.
+
 @article{Hinckley2011a,
-abstract = {We explore techniques for hand-held devices that leverage the multimodal combination of touch and motion. Hybrid touch + motion gestures exhibit interaction properties that combine the strengths of multi-touch with those of motion- sensing. This affords touch-enhanced motion gestures, such as one-handed zooming by holding ones thumb on the screen while tilting a device. We also consider the reverse perspective, that of motion-enhanced touch, which uses motion sensors to probe what happens underneath the surface of touch. Touching the screen induces secondary accelerations and angular velocities in the sensors. For example, our prototype uses motion sensors to distinguish gently swiping a finger on the screen from drags with a hard onset to enable more expressive touch interactions.},
 author = {Hinckley, Ken and Song, Hyunyoung},
 doi = {10.1145/1978942.1979059},
-file = {:Users/ouchangkun/Documents/Mendeley Desktop/Hinckley, Song/Human Factors/Hinckley, Song - 2011 - Sensor Synaesthesia Touch in Motion , and Motion in Touch.pdf:pdf},
 isbn = {9781450302678},
 journal = {Human Factors},
 pages = {801--810},
@@ -327,8 +407,9 @@ url = {http://portal.acm.org/citation.cfm?id=1979059},
 year = {2011}
 }
 
-[3]@inproceedings{Buschek2013b,
-abstract = {We present a machine learning approach to train user-specific offset models, which map actual to intended touch locations to improve accuracy. We propose a flexible framework to adapt and apply models trained on touch data from one device and user to others. This paper presents a study of the first published experimental data from multiple devices per user, and indicates that models not only improve accuracy between repeated sessions for the same user, but across devices and users, too. Device-specific models outperform unadapted user-specific models from different devices. However, with both user- and device-specific data, we demonstrate that our approach allows to combine this information to adapt models to the targeted device resulting in significant improvement. On average, adapted models improved accuracy by over 8{\%}. We show that models can be obtained from a small number of touches (� 60). We also apply models to predict input-styles and identify users.},
+[3]
+
+@inproceedings{Buschek2013b},
 address = {New York, New York, USA},
 author = {Buschek, Daniel and Rogers, Simon and Murray-Smith, Roderick},
 booktitle = {Proceedings of the 15th international conference on Human-computer interaction with mobile devices and services},
@@ -340,3 +421,15 @@ title = {{User-Specific Touch Models in a Cross-Device Context}},
 url = {http://eprints.gla.ac.uk/80621/},
 year = {2013}
 }
+
+[4] 一个框架, 对
+
+@inproceedings{Buschek:2015cd,
+author = {Buschek, Daniel and Alt, Florian},
+title = {{TouchML: A Machine Learning Toolkit for Modelling Spatial Touch Targeting Behaviour}},
+booktitle = {IUI '15: Proceedings of the 20th International Conference on Intelligent User Interfaces},
+year = {2015},
+publisher = {~ACM  Request Permissions},
+month = mar
+}
+

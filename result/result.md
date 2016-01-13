@@ -27,7 +27,6 @@
 	
 	* The last number series always much easier than others
 	* Finger movement is easy to remember
-	* They alway use
 
 ## Posture Classifier
 

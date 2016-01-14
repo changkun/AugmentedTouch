@@ -6,6 +6,8 @@
 
 ## I. Introduction
 
+--- goals for reading this paper
+
 This report aims to summary five parts of exploring in human touch behavior and  sensor features influence classification accuracy in posture predicting and how these features influence a classification model for authentication:
 
 0. TouchML framework for iOS;
@@ -17,6 +19,7 @@ This report aims to summary five parts of exploring in human touch behavior and 
 > All the dataset, analysis source code, results even the commit history can be download on the GitHub: [https://github.com/changkun/AugmentedTouch](https://github.com/changkun/AugmentedTouch)
 
 ## II. Implementation
+--- prototyping.
 
 ### 2.1 TouchML for iOS
 
@@ -64,6 +67,7 @@ Coming soon...
 Inspired by this App, author observed if the traning data came from only one user, then the model sometimes won't work with other users. And also the sensor feature only used one component. So we try to designed an user study to collect a large dataset to exploring  how sensor features influence this classification accuracy and whether the dataset could be using on authentification or not.
 
 ### 2.5 Applying User Study
+--- make it to be an alone section
 > Source Code: [TouchMotion](https://github.com/changkun/AugmentedTouch/tree/master/src/TouchMotion)
 
 In this user study, we are primarily interested in the accuracy of sensor feature extensions.
@@ -71,6 +75,8 @@ In this user study, we are primarily interested in the accuracy of sensor featur
 This also helps to improve our understanding of sensor feature effects.
 
 #### 2.5.1 User Study Procedure
+--- describe it people who can re-inmplement it.
+
 
 <div align="center">
 	<img src="img/pin1.PNG" width="200">
@@ -84,7 +90,7 @@ The 6 PINs are pre-install on the study app, which is **273849, 593827, 950284, 
 At the end of user study, we collected statistics, 16 joined participants which from 10 people of male and 6 people of female. The age range of Participants from 19 to 34, and half of participants are range in 23 to 27. A questionnaire invastigation after participants finished study shows the average of participants age of use touch screen smartphone almost five years. Half of participants are currently using PIN code to protect thier phone and a quarter use fingerprint.
 
 #### 2.5.2 Participants Feedback
-
+--- change to results
 During the whole study, we randomly asked few quesiton to participants and questions are follows:
 
 * What influenced you make mistakes?
@@ -212,7 +218,7 @@ These five different analysis model contains the problem in classification of ha
 
 A classification model in this study can be categorised by users or devices, as result, we heve three model for classification problem.
 
-
+描述得更加清楚
 **Model I**: Typical cross validation based on a specific user and a specific device.
 
 **Model II**: Typical cross validation based on a secific user but use the iPhone 6 Plus data to tran the model, and use iPhone 5 data to test the model.
@@ -286,6 +292,7 @@ Buffer data has its own dimensionality. Each of tap moment recorded 50 record as
 For a data preprocess, we set a kernel function(also can be customized to be anyone) to calculate the average of each buffer vector for reducing dimensions from 50 to 1.
 
 ### 3.4 Result
+--- change to a dependent section.
 
 > In order to reproduce the result of this paper, we open source the analysis code and dataset (participants infomation are removed due to privacy protection) on the Github under CC Licence and GPL Licence. If you interested in this study, you can also download the user study app and applying your work on this idea even expanding it.
 
@@ -307,7 +314,7 @@ In analysis moel IV, every participant has 15 attacker, so we have 8160 error ra
 In analysis model V,  each participant with each device gains its error rate, so **we have 544 error rate results per participant**.
 
 
-#### 3.4.1 Result of Classification Models
+#### 3.4.1 Results of Classification Models
 
 There is no space to cover all the result we condisered, as an example, Fig 6 and 7 illustrates the model I results of 4th participants. 
 
@@ -338,9 +345,26 @@ As feature extensions, in this study, the results shows the conbination of the f
   * 14: (offset_x, offset_y, atti{roll,pitch,yaw}, gyro{x,y,z}),
   * 16: (offset_x, offset_y, atti{roll,pitch,yaw}, acce{x,y,z}, gyro{x,y,z}) 
 
-#### 3.4.2 Result of Authentication Models
+For instance of buffer data, we pick two user's buffer data by mean pre-process, and visualised the three different component of each sensor, the image has some abvious pattern with each user but completely different with others. 
+<div align="center">
+	<div>
+	<img src="img/buffer-user1.png" width="100%">
+	User 1
+	</div>
+	<img src="img/buffer-user2.png" width="100%">
+	User 2
+	<p><strong>Fig 8.</strong> Buffer Model: User1's data visulisation is completely different with User2</p>
+</div>
 
-coming soon...
+Furthermore, the result (include moment data and mean pre-process buffer data) of Model II and Model III shows 97.6% results of error rate is bigger than 50%, 76.4% results of error rate is bigger than 70%, which indicate that this classification problem is device specific.
+
+#### 3.4.2 Results of Authentication Models
+
+User Identification using moment data yielded very bad overall results.
+
+In essence, the model 4 is not a authentication model in the true sense. The error rate results of this model showed more than 80% error rate results less than 40%. And once change to offset feature the error rate will keep reduce almost 10%.
+
+In Model V, the average of error rate with moment data is actrally lower than 10%, which means the the classify arruracy is very strong(bigger than 90%), the model can't distinguish each user.
 
 ## IV. Discussion
 
@@ -352,8 +376,10 @@ Coming soon...
 
 1. Appropriate import sensor feature can largely improve the accuracy of classify hand posture and PIN code login authentification;
 2. Offset feature is better than XY-Position;
-3. Device attitute is the most best feature extension. In input problem, yaw property is the best feature for classification.
-4. coming soon...
+3. Device attitute is the most best feature extension. In input problem, yaw property is the best feature for classification;
+4. The classification problem is a device specific problem.
+5. 
+
 
 ## VI. Feature Work 
 
@@ -372,7 +398,12 @@ There are a plenty of information in the dataset we didn't use for analysis:
 5. Why OFFSET is better than XY significantly;
 6. The operation from questionnaire maybe could as a weight to vote data's value for every user:
   * Operation = { W{leftthumb}, W{rightthumb}, W{leftindex}, W{rightindex}, W{pin}, W{screensize} }
-	
+
+<div align="center">
+<img src="img/buffer-vis.png" width="50%">
+<p><strong>Fig 7.</strong> ROC Curve: The 9th Participant, Analysis Model I, Feature Condition 10</p>
+</div>	
+
 These could be the next step for analysis the best pattern for classification and authentication.
 
 ## VII. References

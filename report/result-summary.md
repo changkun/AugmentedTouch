@@ -1,6 +1,8 @@
 # AugmentedTouch: A Study in Sensors Augment Classification Accuracy of Using Touch Position or Touch Offset Features
 
-> January 11, 2016 by Changkun Ou
+> January 15, 2016 by Changkun Ou
+> 
+> Public Version
 > 
 > Link: [GitHub](https://github.com/changkun/AugmentedTouch/blob/master/report/result-summary.md)
 

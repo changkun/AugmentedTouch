@@ -465,8 +465,7 @@ def identificationMoment(userid, device, featureCondition, classificationConditi
 
     trainingData, testData, trainingLabel, testLabel = train_test_split(data[userid], label[userid], test_size=my_test_size, random_state=my_random_state)
 
-    return classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=1000)
-
+    return classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=my_max_iteration)
 def identificationMomentForAll(featureCondition,  classificationCondition, offsetFeatureOn):
     lines = []
     for userid in xrange(1,17):
@@ -504,6 +503,88 @@ def identificationThreads(xyfeature):
 
     print 'Process identification finished...'
 
+def forTable1(userid, clf):
+    errList1 = []
+    errList2 = []
+    for feature in xrange(0,17):
+        errList1.append(processMethod1(userid,1,featureCondition=feature, classificationCondition=clf,offsetFeatureOn=True))
+        errList2.append(processMethod1(userid,2,featureCondition=feature, classificationCondition=clf,offsetFeatureOn=True))
+    print 'user' + str(userid)
+    print 'iphone 6 plus'
+    for index, err1 in enumerate(errList1):
+        print err1
+    print 'iphone 5'
+    for index, err2 in enumerate(errList2):
+        print err2
+def allTable1():
+    clf = 4
+    for userid in xrange(1,17):
+        forTable1(userid, clf)
+
+def forTable2(userid, clf):
+    errList1 = []
+    for feature in xrange(0,17):
+        errList1.append(processMethod2(userid,featureCondition=feature,classificationCondition=clf,offsetFeatureOn=True))
+    print 'user' + str(userid)
+    print 'iphone6plus train iphone5 hack'
+    for index, err1 in enumerate(errList1):
+        print err1
+def allTable2():
+    clf = 4
+    for userid in xrange(1,17):
+        forTable2(userid, clf)
+
+def forTable3(userid, clf):
+    errList1 = []
+    for feature in xrange(0,17):
+        errList1.append(processMethod3(userid,featureCondition=feature,classificationCondition=clf,offsetFeatureOn=True))
+    print 'user' + str(userid)
+    print 'iphone5 train iphone6plus hack'
+    for index, err1 in enumerate(errList1):
+        print err1
+def allTable3():
+    clf = 4
+    for userid in xrange(1,17):
+        forTable3(userid, clf)
+
+def forTable4(userid, clf):
+    Err1 = []
+    Err2 = []
+    for feature in xrange(0,17):
+        _, errList1 = processMethod4(userid, 1, featureCondition=feature, classificationCondition=clf, offsetFeatureOn=True)
+        _, errList2 = processMethod4(userid, 2, featureCondition=feature, classificationCondition=clf, offsetFeatureOn=True)
+        Err1.append(np.mean(errList1))
+        Err2.append(np.mean(errList2))
+    print 'user' + str(userid)
+    print 'iphone 6 plus'
+    for index, err1 in enumerate(Err1):
+        print err1
+    print 'iphone 5'
+    for index, err2 in enumerate(Err2):
+        print err2
+def allTable4():
+    clf = 4
+    for userid in xrange(1,17):
+        forTable4(userid, clf)
+
+def forTable5(userid, clf):
+    errList1 = []
+    errList2 = []
+    for feature in xrange(0,17):
+        errList1.append(identificationMoment(userid,1,feature, clf,offsetFeatureOn=False))
+        errList2.append(identificationMoment(userid,2,feature, clf,offsetFeatureOn=False))
+    print 'user' + str(userid)
+    print 'iphone 6 plus'
+    for index, err1 in enumerate(errList1):
+        print err1
+    print 'iphone 5'
+    for index, err2 in enumerate(errList2):
+        print err2
+def allTable5():
+    clf = 4
+    for userid in xrange(1,17):
+        forTable5(userid, clf)
+
 def main():
 
     #Method1DrawAllUser()
@@ -514,13 +595,17 @@ def main():
     # Method3Threads(True)
     # Method4Threads(True)
 
-    identificationThreads(False)
+    # identificationThreads(False)
 
     # print identificationMoment(1, 1, 1, 1, False)
 
     # plotROCforAll()
 
-
+    # allTable1()
+    # allTable2()
+    # allTable3()
+    # allTable4()
+    allTable5()
 
 if __name__ == '__main__':
     main()

@@ -1,4 +1,5 @@
 .DS_Store
+.gitignore
 
 result/moment_analysis/error_rate/*
 

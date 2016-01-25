@@ -665,23 +665,35 @@ def allTable4():
     for userid in xrange(1,17):
         forTable4(userid, clf)
 
-def forTable5(userid, clf):
+def forTable5(userid, clf, filename):
+
+    offset = True
+
     errList1 = []
     errList2 = []
+
+    textlist = []
+
     for feature in xrange(0,17):
-        errList1.append(identificationMoment(userid,1,feature, clf,offsetFeatureOn=False))
-        errList2.append(identificationMoment(userid,2,feature, clf,offsetFeatureOn=False))
-    print 'user' + str(userid)
-    print 'iphone 6 plus'
+        errList1.append(identificationMoment(userid,1,feature, clf,offsetFeatureOn=offset))
+        errList2.append(identificationMoment(userid,2,feature, clf,offsetFeatureOn=offset))
+    textlist.append('user' + str(userid) + '\n')
+    textlist.append('iphone 6 plus \n')
     for index, err1 in enumerate(errList1):
-        print err1
-    print 'iphone 5'
+        textlist.append( str(err1)+'\n' )
+    textlist.append('iphone 5 \n')
     for index, err2 in enumerate(errList2):
-        print err2
+        textlist.append( str(err2)+'\n' )
+
+    f = open(filename, 'a')
+    f.writelines(textlist)
+    f.close()
+    print 'user'+str(userid) + 'finished'
+
 def allTable5():
-    clf = 5
+    clf = 8
     for userid in xrange(1,17):
-        forTable5(userid, clf)
+        forTable5(userid, clf, 'offset' + str(clf)+'.txt')
 
 # def feed_forward(X, weights):
 #     a = [X]
@@ -749,11 +761,11 @@ def main():
     # allTable2()
     # allTable3()
     # allTable4()
-    # allTable5()
+    allTable5()
 
     # plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=False)
     # plotROC(10, 2, 16, 1, offset=True, noisyOn=True, noisyNum=30)
-    plotAuthenModelROC(10, 2, 16, 1, offset=True, noisyOn=True, noisyNum=11)
+    # plotAuthenModelROC(10, 2, 16, 1, offset=True, noisyOn=True, noisyNum=11)
 
 if __name__ == '__main__':
     main()

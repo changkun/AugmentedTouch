@@ -6,6 +6,7 @@ from loaddata import splitMomentDataByFeatureAndLabel
 
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 from sklearn import svm
 from sklearn.cross_validation import train_test_split
@@ -20,7 +21,7 @@ import os.path
 
 # basic parameters
 my_kernel = 'linear'
-my_max_iteration = 500000
+my_max_iteration = 250000
 my_test_size = 0.3
 my_random_state = 42
 
@@ -333,8 +334,65 @@ def drawMethod4AverageErrorRate(userid, offset):
     plt.close('all')
     print 'finish save user ' + str(userid) + '.'
 
+def plotAuthenModelROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=True, noisyNum=11):
 
-def plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=True):
+    # import data to play with
+    data, label = identificationDataLabeling(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offset)
+    print 'get data..'
+
+    # binarize the output
+    classes = [0, 1]
+    label = label_binarize(label, classes=classes)
+
+    n_classes = label.shape[1]
+
+    # add noisy feature to make problem harder
+    if noisyOn==True:
+        random_state = np.random.RandomState(my_random_state)
+        n_samples, n_features = data.shape
+        data = np.c_[data, random_state.randn(n_samples, noisyNum * n_features)]
+
+    #shuffle and split traning and test sets
+    trainingData, testData, trainingLabel, testLabel = train_test_split(data, label, test_size=0.5, random_state=my_random_state)
+    print 'splited data..'
+
+    # learn to predict each class against the other
+    classifier = OneVsRestClassifier(svm.SVC(kernel=my_kernel, probability=True, random_state=my_random_state, max_iter=my_max_iteration))
+    label_score = classifier.fit(trainingData, trainingLabel).decision_function(testData)
+    print 'decision success.'
+
+    # Compute ROC curve and ROC area for each class
+    fpr = dict()
+    tpr = dict()
+    roc_auc = dict()
+
+    for i in range(n_classes):
+        fpr[i], tpr[i], _ =roc_curve(testLabel[:, i], label_score[:, i])
+        roc_auc[i] = auc(fpr[i], tpr[i])
+
+    # Plot all ROC curves
+    plt.figure()
+
+    for i in range(n_classes):
+        strLabel = 'ROC curve of class {0} (area = {1:0.2f})'''.format(i, roc_auc[i])
+        plt.plot(fpr[i], tpr[i], label=strLabel, lw=3)
+
+    plt.plot([0, 1], [0, 1], 'k--')
+    plt.xlim([0.0, 1.0])
+    plt.ylim([0.0, 1.0])
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver operating characteristic')
+    plt.legend(loc="lower right")
+
+    # fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
+    fileName="result11.png"
+    plt.savefig(fileName, dpi=72)
+    print 'finish ' + fileName
+    plt.close('all')
+
+
+def plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=True, noisyNum=11):
     # userid = 1
     # device = 1
     # featureCondition = 10
@@ -342,7 +400,8 @@ def plotROC(userid, device, featureCondition, classificationCondition, offset=Fa
     # offset = False
     # noisyOn = True
     #np.set_printoptions(threshold='nan')
-    fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
+    # fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
+    fileName = 'result.png'
     if os.path.exists(fileName)==True:
         print 'finish ' + fileName
         return
@@ -369,7 +428,7 @@ def plotROC(userid, device, featureCondition, classificationCondition, offset=Fa
     if noisyOn==True:
         random_state = np.random.RandomState(my_random_state)
         n_samples, n_features = data.shape
-        data = np.c_[data, random_state.randn(n_samples, 200 * n_features)]
+        data = np.c_[data, random_state.randn(n_samples, noisyNum * n_features)]
 
     #shuffle and split traning and test sets
     trainingData, testData, trainingLabel, testLabel = train_test_split(data, label, test_size=0.5, random_state=my_random_state)
@@ -423,7 +482,7 @@ def plotROC(userid, device, featureCondition, classificationCondition, offset=Fa
 
     for i in range(n_classes):
         strLabel = 'ROC curve of class {0} (area = {1:0.2f})'''.format(i, roc_auc[i])
-        plt.plot(fpr[i], tpr[i], label=strLabel)
+        plt.plot(fpr[i], tpr[i], label=strLabel, lw=3)
 
     plt.plot([0, 1], [0, 1], 'k--')
     plt.xlim([0.0, 1.0])
@@ -433,7 +492,7 @@ def plotROC(userid, device, featureCondition, classificationCondition, offset=Fa
     plt.title('Receiver operating characteristic')
     plt.legend(loc="lower right")
 
-    fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
+    # fileName = '../result/img/roc/clf'+str(classificationCondition)+'/featureCondition' + str(featureCondition) + '/device' + str(device) + '/user' + str(userid) + '.png'
     plt.savefig(fileName, dpi=72)
     print 'finish ' + fileName
     plt.close('all')
@@ -446,9 +505,42 @@ def plotROCforAll():
                 for userid in xrange(1,17):
                     plotROC(userid, device, featureCondition, classificationCondition, offset=True, noisyOn=True)
 
+def plot3DLabel(data, label):
+    print data.shape
+    print label
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    x = [float(value)/736 for value in data[:,0]]
+    y = [float(value)/414 for value in data[:,1]]
+    z = [float(value) for value in data[:,2]]
+    # label = [1 if value=='1' else 0 for value in label]
+
+    ax.scatter(x,y,z,c=label, marker='o')
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('roll')
+    plt.show()
+
+def identificationDataLabeling(userid, device, featureCondition, classificationCondition, offsetFeatureOn=False):
+    data = {}
+    label = {}
+    for user in xrange(1,17):
+        data[user], label[user] = splitMomentDataByFeatureAndLabel(user, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
+        if user == userid:
+            # current user label is 1
+            label[user] = [1 for value in label[user]]
+        else:
+            label[user] = [0 for value in label[user]]
+
+    for user in xrange(1,17):
+        if user != userid:
+            data[userid] = np.vstack((data[userid], data[user]))
+            label[userid] = np.hstack((label[userid], label[user]))
+
+    return data[userid], label[userid]
+
 
 def identificationMoment(userid, device, featureCondition, classificationCondition, offsetFeatureOn=False):
-
     data = {}
     label = {}
     for user in xrange(1,17):
@@ -463,9 +555,15 @@ def identificationMoment(userid, device, featureCondition, classificationConditi
             data[userid] = np.vstack((data[userid], data[user]))
             label[userid] = np.hstack((label[userid], label[user]))
 
-    trainingData, testData, trainingLabel, testLabel = train_test_split(data[userid], label[userid], test_size=my_test_size, random_state=my_random_state)
 
-    return classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=my_max_iteration)
+    trainingData, testData, trainingLabel, testLabel = train_test_split(data[userid], label[userid], test_size=my_test_size, random_state=my_random_state)
+    # print trainingData, trainingLabel
+    # plot3DLabel(trainingData, trainingLabel)
+
+    print 'preload finished.'
+    err = classify(trainingData, trainingLabel, testData, testLabel, kernel=my_kernel, max_iter=my_max_iteration)
+    print 'clssify finished.'
+    return err
 def identificationMomentForAll(featureCondition,  classificationCondition, offsetFeatureOn):
     lines = []
     for userid in xrange(1,17):
@@ -581,55 +679,55 @@ def forTable5(userid, clf):
     for index, err2 in enumerate(errList2):
         print err2
 def allTable5():
-    clf = 4
+    clf = 5
     for userid in xrange(1,17):
         forTable5(userid, clf)
 
-def feed_forward(X, weights):
-    a = [X]
-    for w in weights:
-        a.append(sigmoid(a[-1].dot(w)))
-    return a
+# def feed_forward(X, weights):
+#     a = [X]
+#     for w in weights:
+#         a.append(sigmoid(a[-1].dot(w)))
+#     return a
 
-def grads(X, Y, weights):
-    grads = np.empty_like(weights)
-    a = feed_forward(X, weights)
-    delta = a[-1] - Y # cross-entropy
-    grads[-1] = np.dot(a[-2].T, delta)
-    for i in xrange(len(a)-2, 0, -1):
-        delta = np.dot(delta, weights[i].T) * d_sigmoid(a[i])
-        grads[i-1] = np.dot(a[i-1].T, delta)
-    return grads / len(X)
+# def grads(X, Y, weights):
+#     grads = np.empty_like(weights)
+#     a = feed_forward(X, weights)
+#     delta = a[-1] - Y # cross-entropy
+#     grads[-1] = np.dot(a[-2].T, delta)
+#     for i in xrange(len(a)-2, 0, -1):
+#         delta = np.dot(delta, weights[i].T) * d_sigmoid(a[i])
+#         grads[i-1] = np.dot(a[i-1].T, delta)
+#     return grads / len(X)
 
-def dnn():
-    sigmoid = lambda x: 1 / (1 + np.exp(-x))
-    d_sigmoid = lambda y: y * (1 - y)
+# def dnn():
+#     sigmoid = lambda x: 1 / (1 + np.exp(-x))
+#     d_sigmoid = lambda y: y * (1 - y)
 
-    userid=1
-    device=1
-    featureCondition=1
-    classificationCondition=1
-    offsetFeatureOn=False
+#     userid=1
+#     device=1
+#     featureCondition=1
+#     classificationCondition=1
+#     offsetFeatureOn=False
 
-    data, label = splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
-    trX, teX, trY, teY = train_test_split(data, label, test_size=my_test_size, random_state=my_random_state)
+#     data, label = splitMomentDataByFeatureAndLabel(userid, device, featureCondition, classificationCondition, offsetFeatureOn=offsetFeatureOn)
+#     trX, teX, trY, teY = train_test_split(data, label, test_size=my_test_size, random_state=my_random_state)
 
-    # (trX, trY), _, (teX, teY) = mnist.load_data()
+#     # (trX, trY), _, (teX, teY) = mnist.load_data()
 
 
-    trY = mnist.to_one_hot(trY)
+#     trY = mnist.to_one_hot(trY)
 
-    weights = [
-        np.random.randn(784, 100) / np.sqrt(784),
-        np.random.randn(100, 10) / np.sqrt(100)]
-    num_epochs, batch_size, learn_rate = 30, 10, 0.2
+#     weights = [
+#         np.random.randn(784, 100) / np.sqrt(784),
+#         np.random.randn(100, 10) / np.sqrt(100)]
+#     num_epochs, batch_size, learn_rate = 30, 10, 0.2
 
-    for i in xrange(num_epochs):
-    for j in xrange(0, len(trX), batch_size):
-        X, Y = trX[j:j+batch_size], trY[j:j+batch_size]
-        weights -= learn_rate * grads(X, Y, weights)
-    out = feed_forward(teX, weights)[-1]
-    print i, np.mean(np.argmax(out, axis=1) == teY)
+#     for i in xrange(num_epochs):
+#     for j in xrange(0, len(trX), batch_size):
+#         X, Y = trX[j:j+batch_size], trY[j:j+batch_size]
+#         weights -= learn_rate * grads(X, Y, weights)
+#     out = feed_forward(teX, weights)[-1]
+#     print i, np.mean(np.argmax(out, axis=1) == teY)
 
 def main():
 
@@ -651,7 +749,11 @@ def main():
     # allTable2()
     # allTable3()
     # allTable4()
-    allTable5()
+    # allTable5()
+
+    # plotROC(userid, device, featureCondition, classificationCondition, offset=False, noisyOn=False)
+    # plotROC(10, 2, 16, 1, offset=True, noisyOn=True, noisyNum=30)
+    plotAuthenModelROC(10, 2, 16, 1, offset=True, noisyOn=True, noisyNum=11)
 
 if __name__ == '__main__':
     main()

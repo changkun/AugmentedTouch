@@ -99,6 +99,11 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
         3: Multi-Classification (left thumb, right thumb, left index, right index)
         4: Hand Classification (left thumb+index, right thumb+index)
 
+    when classificationCondition>=5, only get one labeled data, this is only used for authentication.
+        5: leftThumbData
+        6: rightThumbData
+        7: leftIndexData
+        8: rightIndexData
     """
     converLabel = [[value] for value in label]
     dataWithLabel = np.append(rawdata, converLabel, axis=1)
@@ -114,8 +119,7 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
         dataWithLabel = np.vstack((leftIndexData, rightIndexData))
     elif classificationCondition==3:
         pass
-    else: # classificationCondition==4:
-
+    elif classificationCondition==4:
         leftHandData = np.vstack((leftThumbData, leftIndexData))
         (row, column) = leftHandData.shape
         leftHandLabel = np.zeros(row, dtype=int)
@@ -129,6 +133,14 @@ def splitMomentDataByLabel(rawdata, label, classificationCondition=1):
         rightHandData = np.hstack((rightHandData[:, 0:-1], rightHandLabel))
 
         dataWithLabel = np.vstack((leftHandData, rightHandData))
+    elif classificationCondition==5:
+        dataWithLabel = leftThumbData
+    elif classificationCondition==6:
+        dataWithLabel = rightThumbData
+    elif classificationCondition==7:
+        dataWithLabel = leftIndexData
+    elif classificationCondition==8:
+        dataWithLabel = rightIndexData
 
     newData = dataWithLabel[:,0:-1]
     newLabel = dataWithLabel[:,-1]
